@@ -24,7 +24,7 @@
           $movieImageURL = "{$imageBaseURL}/original/{$movie->backdrop_path}";
         @endphp
 
-        <div class="flex flex-row items-center w-full h-full relative slide duration-200">
+        <div class="flex flex-row items-center w-full h-full relative slide">
           {{-- Image --}}
           <img src="{{ $movieImageURL }}" alt="{{ $movie->title }}" class="absolute w-full h-full object-cover">
 
@@ -35,20 +35,20 @@
             <span class="font-bold font-inter text-4xl text-white">{{ $movie->title }}</span>
             <span class="font-inter text-xl text-white w-1/2 line-clamp-2">{{ $movie->overview }}</span>
             <a href="/movie/{{ $movie->id }}"
-              class="w-fit bg-movieapp-500 text-white pl-4 pr-4 py-2 mt-5 font-inter text-sm flex flex-row rounded-full items-center hover:drop-shadow-lg duration-200">
-              <svg width="11" height="14" viewBox="0 0 11 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              class="w-fit bg-movieapp-500 text-white pl-2 pr-4 py-2 mt-5 font-inter text-sm flex flex-row rounded-full items-center hover:drop-shadow-lg duration-200">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
-                  d="M0.5 12.175V1.825C0.5 1.54167 0.6 1.30417 0.8 1.1125C1 0.920833 1.23333 0.825 1.5 0.825C1.58333 0.825 1.67083 0.8375 1.7625 0.8625C1.85417 0.8875 1.94167 0.925 2.025 0.975L10.175 6.15C10.325 6.25 10.4375 6.375 10.5125 6.525C10.5875 6.675 10.625 6.83333 10.625 7C10.625 7.16667 10.5875 7.325 10.5125 7.475C10.4375 7.625 10.325 7.75 10.175 7.85L2.025 13.025C1.94167 13.075 1.85417 13.1125 1.7625 13.1375C1.67083 13.1625 1.58333 13.175 1.5 13.175C1.23333 13.175 1 13.0792 0.8 12.8875C0.6 12.6958 0.5 12.4583 0.5 12.175Z"
-                  fill="#FFF" />
+                  d="M9.525 18.025C9.19167 18.2417 8.854 18.254 8.512 18.062C8.17067 17.8707 8 17.575 8 17.175V6.82499C8 6.42499 8.17067 6.12899 8.512 5.93699C8.854 5.74566 9.19167 5.75832 9.525 5.97499L17.675 11.15C17.975 11.35 18.125 11.6333 18.125 12C18.125 12.3667 17.975 12.65 17.675 12.85L9.525 18.025Z"
+                  fill="white"></path>
               </svg>
-              <span class="pl-1">Detail</span>
+              <span>Detail</span>
             </a>
           </div>
         </div>
       @endforeach
 
       {{-- Prev Button --}}
-      <div class="absolute left-0 top-1/2 -translate-y-1/2 w-1/12 flex justify-center">
+      <div class="z-10 absolute left-0 top-1/2 -translate-y-1/2 w-1/12 flex justify-center">
         <button onclick="moveSlide(-1)" class="bg-white p-3 rounded-full opacity-20 hover:opacity-100 duration-200">
           <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
             <mask id="mask0_203_62" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="25"
@@ -66,7 +66,7 @@
       </div>
 
       {{-- Next Button --}}
-      <div class="rotate-180 absolute right-0 top-1/2 -translate-y-1/2 w-1/12 flex justify-center">
+      <div class="z-10 rotate-180 absolute right-0 top-1/2 -translate-y-1/2 w-1/12 flex justify-center">
         <button onclick="moveSlide(1)" class="bg-white p-3 rounded-full opacity-20 hover:opacity-100 duration-200">
           <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
             <mask id="mask0_203_62" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="25"
