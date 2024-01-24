@@ -173,7 +173,7 @@ export default {
             pink: colors.pink,
             rose: colors.rose,
             movieapp: {
-                500: "#3886ff",
+                500: "#38b6ff",
                 600: "#004166",
             },
         }),
