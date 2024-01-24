@@ -12,6 +12,7 @@ class MovieController extends Controller
     // Max movie trends to show
     $MAX_TREND = 7;
     $trending = [];
+    $topMovies = [];
 
     $baseURL = env('MOVIE_DB_BASE_URL');
     $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
@@ -28,11 +29,23 @@ class MovieController extends Controller
       if (isset($result)) $trending = array_slice($result, 0, $MAX_TREND);
     }
 
+    // Do request api to get top movies [10]
+    $topMovieResponse = Http::get("{$baseURL}/movie/top_rated", [
+      'api_key' => $apiKey,
+    ]);
+
+    if ($topMovieResponse->successful()) {
+      $result = $topMovieResponse->object()->results;
+
+      if (isset($result)) $topMovies = array_slice($result, 0, 10);
+    }
+
     return view('home', [
       'baseURL' => $baseURL,
       'imageBaseURL' => $imageBaseURL,
       'apiKey' => $apiKey,
-      'trending' => $trending
+      'trending' => $trending,
+      'topMovies' => $topMovies
     ]);
   }
 }
