@@ -101,7 +101,7 @@
         @foreach ($topMovies as $movie)
           @php
             $releaseYear = date('Y', strtotime($movie->release_date));
-            $movieImageURL = "{$imageBaseURL}/original/{$movie->poster_path}";
+            $movieImageURL = "{$imageBaseURL}/w500/{$movie->poster_path}";
             $rating = $movie->vote_average * 10;
           @endphp
 
@@ -138,23 +138,23 @@
       <span class="ml-28 font-inter font-bold text-xl">Top 10 TV Shows</span>
 
       <div class="w-auto flex flex-row overflow-x-auto pl-28 pt-6 pb-10">
-        @foreach ($topMovies as $movie)
+        @foreach ($topTvShows as $movie)
           @php
-            $releaseYear = date('Y', strtotime($movie->release_date));
-            $movieImageURL = "{$imageBaseURL}/original/{$movie->poster_path}";
+            $releaseYear = date('Y', strtotime($movie->first_air_date));
+            $movieImageURL = "{$imageBaseURL}/w500/{$movie->poster_path}";
             $rating = $movie->vote_average * 10;
           @endphp
 
-          <a href="movie/{{ $movie->id }}" class="group">
+          <a href="tv/{{ $movie->id }}" class="group">
             <div
               class="min-w-[232px] min-h-[428px] bg-white drop-shadow-[0_0px_8px_rgba(0,0,0,0.25)] group-hover:drop-shadow-[0_0px_8px_rgba(0,0,0,0.5)] rounded-[32px] p-5 flex flex-col mr-8 duration-100">
               <div class="overflow-hidden rounded-[32px]">
-                <img src="{{ $movieImageURL }}" alt="{{ $movie->title }}"
+                <img src="{{ $movieImageURL }}" alt="{{ $movie->original_name }}"
                   class="w-full h-[300px] rounded-[32px] group-hover:scale-125 duration-200">
               </div>
 
               <span
-                class="font-inter font-bold text-xl mt-4 line-clamp-1 group-hover:line-clamp-none">{{ $movie->title }}</span>
+                class="font-inter font-bold text-xl mt-4 line-clamp-1 group-hover:line-clamp-none">{{ $movie->original_name }}</span>
               <span class="font-inter text-sm mt-1">{{ $releaseYear }}</span>
 
               <div class="flex flex-row mt-1 items-center">
