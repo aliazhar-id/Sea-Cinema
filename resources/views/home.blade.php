@@ -173,6 +173,9 @@
       </div>
     </div>
 
+    {{-- Footer Section --}}
+    @include('partials.footer')
+
     <script>
       // Default active slide
       let slideIndex = 1;
