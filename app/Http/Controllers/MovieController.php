@@ -62,4 +62,42 @@ class MovieController extends Controller
       'topTvShows' => $topTvShows
     ]);
   }
+
+  function movies()
+  {
+    $baseURL = env('MOVIE_DB_BASE_URL');
+    $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
+    $apiKey = env('MOVIE_DB_API_KEY');
+
+    $movies = [];
+    $sortBy = 'popularity.desc';
+    $page = 1;
+    $minimalVoter = 100;
+
+    // Do request api to get movie by filter
+    $movieResponse = Http::get("{$baseURL}/discover/movie", [
+      'api_key' => $apiKey,
+      'sort_by' => $sortBy,
+      'vote_count.gte' => $minimalVoter,
+      'page' => $page
+    ]);
+
+    if ($movieResponse->successful()) {
+      $result = $movieResponse->object()->results;
+
+      if (isset($result)) $movies = $result;
+    }
+
+    // return json_decode($movieResponse);
+
+    return view('movie', [
+      'baseURL' => $baseURL,
+      'imageBaseURL' => $imageBaseURL,
+      'apiKey' => $apiKey,
+      'movies' => $movies,
+      'sortBy' => $sortBy,
+      'minimalVoter' => $minimalVoter,
+      'page' => $page
+    ]);
+  }
 }
