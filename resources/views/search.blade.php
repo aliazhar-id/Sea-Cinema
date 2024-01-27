@@ -30,7 +30,7 @@
 
           <input type="text" id="searchInput" type="search"
             class="w-full block p-8 lg:p-4 pl-12 lg:pl-10 text-2xl lg:text-sm text-black focus:outline-none"
-            placeholder="Search..." required>
+            placeholder="Search..." required autofocus>
         </div>
       </div>
 
@@ -119,11 +119,11 @@
               let detailsURL = '';
 
               if (film.media_type === 'movie') {
-                detailsURL = `${baseURL}/movie/${film.id}`;
+                detailsURL = `/movie/${film.id}`;
                 originalDate = film.release_date;
                 seachTitle = film.title;
               } else {
-                detailsURL = `${baseURL}/tv/${film.id}`;
+                detailsURL = `/tv/${film.id}`;
                 originalDate = film.first_air_date;
                 seachTitle = film.name;
               }
