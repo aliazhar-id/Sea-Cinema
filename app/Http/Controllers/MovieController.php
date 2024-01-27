@@ -63,7 +63,7 @@ class MovieController extends Controller
     ]);
   }
 
-  function movies()
+  public function movies()
   {
     $baseURL = env('MOVIE_DB_BASE_URL');
     $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
@@ -101,7 +101,7 @@ class MovieController extends Controller
     ]);
   }
 
-  function tvShows()
+  public function tvShows()
   {
     $baseURL = env('MOVIE_DB_BASE_URL');
     $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
@@ -139,13 +139,11 @@ class MovieController extends Controller
     ]);
   }
 
-  function search()
+  public function search()
   {
     $baseURL = env('MOVIE_DB_BASE_URL');
     $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
     $apiKey = env('MOVIE_DB_API_KEY');
-
-    
 
     return view('search', [
       'baseURL' => $baseURL,
