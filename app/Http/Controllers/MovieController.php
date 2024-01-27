@@ -138,4 +138,19 @@ class MovieController extends Controller
       'page' => $page
     ]);
   }
+
+  function search()
+  {
+    $baseURL = env('MOVIE_DB_BASE_URL');
+    $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
+    $apiKey = env('MOVIE_DB_API_KEY');
+
+    
+
+    return view('search', [
+      'baseURL' => $baseURL,
+      'imageBaseURL' => $imageBaseURL,
+      'apiKey' => $apiKey,
+    ]);
+  }
 }
