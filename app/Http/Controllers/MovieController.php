@@ -176,4 +176,31 @@ class MovieController extends Controller
       'movieData' => $movieData
     ]);
   }
+
+  function tvDetails($id)
+  {
+    $baseURL = env('MOVIE_DB_BASE_URL');
+    $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
+    $apiKey = env('MOVIE_DB_API_KEY');
+
+    $filmData = null;
+
+    $tvDetailResponse = Http::get("{$baseURL}/tv/{$id}", [
+      'api_key' => $apiKey,
+      'append_to_response' => 'videos'
+    ]);
+
+    if ($tvDetailResponse->successful()) {
+      $filmData = $tvDetailResponse->object();
+    }
+
+    // return $filmData;
+
+    return view('tv-details', [
+      'baseURL' => $baseURL,
+      'imageBaseURL' => $imageBaseURL,
+      'apiKey' => $apiKey,
+      'filmData' => $filmData
+    ]);
+  }
 }
