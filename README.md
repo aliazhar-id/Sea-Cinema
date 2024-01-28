@@ -11,7 +11,7 @@
 
 Sea Cinema is an online cinema website that uses Laravel and API. This website provides complete information about the Sea Cinema cinema, starting from complete information about the film, title, synopsis, to trailers.
 
-![Image](https://github.com/aliazhar-id/Sea-Cinema/assets/1.png)
+![Image](https://github.com/aliazhar-id/Sea-Cinema\public\assets)
 
 ## Description
 
@@ -22,6 +22,7 @@ This website was built using the Laravel framework, which is a popular PHP frame
 * [Laravel](https://laravel.com/)
 * [TailwindCSS](https://tailwindcss.com/)
 * [Font Awesome](https://fontawesome.com/)
+* [TMDB API](https://www.themoviedb.org/)
 
 ## Getting Started
 
@@ -38,11 +39,13 @@ This website was built using the Laravel framework, which is a popular PHP frame
 ## Executing program
 
 1. Run Laravel server `php artisan serve`
-2. Run TailwindCSS `npm run dev`
+2. Run Tailwind CSS `npm run dev`
 
-## Contributing
+## About Laravel
 
-
+1. Laravel Framework Version 10.41.0
+2. PHP Version 8.2.12
+3. Tailwind CSS Version 3.4.1
 
 ## License
 
