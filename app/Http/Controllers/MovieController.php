@@ -54,6 +54,7 @@ class MovieController extends Controller
 
 
     return view('home', [
+      'title' => 'Home',
       'baseURL' => $baseURL,
       'imageBaseURL' => $imageBaseURL,
       'apiKey' => $apiKey,
@@ -91,6 +92,7 @@ class MovieController extends Controller
     // return json_decode($movieResponse);
 
     return view('movie', [
+      'title' => 'Movies',
       'baseURL' => $baseURL,
       'imageBaseURL' => $imageBaseURL,
       'apiKey' => $apiKey,
@@ -108,6 +110,7 @@ class MovieController extends Controller
     $apiKey = env('MOVIE_DB_API_KEY');
 
     return view('search', [
+      'title' => 'Search',
       'baseURL' => $baseURL,
       'imageBaseURL' => $imageBaseURL,
       'apiKey' => $apiKey,
