@@ -1,16 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.main')
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Movies App</title>
-
-  @vite('resources/css/app.css')
-</head>
-
-<body>
+@section('body')
   <div class="w-full h-screen flex flex-col relative">
     @php
       $backDropPath = $movieData ? "{$imageBaseURL}/original{$movieData->backdrop_path}" : '';
@@ -25,14 +15,11 @@
       <div class="w-1/3 pl-5">
         <a href="/movies"
           class="uppercase text-base mx-5 text-white hover:text-movieapp-500 duration-200 font-inter">Movies</a>
-        <a href="/tv-shows" class="uppercase text-base mx-5 text-white hover:text-movieapp-500 duration-200 font-inter">
-          TV Shows
-        </a>
       </div>
 
       <div class="w-1/3 flex items-center justify-center">
         <a href="/" class="font-bold text-4xl font-quicksand text-white hover:text-movieapp-500 duration-200">
-          MOVIES APP
+          Sea Cinema
         </a>
       </div>
       <div class="w-1/3 flex flex-row justify-end pr-10">
@@ -155,7 +142,9 @@
     </div>
 
   </div>
+@endsection
 
+@section('script')
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
@@ -174,6 +163,4 @@
       }
     }
   </script>
-</body>
-
-</html>
+@endsection

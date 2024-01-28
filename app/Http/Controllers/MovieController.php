@@ -54,6 +54,7 @@ class MovieController extends Controller
 
 
     return view('home', [
+      'title' => 'Home',
       'baseURL' => $baseURL,
       'imageBaseURL' => $imageBaseURL,
       'apiKey' => $apiKey,
@@ -91,48 +92,11 @@ class MovieController extends Controller
     // return json_decode($movieResponse);
 
     return view('movie', [
+      'title' => 'Movies',
       'baseURL' => $baseURL,
       'imageBaseURL' => $imageBaseURL,
       'apiKey' => $apiKey,
       'movies' => $movies,
-      'sortBy' => $sortBy,
-      'minimalVoter' => $minimalVoter,
-      'page' => $page
-    ]);
-  }
-
-  public function tvShows()
-  {
-    $baseURL = env('MOVIE_DB_BASE_URL');
-    $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
-    $apiKey = env('MOVIE_DB_API_KEY');
-
-    $tvShows = [];
-    $sortBy = 'popularity.desc';
-    $page = 1;
-    $minimalVoter = 100;
-
-    // Do request api to get movie by filter
-    $movieResponse = Http::get("{$baseURL}/discover/tv", [
-      'api_key' => $apiKey,
-      'sort_by' => $sortBy,
-      'vote_count.gte' => $minimalVoter,
-      'page' => $page
-    ]);
-
-    if ($movieResponse->successful()) {
-      $result = $movieResponse->object()->results;
-
-      if (isset($result)) $tvShows = $result;
-    }
-
-    // return json_decode($movieResponse);
-
-    return view('tv', [
-      'baseURL' => $baseURL,
-      'imageBaseURL' => $imageBaseURL,
-      'apiKey' => $apiKey,
-      'tvShows' => $tvShows,
       'sortBy' => $sortBy,
       'minimalVoter' => $minimalVoter,
       'page' => $page
@@ -146,6 +110,7 @@ class MovieController extends Controller
     $apiKey = env('MOVIE_DB_API_KEY');
 
     return view('search', [
+      'title' => 'Search',
       'baseURL' => $baseURL,
       'imageBaseURL' => $imageBaseURL,
       'apiKey' => $apiKey,
@@ -174,33 +139,6 @@ class MovieController extends Controller
       'imageBaseURL' => $imageBaseURL,
       'apiKey' => $apiKey,
       'movieData' => $movieData
-    ]);
-  }
-
-  function tvDetails($id)
-  {
-    $baseURL = env('MOVIE_DB_BASE_URL');
-    $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
-    $apiKey = env('MOVIE_DB_API_KEY');
-
-    $filmData = null;
-
-    $tvDetailResponse = Http::get("{$baseURL}/tv/{$id}", [
-      'api_key' => $apiKey,
-      'append_to_response' => 'videos'
-    ]);
-
-    if ($tvDetailResponse->successful()) {
-      $filmData = $tvDetailResponse->object();
-    }
-
-    // return $filmData;
-
-    return view('tv-details', [
-      'baseURL' => $baseURL,
-      'imageBaseURL' => $imageBaseURL,
-      'apiKey' => $apiKey,
-      'filmData' => $filmData
     ]);
   }
 }
