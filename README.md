@@ -21,7 +21,6 @@ This website was built using the Laravel framework, which is a popular PHP frame
 
 * [Laravel](https://laravel.com/)
 * [TailwindCSS](https://tailwindcss.com/)
-* [Laravel Breeze](https://laravel.com/docs/10.x/starter-kits)
 * [Font Awesome](https://fontawesome.com/)
 
 ## Getting Started
