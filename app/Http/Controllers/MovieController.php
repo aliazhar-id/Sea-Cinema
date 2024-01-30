@@ -53,7 +53,7 @@ class MovieController extends Controller
     }
 
 
-    return view('home', [
+    return view('movies.home', [
       'title' => 'Home',
       'baseURL' => $baseURL,
       'imageBaseURL' => $imageBaseURL,
@@ -91,7 +91,7 @@ class MovieController extends Controller
 
     // return json_decode($movieResponse);
 
-    return view('movie', [
+    return view('movies.movie', [
       'title' => 'Movies',
       'baseURL' => $baseURL,
       'imageBaseURL' => $imageBaseURL,
@@ -109,7 +109,7 @@ class MovieController extends Controller
     $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
     $apiKey = env('MOVIE_DB_API_KEY');
 
-    return view('search', [
+    return view('movies.search', [
       'title' => 'Search',
       'baseURL' => $baseURL,
       'imageBaseURL' => $imageBaseURL,
@@ -134,7 +134,7 @@ class MovieController extends Controller
       $movieData = $movieDetailResponse->object();
     }
 
-    return view('movie-details', [
+    return view('movies.movie-details', [
       'baseURL' => $baseURL,
       'imageBaseURL' => $imageBaseURL,
       'apiKey' => $apiKey,
