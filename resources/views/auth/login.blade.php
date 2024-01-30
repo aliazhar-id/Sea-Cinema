@@ -23,18 +23,15 @@
       <form class="bg-white w-3/5" action="{{ route('auth.actionLogin') }}" method="POST">
         @csrf
 
-        @error('error')
-          PPPPPPPPPPPPPPPPPP
-        @enderror
-
         @if (session()->has('error'))
-          <div class="col-12">
-            <div class="d-grid">
-              <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-              </div>
-            </div>
+          <div class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 mb-2" role="alert">
+            <p class="font-bold">Error</p>
+            <p>{{ session('error') }}</p>
+          </div>
+        @elseif(session()->has('success'))
+          <div class="bg-teal-100 border-l-4 border-teal-500 text-teal-900 p-4 mb-2" role="alert">
+            <p class="font-bold">Success</p>
+            <p>{{ session('success') }}</p>
           </div>
         @endif
 
