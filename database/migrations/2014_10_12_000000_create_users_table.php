@@ -17,8 +17,8 @@ return new class extends Migration
       $table->string('username')->unique();
       $table->string('email')->unique();
       $table->string('password');
-      $table->integer('balance');
-      $table->string('image');
+      $table->integer('balance')->default(0);
+      $table->string('image')->nullable();
       $table->enum('role', ['user', 'admin', 'superadmin']);
       $table->rememberToken();
       $table->timestamps();
