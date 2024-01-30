@@ -12,7 +12,8 @@ Route::get('/search', [MovieController::class, 'search']);
 Route::get('/movie/{id}', [MovieController::class, 'movieDetails']);
 
 // AUTH PAGE
-Route::get('/auth/login', [LoginController::class, 'index'])->name('auth.login');
-Route::post('/auth/login', [LoginController::class, 'login'])->name('auth.actionLogin');
-Route::post('/auth/register', [RegisterController::class, 'index'])->name('auth.register');
-Route::post('/auth/register', [RegisterController::class, 'register'])->name('auth.actionRegister');
+Route::get('/auth/login', [LoginController::class, 'index'])->name('auth.login')->middleware('guest');
+Route::post('/auth/login', [LoginController::class, 'login'])->name('auth.actionLogin')->middleware('guest');
+Route::get('/auth/register', [RegisterController::class, 'index'])->name('auth.register')->middleware('guest');
+Route::post('/auth/register', [RegisterController::class, 'register'])->name('auth.actionRegister')->middleware('guest');
+Route::get('/auth/logout', [LoginController::class, 'logout'])->name('auth.logout')->middleware('auth');
