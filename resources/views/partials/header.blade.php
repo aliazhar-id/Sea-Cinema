@@ -18,7 +18,15 @@
       </svg>
     </a> --}}
 
-    <a href="/auth/login" class="group w-fit bg-movieapp-500 text-white pl-4 pr-6 py-3 font-inter flex flex-row rounded-2xl items-center hover:drop-shadow-lg duration-200">Login</a>
+    @auth
+      <a href="/auth/logout"
+        class="group w-fit bg-movieapp-500 text-white pl-4 pr-6 py-3 font-inter flex flex-row rounded-2xl items-center hover:drop-shadow-lg duration-200">
+        Log Out
+      </a>
+    @else
+      <a href="/auth/login"
+        class="group w-fit bg-movieapp-500 text-white pl-4 pr-6 py-3 font-inter flex flex-row rounded-2xl items-center hover:drop-shadow-lg duration-200">Login</a>
+    @endauth
 
   </div>
 
