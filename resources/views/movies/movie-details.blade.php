@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('movies.layouts.main')
 
 @section('body')
   <div class="w-full h-screen flex flex-col relative">

@@ -1,9 +1,9 @@
-@extends('layouts.main')
+@extends('movies.layouts.main')
 
 @section('body')
   <div class="w-full h-auto min-h-screen flex flex-col">
     {{-- Header Section --}}
-    @include('partials.header')
+    @include('movies.partials.header')
 
     {{-- Search Wrapper --}}
     <div class="w-full h-auto min-h-screen">
@@ -51,7 +51,7 @@
 
 
     {{-- Footer Section --}}
-    @include('partials.footer')
+    @include('movies.partials.footer')
   </div>
 @endsection
 

@@ -1,9 +1,9 @@
-@extends('layouts.main')
+@extends('movies.layouts.main')
 
 @section('body')
   <div class="w-full h-auto min-h-screen flex flex-col">
     {{-- Header Section --}}
-    @include('partials.header')
+    @include('movies.partials.header')
 
     {{-- Sort Section --}}
     <div class="ml-28 mt-8 flex flex-row items-center">
@@ -91,7 +91,7 @@
     </div>
 
     {{-- Footer Section --}}
-    @include('partials.footer')
+    @include('movies.partials.footer')
   </div>
 @endsection
 

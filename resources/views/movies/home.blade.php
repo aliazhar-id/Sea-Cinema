@@ -1,10 +1,10 @@
-@extends('layouts.main')
+@extends('movies.layouts.main')
 
 @section('body')
   <div class="w-full h-auto min-h-screen flex flex-col">
 
     {{-- Header Section --}}
-    @include('partials.header')
+    @include('movies.partials.header')
 
     {{-- Banner Section --}}
     <div class="w-full h-[512px] flex flex-col relative bg-black">
@@ -162,7 +162,7 @@
     </div>
 
     {{-- Footer Section --}}
-    @include('partials.footer')
+    @include('movies.partials.footer')
   @endsection
 
   @section('script')
