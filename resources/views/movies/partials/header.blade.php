@@ -1,33 +1,120 @@
-<div class="w-full bg-white h-[96px] drop-shadow-lg flex row items-center" 96px="">
-  <div class="w-1/3 pl-5">
-    <a href="/movies"
-      class="uppercase text-base mx-5 text-black hover:text-movieapp-500 duration-200 font-inter">Movies</a>
+<nav class="bg-white">
+  <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+    <div class="relative flex h-16 items-center justify-between">
+      <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+        <!-- Mobile menu button-->
+        <button type="button"
+          class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+          aria-controls="mobile-menu" aria-expanded="false">
+          <span class="absolute -inset-0.5"></span>
+          <span class="sr-only">Open main menu</span>
+          <!--
+            Icon when menu is closed.
+
+            Menu open: "hidden", Menu closed: "block"
+          -->
+          <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          </svg>
+          <!--
+            Icon when menu is open.
+
+            Menu open: "block", Menu closed: "hidden"
+          -->
+          <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+            aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+        <div class="flex flex-shrink-0 font-inter text-lg font-bold uppercase items-center">
+          Sea Cinema |
+        </div>
+        <div class="hidden sm:ml-6 sm:block">
+          <div class="flex space-x-4">
+            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-movieapp-600 hover:text-white" -->
+            <a href="{{ route('home') }}"
+              class="{{ Request::is('/') ? 'bg-movieapp-500 text-white' : 'text-gray-700 hover:bg-movieapp-600 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium"
+              aria-current="page">Top Movies</a>
+            <a href="{{ route('movies') }}"
+              class="{{ Request::is('movies') ? 'bg-movieapp-500 text-white' : 'text-gray-700 hover:bg-movieapp-600 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">All
+              Movies</a>
+            <a href="{{ route('schedule') }}"
+              class="{{ Request::is('schedule') ? 'bg-movieapp-500 text-white' : 'text-gray-700 hover:bg-movieapp-600 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Schedule</a>
+          </div>
+        </div>
+      </div>
+      <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+
+        @auth
+          <button type="button"
+            class="relative rounded-full bg-gray-300 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+            <span class="absolute -inset-1.5"></span>
+            <span class="sr-only">View notifications</span>
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+              aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+            </svg>
+          </button>
+
+          <!-- Profile dropdown -->
+          <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName"
+            class="flex items-center ml-3 text-sm pe-1 font-medium text-gray-900 rounded-full hover:text-blue-600 md:me-0 focus:ring-4 focus:ring-gray-100"
+            type="button">
+            <span class="sr-only">Open user menu</span>
+            <img class="w-8 h-8 me-2 rounded-full"
+              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt="user photo">
+            {{ auth()->user()->username }}
+            <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 10 6">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 4 4 4-4" />
+            </svg>
+          </button>
+
+          <!-- Dropdown menu -->
+          <div id="dropdownAvatarName" class="z-20 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
+            <div class="px-4 py-3 text-sm text-gray-900">
+              <div class="font-medium ">{{ auth()->user()->name }}</div>
+              <div class="truncate">{{ auth()->user()->email }}</div>
+            </div>
+            <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
+              <li>
+                <a href="{{ route('dashboard') }}" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
+              </li>
+            </ul>
+            <div class="py-2">
+              <a href="{{ route('auth.logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-red-500">
+                Sign out</a>
+            </div>
+          </div>
+        @else
+          <a href="{{ route('auth.login') }}"
+            class="group w-fit bg-movieapp-500 text-white pl-4 pr-6 py-3 font-inter flex flex-row rounded-2xl items-center hover:drop-shadow-lg duration-200">Login</a>
+        @endauth
+
+      </div>
+    </div>
   </div>
 
-  <div class="w-1/3 flex items-center justify-center">
-    <a href="/" class="font-bold text-4xl font-quicksand text-black hover:text-movieapp-500 duration-200">
-      SEA CINEMA
-    </a>
+  <!-- Mobile menu, show/hide based on menu state. -->
+  <div class="sm:hidden" id="mobile-menu">
+    <div class="space-y-1 px-2 pb-3 pt-2">
+      <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+      <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+        aria-current="page">Top Movies</a>
+      <a href="#"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">All
+        Movies</a>
+      <a href="{{ route('schedule') }}"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Schedule</a>
+    </div>
   </div>
-  <div class="w-1/3 flex flex-row justify-end pr-10">
-    {{-- <a href="/search" class="group">
-      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M28.525 27.475L22.9625 21.9C24.8885 19.6983 25.8834 16.8343 25.7372 13.9127C25.591 10.9911 24.315 8.24072 22.1787 6.24237C20.0425 4.24402 17.2132 3.15414 14.2883 3.20291C11.3635 3.25167 8.57212 4.43526 6.50367 6.50371C4.43521 8.57217 3.25163 11.3636 3.20286 14.2884C3.1541 17.2132 4.24397 20.0425 6.24233 22.1788C8.24068 24.315 10.9911 25.591 13.9126 25.7372C16.8342 25.8835 19.6983 24.8885 21.9 22.9625L27.475 28.525C27.6142 28.6642 27.803 28.7425 28 28.7425C28.1969 28.7425 28.3857 28.6642 28.525 28.525C28.6642 28.3858 28.7424 28.1969 28.7424 28C28.7424 27.8031 28.6642 27.6142 28.525 27.475ZM4.74996 14.5C4.74996 12.5716 5.32178 10.6866 6.39313 9.08319C7.46447 7.47981 8.98721 6.23013 10.7688 5.49218C12.5504 4.75422 14.5108 4.56114 16.4021 4.93734C18.2934 5.31355 20.0307 6.24215 21.3942 7.60571C22.7578 8.96927 23.6864 10.7066 24.0626 12.5979C24.4388 14.4892 24.2457 16.4496 23.5078 18.2312C22.7698 20.0127 21.5201 21.5355 19.9168 22.6068C18.3134 23.6782 16.4283 24.25 14.5 24.25C11.9151 24.2467 9.43708 23.2184 7.60932 21.3906C5.78155 19.5629 4.75326 17.0848 4.74996 14.5Z"
-          class="fill-black group-hover:fill-develobe-500 duration-200"></path>
-      </svg>
-    </a> --}}
-
-    @auth
-      <a href="/auth/logout"
-        class="group w-fit bg-movieapp-500 text-white pl-4 pr-6 py-3 font-inter flex flex-row rounded-2xl items-center hover:drop-shadow-lg duration-200">
-        Log Out
-      </a>
-    @else
-      <a href="/auth/login"
-        class="group w-fit bg-movieapp-500 text-white pl-4 pr-6 py-3 font-inter flex flex-row rounded-2xl items-center hover:drop-shadow-lg duration-200">Login</a>
-    @endauth
-
-  </div>
-
-</div>
+</nav>

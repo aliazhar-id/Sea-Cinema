@@ -141,4 +141,10 @@ class MovieController extends Controller
       'movieData' => $movieData
     ]);
   }
+
+  public function schedule() {
+    return view('movies.schedule', [
+      'title' => 'Shcedule'
+    ]);
+  }
 }
