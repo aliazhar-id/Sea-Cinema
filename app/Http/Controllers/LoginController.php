@@ -26,7 +26,7 @@ class LoginController extends Controller
     if (Auth::attempt($credentials, true)) {
       $request->session()->regenerate();
 
-      return redirect(route('home'));
+      return redirect(route('main.home'));
     }
 
     return back()->withInput()->with('error', 'You have entered an invalid email or password!');
@@ -39,6 +39,6 @@ class LoginController extends Controller
     $request->session()->invalidate();
     $request->session()->regenerateToken();
 
-    return redirect(route('home'));
+    return redirect(route('main.home'));
   }
 }

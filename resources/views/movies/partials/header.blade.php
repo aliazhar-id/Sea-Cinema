@@ -35,13 +35,13 @@
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex space-x-4">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-movieapp-600 hover:text-white" -->
-            <a href="{{ route('home') }}"
+            <a href="{{ route('main.home') }}"
               class="{{ Request::is('/') ? 'bg-movieapp-500 text-white' : 'text-gray-700 hover:bg-movieapp-600 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium"
               aria-current="page">Top Movies</a>
-            <a href="{{ route('movies') }}"
+            <a href="{{ route('main.movies') }}"
               class="{{ Request::is('movies') ? 'bg-movieapp-500 text-white' : 'text-gray-700 hover:bg-movieapp-600 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">All
               Movies</a>
-            <a href="{{ route('schedule') }}"
+            <a href="{{ route('main.schedule') }}"
               class="{{ Request::is('schedule') ? 'bg-movieapp-500 text-white' : 'text-gray-700 hover:bg-movieapp-600 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Schedule</a>
           </div>
         </div>
@@ -84,7 +84,7 @@
             </div>
             <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
               <li>
-                <a href="{{ route('dashboard') }}" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
+                <a href="{{ route('dashboard.index') }}" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
               </li>
               <li>
                 <a href="#" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
@@ -113,7 +113,7 @@
       <a href="#"
         class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">All
         Movies</a>
-      <a href="{{ route('schedule') }}"
+      <a href="{{ route('main.schedule') }}"
         class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Schedule</a>
     </div>
   </div>
