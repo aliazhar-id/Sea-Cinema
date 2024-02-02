@@ -36,7 +36,7 @@
         @php
           $releaseYear = date('Y', strtotime($movie->release_date));
           $movieImageURL = "{$imageBaseURL}/w500/{$movie->poster_path}";
-          $rating = $movie->vote_average * 10;
+          $rating = round($movie->vote_average * 10, 0);
         @endphp
 
         <a href="movie/{{ $movie->id }}" class="group">
