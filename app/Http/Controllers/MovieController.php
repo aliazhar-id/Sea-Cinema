@@ -103,15 +103,30 @@ class MovieController extends Controller
     ]);
   }
 
-  public function search()
+  public function search(Request $request)
   {
     $baseURL = env('MOVIE_DB_BASE_URL');
     $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
     $apiKey = env('MOVIE_DB_API_KEY');
 
+    $searchKeyword = $request['query'];
+
+    $movies = [];
+
+    // Do request api to get movie by filter
+    $movieResponse = Http::get("{$baseURL}/search/multi?page=1&api_key={$apiKey}&query={$searchKeyword}", [
+      'api_key' => $apiKey,
+      'page' => 1
+    ]);
+
+    if ($movieResponse->successful()) {
+      $result = $movieResponse->object()->results;
+
+      if (isset($result)) $movies = $result;
+    }
+
     return view('movies.search', [
       'title' => 'Search',
-      'baseURL' => $baseURL,
       'imageBaseURL' => $imageBaseURL,
       'apiKey' => $apiKey,
     ]);

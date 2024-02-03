@@ -28,9 +28,13 @@ class UserFactory extends Factory
     return [
       'name' => fake()->name(),
       'username' => $username,
-      'email' => fake()->unique()->freeEmail(),
       'password' => static::$password ??= Hash::make('123'),
+      'email' => fake()->unique()->freeEmail(),
+      'dob' => fake()->dateTimeBetween('1990-01-01', '2015-12-31')->format('Y/m/d'),
+      'address' => fake()->address(),
+      'phone' => fake()->phoneNumber(),
       'remember_token' => Str::random(10),
+      'image' => fake()->imageUrl(360, 360, 'animals', true, 'cats'),
     ];
   }
 

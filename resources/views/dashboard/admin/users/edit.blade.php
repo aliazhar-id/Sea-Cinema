@@ -1,0 +1,225 @@
+@extends('dashboard.layouts.main')
+
+@php
+  $postCount = $posts->count();
+  $totalClick = $posts->sum('click');
+  $postRate = $totalClick ? min(100, floor(($totalClick / $postCount) * 0.0485 * 100)) : 0;
+  $grade = 'No';
+
+  if ($postCount) {
+      if ($postRate >= 80) {
+          $grade = 'A';
+      } elseif ($postRate >= 60) {
+          $grade = 'B';
+      } elseif ($postRate >= 40) {
+          $grade = 'C';
+      } elseif ($postRate >= 10) {
+          $grade = 'D';
+      } else {
+          $grade = 'E';
+      }
+  }
+@endphp
+
+@section('content')
+  <h1 class="h3 mb-4 text-gray-800">Edit User</h1>
+
+  @if (session('success'))
+    <div class="alert alert-success border-left-success alert-dismissible fade show" role="alert">
+      {{ session('success') }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  @elseif(session('error'))
+    <div class="alert alert-warning border-left-warning alert-dismissible fade show" role="alert">
+      {{ session('error') }}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  @endif
+
+  <form action="{{ route('admin.users.update', $user->username) }}" method="POST" autocomplete="off"
+    enctype="multipart/form-data">
+    @csrf
+    @method('PATCH')
+
+    <div class="row">
+      <div class="col-lg-4 order-lg-2">
+        <div class="card shadow mb-4">
+          <div class="card-profile-image mt-4 text-center position-relative">
+            <div class="rounded-circle overflow-hidden position-relative mx-auto shadow-lg" style="width: fit-content">
+              <img width="180px" height="180px" id="profile-image-preview"
+                src="{{ $user->image ? asset('storage/' . $user->image) : '/assets/guest.jpeg' }}">
+              <div class="profile-image-group position-absolute text-center pt-1">
+                <input class="d-none" type="file" id="profile-image-input" name="image" />
+                <label for="profile-image-input" style="width:100%">
+                  <i class="fas fa-2x text-gray-300 fa-camera"></i>
+                </label>
+              </div>
+            </div>
+            @error('image')
+              <p class="text-danger mt-2 mb-0">
+                {{ $message }}
+              </p>
+            @enderror
+          </div>
+          <div class="card-body pt-1">
+
+            <div class="row mt-2">
+              <div class="col-lg-12">
+                <div class="text-center">
+                  <h5 class="font-weight-bold">{{ $user->name }}</h5>
+                  <div class="col-lg-8 mx-auto">
+                    {{-- <div class="form-group">
+                      <label for="role" class="form-label">Role</label>
+                      <select id="role" class="form-control" name="role">
+                        <option value="member">Member</option>
+                        <option value="admin">Admin</option>
+                      </select>
+                    </div> --}}
+                  </div>
+                  <p>{{ ucfirst($user->role) }}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row text-center">
+              <div class="col-md-4">
+                <div class="card-profile-stats">
+                  <span class="heading">{{ $postCount }}</span>
+                  <span class="description">Post</span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card-profile-stats">
+                  <span class="heading">{{ $totalClick }}</span>
+                  <span class="description">Click</span>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card-profile-stats">
+                  <span class="heading">{{ $grade }}</span>
+                  <span class="description">Grade</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-lg-8 order-lg-1">
+
+        <div class="card shadow mb-4">
+
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Edit User</h6>
+          </div>
+
+          <div class="card-body">
+            <h6 class="heading-small text-muted mb-4">User information</h6>
+
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group focused">
+                    <label class="form-control-label" for="username">Username</label>
+                    <input type="text" id="username" class="form-control @error('username') is-invalid @enderror"
+                      name="username" placeholder="Username" value="{{ old('username', $user->username) }}">
+
+                    @error('username')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group focused">
+                    <label class="form-control-label" for="name">Name</label>
+                    <input type="text" id="name" class="form-control @error('name') is-invalid @enderror"
+                      name="name" placeholder="Name" value="{{ old('name', $user->name) }}">
+
+                    @error('name')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="email">Email address</label>
+                    <input type="email" id="email" class="form-control @error('email') is-invalid @enderror"
+                      name="email" placeholder="example@example.com" value="{{ old('email', $user->email) }}">
+
+                    @error('email')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group focused">
+                    <label class="form-control-label" for="new_password">New password</label>
+                    <input type="password" id="new_password"
+                      class="form-control @error('new_password') is-invalid @enderror" name="new_password"
+                      placeholder="New password">
+
+                    @error('new_password')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group focused">
+                    <label class="form-control-label" for="confirm_password">Confirm password</label>
+                    <input type="password" id="confirm_password"
+                      class="form-control @error('new_password_confirmation') is-invalid @enderror"
+                      name="new_password_confirmation" placeholder="Confirm password">
+                    @error('new_password_confirmation')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Button -->
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col text-center">
+                  <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </form>
+@endsection
+
+@section('custom-script')
+  <script>
+    const profileImagePreview = document.querySelector('#profile-image-preview');
+    const profileImageInput = document.querySelector('#profile-image-input');
+
+    profileImageInput.addEventListener('change', () => {
+      const oFReader = new FileReader();
+      oFReader.readAsDataURL(profileImageInput.files[0]);
+
+      oFReader.addEventListener('load', (e) => {
+        profileImagePreview.src = e.target.result;
+      })
+
+    });
+  </script>
+@endsection
