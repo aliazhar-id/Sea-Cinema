@@ -32,14 +32,17 @@ This website was built using the Laravel framework, which is a popular PHP frame
 2. Install Composer dependencies `composer install`
 3. Install npm dependencies `npm install`
 4. Create a copy of your .env file `cp .env.example .env`
-5. Once you have the API key, you can add it to your Laravel application's .env file. Open the .env file and find the following line: `MOVIE_DB_API_KEY=`
-6. Replace the empty value with your API key. For example, if your API key is `1234567890abcdef`, you would change the line to: `MOVIE_DB_API_KEY=1234567890abcdef`
-7. Generate an app encryption key `php artisan key:generate`
+5. adjust your database in `DB_DATABASE`
+6. Run migration and update database `php artisan migrate`
+7. Once you have the API key, you can add it to your Laravel application's .env file. Open the .env file and find the following line: `MOVIE_DB_API_KEY=`
+8. Replace the empty value with your API key. For example, if your API key is `1234567890abcdef`, you would change the line to: `MOVIE_DB_API_KEY=1234567890abcdef`
+9. Generate an app encryption key `php artisan key:generate`
 
 ## Executing program
 
-1. Run Laravel server `php artisan serve`
-2. Run Tailwind CSS `npm run dev`
+1. It requires 2 terminals to run it
+2. Run Laravel server `php artisan serve`
+3. Run Tailwind CSS `npm run dev`
 
 ## About Laravel
 
