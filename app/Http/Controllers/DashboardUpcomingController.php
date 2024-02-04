@@ -92,9 +92,6 @@ class DashboardUpcomingController extends Controller
       'rating' => $movieData->vote_average * 10
     ]);
 
-    return view('dashboard.main.schedule', [
-      'title' => 'Schedule',
-      'movies' => Movies::latest()->get(),
-    ]);
+    return redirect()->route('dashboard.upcoming.index');
   }
 }

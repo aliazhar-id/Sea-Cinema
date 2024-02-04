@@ -15,6 +15,7 @@ return new class extends Migration
             $table->ulid('id_schedule');
             $table->string('id_movie');
             $table->datetime('time');
+            $table->integer('price');
             $table->foreign('id_movie')->references('id_movie')->on('movies')->onDelete('cascade');
             $table->timestamps();
         });

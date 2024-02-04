@@ -63,25 +63,28 @@
     <a href="{{ route('dashboard.schedule.create') }}" class="btn btn-primary mb-3 mx-">Create new Schedule</a>
   </div>
 
-  @if ($movies->count())
+  @if ($schedules->count())
     <div class="table-responsive col-lg-12 mt-4">
       <table class="table table-striped table-sm" id="dataTable">
         <thead>
           <tr>
             <th scope="col">No.</th>
+            <th scope="col">Id</th>
             <th scope="col">Title</th>
+            <th scope="col">Date</th>
             <th scope="col">Price</th>
-            <th scope="col">Rating</th>
+            
             <th scope="col" data-orderable="false">Action</th>
           </tr>
         </thead>
         <tbody>
-          @foreach ($movies as $movie)
+          @foreach ($schedules as $sch)
             <tr>
               <td>{{ $loop->iteration }}</td>
-              <td>{{ $movie->title }}</td>
-              <td>{{ $movie->price }}</td>
-              <td>{{ $movie->rating }}</td>
+              <td>{{ $sch->id_movie }}</td>
+              <td>{{ $sch->movie->title }}</td>
+              <td>{{ $sch->time }}</td>
+              <td>{{ $sch->price }}</td>
               <td>
                 <a href="" class="badge bg-primary"><span
                 {{-- <a href="{{ route('posts.show', $movie->slug) }}" class="badge bg-primary"><span --}}
@@ -92,7 +95,7 @@
                     data-feather="edit"></span>
                 </a>
                 <button class="badge bg-danger border-0 text-info" data-toggle="modal" data-target="#deleteMovieModal"
-                  data-movie="{{ $movie->slug }}"><span data-feather="x-circle"></span></button>
+                  data-movie="{{ $sch->id_movie }}"><span data-feather="x-circle"></span></button>
               </td>
             </tr>
           @endforeach

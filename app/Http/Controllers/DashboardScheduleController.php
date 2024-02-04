@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movies;
+use App\Models\Schedules;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -12,7 +13,7 @@ class DashboardScheduleController extends Controller
   {
     return view('dashboard.main.schedule', [
       'title' => 'Schedule',
-      'movies' => Movies::latest()->get()
+      'schedules' => Schedules::orderBy('id_movie')->orderBy('created_at')->get()
     ]);
   }
 
@@ -20,14 +21,23 @@ class DashboardScheduleController extends Controller
   {
     return view('dashboard.main.schedule-create', [
       'title' => 'Create Schedule',
+      'movies' => Movies::latest()->get()
     ]);
   }
 
-  public function store()
+  public function store(Request $request)
   {
-    // return view('dashboard.main.schedule', [
-    //   'title' => 'Schedule',
-    //   'movies' => Movies::latest()->get()
-    // ]);
+    
+    $id_movie = $request['id_movie'];
+    $time = $request['time'];
+    $price = $request['price'];
+
+    Schedules::create([
+      'id_movie' => $id_movie,
+      'time' => $time,
+      'price' => $price
+    ]);
+
+    return back();
   }
 }

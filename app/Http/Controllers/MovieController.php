@@ -159,8 +159,12 @@ class MovieController extends Controller
   }
 
   public function schedule() {
+    $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
+
     return view('movies.schedule', [
-      'title' => 'Shcedule'
+      'title' => 'Shcedule',
+      'movies' => Movies::has('schedules')->get(),
+      'imageBaseURL' => $imageBaseURL
     ]);
   }
 
