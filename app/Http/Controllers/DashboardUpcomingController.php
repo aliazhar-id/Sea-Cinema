@@ -25,10 +25,10 @@ class DashboardUpcomingController extends Controller
 
     $searchKeyword = request('search');
 
-    $movies = ['Not Found'];
+    $movies = [];
+    $status = true;
 
     if ($searchKeyword) {
-
       // Do request api to get movie by filter
       $movieResponse = Http::get("{$baseURL}/search/movie", [
         'query' => $searchKeyword,
@@ -38,28 +38,63 @@ class DashboardUpcomingController extends Controller
 
       if ($movieResponse->successful()) {
         $result = $movieResponse->object()->results;
+        $movies = $result;
 
-        if (isset($result)) {
-          $movies = $result;
-        } else {
-          $movies = $result;
-        }; 
-
+        if (!$movies) {
+          $status = false;
+        }
       }
     }
 
     return view('dashboard.main.upcoming-create', [
       'title' => 'Create Upcoming',
       'movies' => $movies,
+      'status' => $status,
       'imageBaseURL' => $imageBaseURL
     ]);
   }
 
-  public function store()
+  public function store(Request $request)
   {
-    // return view('dashboard.main.schedule', [
-    //   'title' => 'Schedule',
-    //   'movies' => Movies::latest()->get()
-    // ]);
+    $baseURL = env('MOVIE_DB_BASE_URL');
+    $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
+    $apiKey = env('MOVIE_DB_API_KEY');
+
+    $movieData = null;
+    $movieId = $request['id-movie'];
+    $trailerID = null;
+
+    $movieDetailResponse = Http::get("{$baseURL}/movie/{$movieId}", [
+      'api_key' => $apiKey,
+      'append_to_response' => 'videos'
+    ]);
+
+    if ($movieDetailResponse->successful()) {
+      $movieData = $movieDetailResponse->object();
+    }
+
+    
+
+    if (isset($movieData->videos->results)) {
+      foreach ($movieData->videos->results as $movie) {
+        if (strtolower($movie->type) == 'trailer') {
+          $trailerID = $movie->key;
+        }
+      }
+    }
+
+    Movies::create([
+      'id_movie' => $movieId,
+      'image_path' => $movieData->poster_path,
+      'trailer_id' => $trailerID,
+      'title' => $movieData->title,
+      'release_date' => $movieData->release_date,
+      'rating' => $movieData->vote_average * 10
+    ]);
+
+    return view('dashboard.main.schedule', [
+      'title' => 'Schedule',
+      'movies' => Movies::latest()->get(),
+    ]);
   }
 }

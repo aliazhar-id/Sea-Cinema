@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('image_path');
             $table->string('trailer_id');
             $table->string('title');
-            $table->integer('rating');
-            $table->integer('price');
+            $table->float('rating');
+            $table->date('release_date');
+            $table->integer('price')->nullable();
             $table->timestamps();
         });
     }

@@ -64,7 +64,7 @@
 
 
             <div class="pl-lg-4 mt-3 row">
-              @if ($movies and $movies[0])
+              @if ($movies)
                 <div class="table-responsive col-lg-12 mt-4">
                   <table class="table table-striped table-sm" id="dataTable">
                     <thead>
@@ -84,46 +84,40 @@
                           <td>{{ $movie->title }}</td>
                           <td>{{ $movie->popularity * 10 }}</td>
                           <td>
-                            <a href="" class="badge bg-primary"><span {{-- <a href="{{ route('posts.show', $movie->slug) }}" class="badge bg-primary"><span --}}
-                                data-feather="eye"></span>
-                            </a>
-                            <a href="" class="badge bg-warning"><span {{-- <a href="{{ route('posts.edit', $movie->slug) }}" class="badge bg-warning"><span --}}
-                                data-feather="edit"></span>
-                            </a>
-                            <button class="badge bg-danger border-0 text-info" data-toggle="modal"
-                              data-target="#deleteUpcomingModal" data-movie="{{ $movie->id }}"><span
-                                data-feather="x-circle"></span></button>
+                            <button class="badge bg-success border-0 text-white" data-toggle="modal"
+                              data-target="#addUpcomingModal" data-movie="{{ $movie->id }}"><span
+                                data-feather="plus"></span> Create</button>
                           </td>
                         </tr>
                       @endforeach
                     </tbody>
                   </table>
                 </div>
-              @elseif($movies[0] )
-                <p class="text-center mt-5">No Movies Schedule Found :(</p>
+              @elseif(!$status)
+                <p class="text-center mt-5 mx-auto">No Movies Found :(</p>
               @endif
 
             </div>
 
 
-            <!-- Delete Movie Upcoming Modal-->
-            <div class="modal fade" id="deleteUpcomingModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <!-- Add Movie Upcoming Modal-->
+            <div class="modal fade" id="addUpcomingModal" tabindex="-1" role="dialog" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Are you sure want to delete</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Are you sure want to add</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">×</span>
                     </button>
                   </div>
-                  <div class="modal-body">Select "DELETE" below if you are ready to delete this upcoming movie.</div>
+                  <div class="modal-body">Select "ADD" below if you are ready to add this upcoming movie.</div>
                   <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <form method="POST" id='deleteForm'>
-                      @method('DELETE')
+                    <form method="POST" id='deleteForm' action="{{ route('dashboard.upcoming.store') }}">
                       @csrf
-                      <button type="submit" class="btn btn-danger">
-                        <i class="far fa-trash-alt"></i> DELETE
+                      <input type="hidden" id="id-movie" name="id-movie">
+                      <button type="submit" class="btn btn-success">
+                        <i class="fas fa-plus"></i> ADD
                       </button>
                     </form>
                   </div>
@@ -143,12 +137,12 @@
 
 @section('custom-script')
   <script>
-    $('#deleteUpcomingModal').on('show.bs.modal', function(event) {
+    $('#addUpcomingModal').on('show.bs.modal', function(event) {
       const button = $(event.relatedTarget)
       const movie = button.data('movie');
       const modal = $(this);
 
-      modal.find('form').attr('action', `/${movie}`);
+      $('#id-movie').val(movie);
     })
   </script>
 

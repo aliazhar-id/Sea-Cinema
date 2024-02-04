@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Movies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -160,6 +161,16 @@ class MovieController extends Controller
   public function schedule() {
     return view('movies.schedule', [
       'title' => 'Shcedule'
+    ]);
+  }
+
+  public function upcoming() {
+    $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
+
+    return view('movies.upcoming', [
+      'title' => 'Upcoming',
+      'movies' => Movies::doesntHave('schedules')->get(),
+      'imageBaseURL' => $imageBaseURL
     ]);
   }
 }
