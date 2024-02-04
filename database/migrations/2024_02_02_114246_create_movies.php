@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('movies', function (Blueprint $table) {
             $table->string('id_movie')->primary();
             $table->string('image_path');
-            $table->string('trailer_id');
+            $table->string('trailer_id')->nullable();
             $table->string('title');
             $table->float('rating');
             $table->date('release_date');
