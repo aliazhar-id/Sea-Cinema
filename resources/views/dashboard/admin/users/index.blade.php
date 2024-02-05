@@ -69,6 +69,7 @@
             <th scope="col">Username</th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
+            <th scope="col">Role</th>
             <th scope="col" data-orderable="false">Action</th>
           </tr>
         </thead>
@@ -79,6 +80,7 @@
               <td>{{ $user->username }}</td>
               <td>{{ $user->name }}</td>
               <td>{{ $user->email }}</td>
+              <td>{{ $user->role }}</td>
               <td>
                 <a href="{{ route('dashboard.users.show', $user->username) }}" class="badge bg-primary"><span
                     data-feather="eye"></span>

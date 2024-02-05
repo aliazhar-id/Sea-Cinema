@@ -51,15 +51,23 @@
                 <div class="text-center">
                   <h5 class="font-weight-bold">{{ $user->name }}</h5>
                   <div class="col-lg-8 mx-auto">
-                    {{-- <div class="form-group">
-                      <label for="role" class="form-label">Role</label>
-                      <select id="role" class="form-control" name="role">
-                        <option value="member">Member</option>
-                        <option value="admin">Admin</option>
-                      </select>
-                    </div> --}}
+                    @can('superadmin')
+                      <div class="form-group">
+                        <label for="role" class="form-label">Role</label>
+                        <select id="role" class="form-control @error('role') is-invalid @enderror" name="role">
+                          <option value="member">Member</option>
+                          <option value="admin">Admin</option>
+                        </select>
+
+                        @error('role')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                      </div>
+                    @else
+                      <p>{{ ucfirst($user->role) }}</p>
+                    @endcan
+
                   </div>
-                  <p>{{ ucfirst($user->role) }}</p>
                 </div>
               </div>
             </div>

@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\DeletedUser;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
+use App\Enums\ServerStatus;
 
 class AdminUserController extends Controller
 {
@@ -16,13 +18,25 @@ class AdminUserController extends Controller
    */
   public function index()
   {
-    return view('dashboard.admin.users.index', [
-      'title' => 'Users',
-      'users' => User::whereNotIn('role', ['admin', 'superadmin'])
+    $users = null;
+
+    if (auth()->user()->role === 'superadmin') {
+      $users = User::where('role', '<>', 'superadmin')
         ->where('id_user', '!=', auth()->user()->id_user)
         // ->filter(request(['search']))
         ->latest()
-        ->get()
+        ->get();
+    } else {
+      $users = User::whereNotIn('role', ['admin', 'superadmin'])
+        ->where('id_user', '!=', auth()->user()->id_user)
+        // ->filter(request(['search']))
+        ->latest()
+        ->get();
+    }
+
+    return view('dashboard.admin.users.index', [
+      'title' => 'Users',
+      'users' => $users
     ]);
   }
 
@@ -78,7 +92,7 @@ class AdminUserController extends Controller
    */
   public function show(User $user)
   {
-    if ($user->role !== 'member') {
+    if ($user->role !== 'member' && auth()->user()->role !== 'superadmin') {
       abort(403);
     }
 
@@ -97,7 +111,7 @@ class AdminUserController extends Controller
       return redirect(route('profile.index'));
     }
 
-    if ($user->role !== 'member') {
+    if ($user->role !== 'member' && auth()->user()->role !== 'superadmin') {
       abort(403);
     }
 
@@ -112,7 +126,7 @@ class AdminUserController extends Controller
    */
   public function update(Request $request, User $user)
   {
-    if ($user->role !== 'member') {
+    if ($user->role !== 'member' && auth()->user()->role !== 'superadmin') {
       abort(403);
     }
 
@@ -145,6 +159,11 @@ class AdminUserController extends Controller
 
     if ($request->phone != $user->phone) {
       $rules['phone'] = 'required|numeric|digits_between:10,15|unique:users,phone';
+      $isProfileUpdated = true;
+    }
+
+    if ($request->role != $user->role) {
+      $rules['role'] = 'required|in:admin,member';
       $isProfileUpdated = true;
     }
 
