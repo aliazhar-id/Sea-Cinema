@@ -86,16 +86,20 @@
                             <div class="font-medium ">{{ auth()->user()->name }}</div>
                             <div class="truncate">{{ auth()->user()->email }}</div>
                         </div>
+
                         <ul class="py-2 text-sm text-gray-700"
-                            aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
-                            <li>
-                                <a href="{{ route('dashboard.index') }}"
-                                    class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
-                            </li>
+                        aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
+                        @can('admin')
+                          <li>
+                              <a href="{{ route('dashboard.index') }}"
+                                  class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
+                          </li>
+                        @endcan
                             <li>
                                 <a href="#" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
                             </li>
-                        </ul>
+                          </ul>
+
                         <div class="py-2">
                             <a href="{{ route('auth.logout') }}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-red-500">
