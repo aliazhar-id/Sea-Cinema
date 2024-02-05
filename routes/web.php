@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardScheduleController;
 use App\Http\Controllers\DashboardUpcomingController;
@@ -43,6 +44,8 @@ Route::name('dashboard.')->group(function () {
   Route::get('dashboard/schedule/create', [DashboardScheduleController::class, 'create'])->name('schedule.create')->middleware('admin');
   Route::post('dashboard/schedule', [DashboardScheduleController::class, 'store'])->name('schedule.store')->middleware('admin');
 });
+
 Route::resource('dashboard/profile', UserController::class)->parameters(['profile' => 'user'])->only(['index', 'update'])->middleware('admin');
+Route::resource('dashboard/users', AdminUserController::class, ['as' => 'dashboard'])->middleware('admin');
 
 // Route::resource('/dashboard/posts', UserPostController::class)->middleware('auth');

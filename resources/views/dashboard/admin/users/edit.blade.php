@@ -1,26 +1,5 @@
 @extends('dashboard.layouts.main')
 
-@php
-  $postCount = $posts->count();
-  $totalClick = $posts->sum('click');
-  $postRate = $totalClick ? min(100, floor(($totalClick / $postCount) * 0.0485 * 100)) : 0;
-  $grade = 'No';
-
-  if ($postCount) {
-      if ($postRate >= 80) {
-          $grade = 'A';
-      } elseif ($postRate >= 60) {
-          $grade = 'B';
-      } elseif ($postRate >= 40) {
-          $grade = 'C';
-      } elseif ($postRate >= 10) {
-          $grade = 'D';
-      } else {
-          $grade = 'E';
-      }
-  }
-@endphp
-
 @section('content')
   <h1 class="h3 mb-4 text-gray-800">Edit User</h1>
 
@@ -40,7 +19,7 @@
     </div>
   @endif
 
-  <form action="{{ route('admin.users.update', $user->username) }}" method="POST" autocomplete="off"
+  <form action="{{ route('dashboard.users.update', $user->username) }}" method="POST" autocomplete="off"
     enctype="multipart/form-data">
     @csrf
     @method('PATCH')
@@ -81,27 +60,6 @@
                     </div> --}}
                   </div>
                   <p>{{ ucfirst($user->role) }}</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="row text-center">
-              <div class="col-md-4">
-                <div class="card-profile-stats">
-                  <span class="heading">{{ $postCount }}</span>
-                  <span class="description">Post</span>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="card-profile-stats">
-                  <span class="heading">{{ $totalClick }}</span>
-                  <span class="description">Click</span>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="card-profile-stats">
-                  <span class="heading">{{ $grade }}</span>
-                  <span class="description">Grade</span>
                 </div>
               </div>
             </div>

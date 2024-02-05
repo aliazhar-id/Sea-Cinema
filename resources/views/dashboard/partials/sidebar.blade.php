@@ -61,9 +61,8 @@
     </div>
 
     <!-- Nav Item - Users -->
-    <li class="nav-item {{ Request::is('dashboard/admin/users*') ? 'active' : '' }}">
-      <a class="nav-link pb-2" href="">
-      {{-- <a class="nav-link pb-2" href="{{ route('admin.users.index') }}"> --}}
+    <li class="nav-item {{ Request::routeIs('dashboard.users*') ? 'active' : '' }}">
+      <a class="nav-link pb-2" href="{{ route('dashboard.users.index') }}">
         <i class="fas fa-user"></i>
         <span>Users</span></a>
     </li>
