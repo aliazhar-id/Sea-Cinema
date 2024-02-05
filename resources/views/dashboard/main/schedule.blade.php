@@ -82,8 +82,8 @@
             <tr>
               <td>{{ $loop->iteration }}</td>
               <td>{{ $sch->id_movie }}</td>
-              <td>{{ $sch->movie->title }}</td>
-              <td>{{ $sch->time }}</td>
+              <td>{{ $sch->title }}</td>
+              {{-- <td>{{ $sch->detail->datetime }}</td> --}}
               <td>{{ $sch->price }}</td>
               <td>
                 <a href="" class="badge bg-primary"><span

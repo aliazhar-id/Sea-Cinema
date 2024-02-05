@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Movies;
+use App\Models\Schedules;
+use App\Models\Upcoming;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -163,7 +164,7 @@ class MovieController extends Controller
 
     return view('movies.schedule', [
       'title' => 'Shcedule',
-      'movies' => Movies::has('schedules')->get(),
+      'movies' => Schedules::latest()->get(),
       'imageBaseURL' => $imageBaseURL
     ]);
   }
@@ -173,7 +174,7 @@ class MovieController extends Controller
 
     return view('movies.upcoming', [
       'title' => 'Upcoming',
-      'movies' => Movies::doesntHave('schedules')->get(),
+      'movies' => Upcoming::latest()->get(),
       'imageBaseURL' => $imageBaseURL
     ]);
   }

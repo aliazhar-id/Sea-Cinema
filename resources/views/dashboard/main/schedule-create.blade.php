@@ -23,45 +23,15 @@
 
         <div class="card-body">
 
-            <form action="{{ route('dashboard.schedule.store') }}" method="POST" autocomplete="off">
-            @csrf
+          <form action="" method="GET" autocomplete="off">
             <div class="pl-lg-4">
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label for="category" class="form-label">Movie<span class="small text-danger">*</span></label>
-                    <select class="form-control" name="id_movie">
-                      @foreach ($movies as $movie)
-                        <option value="{{ $movie->id_movie }}">{{ $movie->title }}</option>
-                      @endforeach
-                    </select>
-                  </div>
-                </div>
 
-                <div class="col-lg-3">
-                  <label for="datepicker" class="form-label">Time<span class="small text-danger">*</span></label>
-                  <input class="w-full" id="datepicker" name="time" width="234"/>
-                  <script>
-                    $('#datepicker').datetimepicker({
-                      uiLibrary: 'bootstrap4',
-                      footer: true,
-                      format: 'yyyy-mm-dd HH:MM'
-                    });
-                  </script>
-                </div>
-
-                <div class="col-lg-3">
-                  <div class="form-group focused w-full">
-                    <label class="form-control-label" for="title">Price</label>
-                    <input type="number" id="title" class="form-control @error('price') is-invalid @enderror"
-                      name="price" placeholder="ex: How to create blog with Laravel 10" value="{{ old('price') }}">
-
-                    @error('price')
-                      <div class="invalid-feedback">
-                        {{ $message }}
-                      </div>
-                    @enderror
-                  </div>
+              <div class="col-lg-8 mx-auto">
+                <div class="form-group focused">
+                  <label class="form-control-label" for="search">Search movie<span
+                      class="small text-danger">*</span></label>
+                  <input type="text" id="search" class="form-control" name="search" placeholder="Movie title. . ."
+                    value="{{ request('search') }}" required>
                 </div>
               </div>
             </div>
@@ -70,11 +40,218 @@
             <div class="pl-lg-4">
               <div class="row">
                 <div class="col text-center">
-                  <button type="submit" class="btn btn-primary">Create Schedule</button>
+                  <button type="submit" class="btn btn-primary">Search</button>
                 </div>
               </div>
             </div>
           </form>
+
+          <div class="pl-lg-4 mt-3 row">
+            @if ($movies)
+              @foreach ($movies as $movie)
+                @php
+                  $posterImagePath = isset($movie->poster_path) ? "{$imageBaseURL}/original{$movie->poster_path}" : 'https://source.unsplash.com/film/200x200';
+                @endphp
+
+                <div class="card m-1" style="width: 18rem;">
+                  <img class="card-img-top" src="{{ $posterImagePath }}" height="200" width="200"
+                    alt="Card image cap">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ $movie->title }}</h5>
+                    <p class="card-text text-truncate">{{ isset($movie->tagline) ? $movie->tagline : $movie->overview }}
+                    </p>
+                    <button class="btn bg-primary text-white" data-toggle="modal" data-target="#addScheduleModal"
+                      data-movie="{{ $movie->id }}" data-title="{{ $movie->title }}">
+                      Add Schedule
+                    </button>
+                  </div>
+                </div>
+              @endforeach
+
+
+
+
+              {{-- <div class="table-responsive col-lg-12 mt-4">
+                <table class="table table-striped table-sm" id="dataTable">
+                  <thead>
+                    <tr>
+                      <th scope="col">No.</th>
+                      <th scope="col">Id</th>
+                      <th scope="col">Title</th>
+                      <th scope="col">Popularity</th>
+                      <th scope="col" data-orderable="false">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($movies as $movie)
+                      <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $movie->id }}</td>
+                        <td>{{ $movie->title }}</td>
+                        <td>{{ $movie->popularity * 10 }}</td>
+                        <td>
+                          <button class="badge bg-primary border-0 text-white" data-toggle="modal"
+                            data-target="#showDetailModal" data-movie="{{ $movie->id }}"><span
+                              data-feather="eye"></span></button>
+                          <button class="badge bg-success border-0 text-white" data-toggle="modal"
+                            data-target="#addUpcomingModal" data-movie="{{ $movie->id }}"><span
+                              data-feather="plus"></span></button>
+                        </td>
+                      </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              </div> --}}
+            @elseif(!$status)
+              <p class="text-center mt-5 mx-auto">No Movies Found :(</p>
+            @endif
+
+          </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="addScheduleModal" tabindex="-1" aria-labelledby="addScheduleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="addScheduleModalLabel">Movie Detail</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+
+                  <form action="{{ route('dashboard.schedule.store') }}" method="POST" autocomplete="off">
+                    @csrf
+                    <input type="hidden" id="id-movie" name="id-movie">
+
+                    <div class="row w-full">
+                      <div class="col-lg-6">
+                        <label for="datepicker" class="form-label">Time</label>
+                        <input class="w-full" id="datepicker" name="time" width="234" placeholder="Pick date" />
+                        <script>
+                          $('#datepicker').datetimepicker({
+                            uiLibrary: 'bootstrap4',
+                            footer: true,
+                            modal: true,
+                            format: 'yyyy-mm-dd HH:MM'
+                          });
+                        </script>
+                      </div>
+
+                      <div class="col-lg-6">
+                        <div class="form-group focused w-full">
+                          <label class="form-control-label" for="title">Price</label>
+                          <input type="number" id="title" class="form-control @error('price') is-invalid @enderror"
+                            name="price" placeholder="Price" value="{{ old('price') }}">
+
+                          @error('price')
+                            <div class="invalid-feedback">
+                              {{ $message }}
+                            </div>
+                          @enderror
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row w-full">
+                      <div class="col-lg-6">
+                        <label for="datepicker" class="form-label">Time</label>
+                        <input class="w-full" id="datepicker" name="time" width="234" placeholder="Pick date" />
+                        <script>
+                          $('#datepicker').datetimepicker({
+                            uiLibrary: 'bootstrap4',
+                            footer: true,
+                            modal: true,
+                            format: 'yyyy-mm-dd HH:MM'
+                          });
+                        </script>
+                      </div>
+
+                      <div class="col-lg-6">
+                        <div class="form-group focused w-full">
+                          <label class="form-control-label" for="title">Price</label>
+                          <input type="number" id="title" class="form-control @error('price') is-invalid @enderror"
+                            name="price" placeholder="Price" value="{{ old('price') }}">
+
+                          @error('price')
+                            <div class="invalid-feedback">
+                              {{ $message }}
+                            </div>
+                          @enderror
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row w-full">
+                      <div class="col-lg-6">
+                        <label for="datepicker" class="form-label">Time</label>
+                        <input class="w-full" id="datepicker" name="time" width="234" placeholder="Pick date" />
+                        <script>
+                          $('#datepicker').datetimepicker({
+                            uiLibrary: 'bootstrap4',
+                            footer: true,
+                            modal: true,
+                            format: 'yyyy-mm-dd HH:MM'
+                          });
+                        </script>
+                      </div>
+
+                      <div class="col-lg-6">
+                        <div class="form-group focused w-full">
+                          <label class="form-control-label" for="title">Price</label>
+                          <input type="number" id="title" class="form-control @error('price') is-invalid @enderror"
+                            name="price" placeholder="Price" value="{{ old('price') }}">
+
+                          @error('price')
+                            <div class="invalid-feedback">
+                              {{ $message }}
+                            </div>
+                          @enderror
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row w-full">
+                      <div class="col-lg-6">
+                        <label for="datepicker" class="form-label">Time</label>
+                        <input class="w-full" id="datepicker" name="time" width="234" placeholder="Pick date" />
+                        <script>
+                          $('#datepicker').datetimepicker({
+                            uiLibrary: 'bootstrap4',
+                            footer: true,
+                            modal: true,
+                            format: 'yyyy-mm-dd HH:MM'
+                          });
+                        </script>
+                      </div>
+
+                      <div class="col-lg-6">
+                        <div class="form-group focused w-full">
+                          <label class="form-control-label" for="title">Price</label>
+                          <input type="number" id="title" class="form-control @error('price') is-invalid @enderror"
+                            name="price" placeholder="Price" value="{{ old('price') }}">
+
+                          @error('price')
+                            <div class="invalid-feedback">
+                              {{ $message }}
+                            </div>
+                          @enderror
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="pl-lg-4">
+                      <div class="row">
+                        <div class="col text-center">
+                          <button type="submit" class="btn btn-primary">Create Schedule</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </div>
 
         </div>
 
@@ -85,4 +262,15 @@
 @endsection
 
 @section('custom-script')
+  <script>
+    $('#addScheduleModal').on('show.bs.modal', function(event) {
+      const button = $(event.relatedTarget)
+      const id = button.data('movie');
+      const title = button.data('title');
+      // const modal = $(this);
+
+      $('#id-movie').val(id);
+      $('#addScheduleModalLabel').html(title);
+    })
+  </script>
 @endsection

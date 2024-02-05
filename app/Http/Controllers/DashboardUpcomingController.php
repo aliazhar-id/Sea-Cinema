@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Movies;
+use App\Models\Upcoming;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -12,13 +13,12 @@ class DashboardUpcomingController extends Controller
   {
     return view('dashboard.main.upcoming', [
       'title' => 'Upcomming',
-      'movies' => Movies::doesntHave('schedules')->get()
+      'movies' => Upcoming::latest()->get()
     ]);
   }
 
   public function create()
   {
-
     $baseURL = env('MOVIE_DB_BASE_URL');
     $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
     $apiKey = env('MOVIE_DB_API_KEY');
@@ -73,8 +73,6 @@ class DashboardUpcomingController extends Controller
       $movieData = $movieDetailResponse->object();
     }
 
-    
-
     if (isset($movieData->videos->results)) {
       foreach ($movieData->videos->results as $movie) {
         if (strtolower($movie->type) == 'trailer') {
@@ -83,9 +81,9 @@ class DashboardUpcomingController extends Controller
       }
     }
 
-    Movies::create([
+    Upcoming::create([
       'id_movie' => $movieId,
-      'image_path' => $movieData->poster_path,
+      'poster_path' => $movieData->poster_path,
       'trailer_id' => $trailerID,
       'title' => $movieData->title,
       'release_date' => $movieData->release_date,

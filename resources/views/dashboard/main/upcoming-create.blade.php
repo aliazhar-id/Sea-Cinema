@@ -84,9 +84,12 @@
                           <td>{{ $movie->title }}</td>
                           <td>{{ $movie->popularity * 10 }}</td>
                           <td>
+                            <button class="badge bg-primary border-0 text-white" data-toggle="modal"
+                              data-target="#showDetailModal" data-movie="{{ $movie->id }}"><span
+                                data-feather="eye"></span></button>
                             <button class="badge bg-success border-0 text-white" data-toggle="modal"
                               data-target="#addUpcomingModal" data-movie="{{ $movie->id }}"><span
-                                data-feather="plus"></span> Create</button>
+                                data-feather="plus"></span></button>
                           </td>
                         </tr>
                       @endforeach
@@ -97,6 +100,27 @@
                 <p class="text-center mt-5 mx-auto">No Movies Found :(</p>
               @endif
 
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="showDetailModal" tabindex="-1" aria-labelledby="showDetailModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="showDetailModalLabel">Movie Detail</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <img class="img-fluid" src="https://image.tmdb.org/t/p/w500//hek3koDUyRQk7FIhPXsa6mT2Zc3.jpg" alt="">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
             </div>
 
 
@@ -166,5 +190,9 @@
         entriesCount.toggle(api.page.info().pages > 1);
       }
     });
+
+    $('#myModal').on('hidden.bs.modal', function(event) {
+      // do something...
+    })
   </script>
 @endsection

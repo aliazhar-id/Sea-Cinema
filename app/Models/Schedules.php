@@ -2,21 +2,18 @@
 
 namespace App\Models;
 
-use App\Models\Movies;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Schedules extends Model
 {
-  use HasFactory, HasUlids;
+  use HasFactory;
 
   protected $guarded = [];
-  protected $primaryKey = 'id_schedule';
+  protected $primaryKey = 'id_movie';
 
-  public function movie()
+  public function detail()
   {
-    return $this->belongsTo(Movies::class, 'id_movie');
+    return $this->hasMany(DetailSchedule::class, 'id_schedule');
   }
 }
