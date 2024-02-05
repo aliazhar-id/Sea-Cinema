@@ -108,7 +108,8 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="email">Email address</label>
+                    <label class="form-control-label" for="email">Email address<span
+                        class="small text-danger">*</span></label>
                     <input type="email" id="email" class="form-control @error('email') is-invalid @enderror"
                       name="email" placeholder="example@example.com" value="{{ old('email', $user->email) }}">
 
@@ -116,6 +117,46 @@
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                   </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="email">Date of Birth</label>
+                    <input type="date" id="dob" class="form-control @error('dob') is-invalid @enderror"
+                      name="dob" placeholder="example@example.com" value="{{ old('dob', $user->dob) }}">
+
+                    @error('dob')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group focused">
+                    <label class="form-control-label" for="phone">Phone</label>
+                    <input type="text" id="phone" class="form-control @error('phone') is-invalid @enderror"
+                      name="phone" placeholder="Phone Number" value="{{ old('phone', $user->phone) }}">
+
+                    @error('phone')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" class="form-control @error('address') is-invalid @enderror" rows="3">{{ old('address', $user->address) }}</textarea>
+
+                    @error('address')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </div>
+
                 </div>
               </div>
 
