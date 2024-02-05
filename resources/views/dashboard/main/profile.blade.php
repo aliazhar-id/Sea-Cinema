@@ -98,7 +98,7 @@
               </div>
 
               <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="email">Email address<span
                         class="small text-danger">*</span></label>
@@ -109,6 +109,32 @@
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                   </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group focused">
+                    <label class="form-control-label" for="phone">Phone</label>
+                    <input type="text" id="phone" class="form-control @error('phone') is-invalid @enderror"
+                      name="phone" placeholder="Phone Number" value="{{ old('phone', auth()->user()->phone) }}">
+
+                    @error('phone')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" class="form-control @error('address') is-invalid @enderror" rows="3">{{ old('address', auth()->user()->address) }}</textarea>
+
+                    @error('address')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </div>
+
                 </div>
               </div>
 
