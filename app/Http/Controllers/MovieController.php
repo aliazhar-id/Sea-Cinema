@@ -15,7 +15,6 @@ class MovieController extends Controller
     $MAX_TREND = 7;
     $trending = [];
     $topMovies = [];
-    $topTvShows = [];
 
     $baseURL = env('MOVIE_DB_BASE_URL');
     $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
@@ -43,18 +42,6 @@ class MovieController extends Controller
       if (isset($result)) $topMovies = array_slice($result, 0, 10);
     }
 
-    // Do request api to get top tv shows [10]
-    $topTvShowResponse = Http::get("{$baseURL}/tv/top_rated", [
-      'api_key' => $apiKey,
-    ]);
-
-    if ($topTvShowResponse->successful()) {
-      $result = $topTvShowResponse->object()->results;
-
-      if (isset($result)) $topTvShows = array_slice($result, 0, 10);
-    }
-
-
     return view('movies.home', [
       'title' => 'Home',
       'baseURL' => $baseURL,
@@ -62,7 +49,6 @@ class MovieController extends Controller
       'apiKey' => $apiKey,
       'trending' => $trending,
       'topMovies' => $topMovies,
-      'topTvShows' => $topTvShows
     ]);
   }
 
