@@ -163,7 +163,7 @@ class MovieController extends Controller
     $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
 
     return view('movies.schedule', [
-      'title' => 'Shcedule',
+      'title' => 'schedule',
       'movies' => Schedules::latest()->get(),
       'imageBaseURL' => $imageBaseURL
     ]);

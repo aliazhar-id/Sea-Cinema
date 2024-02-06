@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detail_schedules', function (Blueprint $table) {
-            $table->id('id_schedule');
+        Schema::create('movies', function (Blueprint $table) {
+            $table->id();
             $table->string('id_movie');
-            $table->datetime('datetime');
-            $table->foreign('id_movie')->references('id_movie')->on('schedules')->onDelete('cascade');
+            $table->string('poster_path');
+            $table->string('trailer_id')->nullable();
+            $table->string('title');
+            $table->float('rating');
+            $table->date('release_date');
             $table->timestamps();
         });
     }
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('detail_schedules');
+        Schema::dropIfExists('movie');
     }
 };

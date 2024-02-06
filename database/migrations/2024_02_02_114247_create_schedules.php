@@ -6,19 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-  /**
-   * Run the migrations.
-   */
-  public function up(): void
+    public function up(): void
   {
     Schema::create('schedules', function (Blueprint $table) {
-      $table->string('id_movie')->primary();
-      $table->string('poster_path')->nullable();
-      $table->string('trailer_id')->nullable();
-      $table->string('title');
-      $table->float('rating');
-      $table->date('release_date')->nullable();
+      $table->id();
+      $table->string('id_schedule');
+      $table->foreignId('movie_id')->constrained();
+      $table->string('id_movie');
       $table->integer('price')->nullable();
+      $table->date('date');
+      $table->string('startat');
+      $table->json('seats');
+      $table->string('studio');
       $table->timestamps();
     });
   }

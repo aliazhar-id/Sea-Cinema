@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('upcomings', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('id_movie');
-            $table->string('poster_path');
-            $table->string('trailer_id')->nullable();
-            $table->string('title');
-            $table->float('rating');
-            $table->date('release_date');
+            $table->foreignId('schedules_id')->constrained();
             $table->timestamps();
+            $table->string("transaction_code");
+            $table->integer("total_price");
+            $table->string("booked_seat");
+            $table->enum('status', ['success', 'pending', 'failed']);
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('upcomings');
+        Schema::dropIfExists('transactions');
     }
 };
