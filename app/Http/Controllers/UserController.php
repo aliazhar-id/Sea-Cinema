@@ -77,6 +77,16 @@ class UserController extends Controller
       $isProfileUpdated = true;
     }
 
+    if ($request->phone != $user->phone) {
+      $rules['phone'] = 'required|numeric|digits_between:10,15|unique:users,phone';
+      $isProfileUpdated = true;
+    }
+
+    if ($request->address != $user->address) {
+      $rules['address'] = 'required|min:8|max:255';
+      $isProfileUpdated = true;
+    }
+
     if ($request->email != $user->email) {
       $rules['email'] = 'required|email:dns|unique:users|max:30';
       $isProfileUpdated = true;

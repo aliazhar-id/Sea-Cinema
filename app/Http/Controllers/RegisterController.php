@@ -22,7 +22,7 @@ class RegisterController extends Controller
       'username' => 'required|alpha_dash|unique:users|min:3|max:15',
       'email' => 'required|email:dns|unique:users|max:30',
       'dob' => 'required|date_format:Y-m-d',
-      'address' => 'required|max:255',
+      'address' => 'required|min:8|max:255',
       'phone' => 'required|numeric|digits_between:10,15|unique:users,phone',
       'password' => 'required|min:6|max:255|confirmed',
       'password_confirmation' => 'required|max:50',

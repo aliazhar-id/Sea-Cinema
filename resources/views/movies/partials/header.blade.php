@@ -69,7 +69,7 @@
                         type="button">
                         <span class="sr-only">Open user menu</span>
                         <img class="w-8 h-8 me-2 rounded-full"
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                            src="{{ auth()->user()->image ? asset('storage/' . auth()->user()->image) : '/assets/guest.jpeg' }}"
                             alt="user photo">
                         {{ auth()->user()->username }}
                         <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -86,16 +86,20 @@
                             <div class="font-medium ">{{ auth()->user()->name }}</div>
                             <div class="truncate">{{ auth()->user()->email }}</div>
                         </div>
+
                         <ul class="py-2 text-sm text-gray-700"
-                            aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
-                            <li>
-                                <a href="{{ route('dashboard.index') }}"
-                                    class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
-                            </li>
+                        aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
+                        @can('admin')
+                          <li>
+                              <a href="{{ route('dashboard.index') }}"
+                                  class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
+                          </li>
+                        @endcan
                             <li>
                                 <a href="#" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
                             </li>
-                        </ul>
+                          </ul>
+
                         <div class="py-2">
                             <a href="{{ route('auth.logout') }}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-red-500">

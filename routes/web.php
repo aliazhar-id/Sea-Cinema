@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardScheduleController;
 use App\Http\Controllers\DashboardUpcomingController;
@@ -30,19 +31,21 @@ Route::name('auth.')->group(function () {
 
 // DASHBOARD
 Route::name('dashboard.')->group(function () {
-  Route::get('dashboard', [DashboardController::class, 'index'])->name('index');
-  Route::post('dashboard/search', [DashboardController::class, 'search'])->name('search');
+  Route::get('dashboard', [DashboardController::class, 'index'])->name('index')->middleware('admin');
+  Route::post('dashboard/search', [DashboardController::class, 'search'])->name('search')->middleware('admin');
 
   // UPCOMING
-  Route::get('dashboard/upcoming', [DashboardUpcomingController::class, 'index'])->name('upcoming.index');
-  Route::get('dashboard/upcoming/create', [DashboardUpcomingController::class, 'create'])->name('upcoming.create');
-  Route::post('dashboard/upcoming', [DashboardUpcomingController::class, 'store'])->name('upcoming.store');
+  Route::get('dashboard/upcoming', [DashboardUpcomingController::class, 'index'])->name('upcoming.index')->middleware('admin');
+  Route::get('dashboard/upcoming/create', [DashboardUpcomingController::class, 'create'])->name('upcoming.create')->middleware('admin');
+  Route::post('dashboard/upcoming', [DashboardUpcomingController::class, 'store'])->name('upcoming.store')->middleware('admin');
 
   // SCHEDULE
-  Route::get('dashboard/schedule', [DashboardScheduleController::class, 'index'])->name('schedule.index');
-  Route::get('dashboard/schedule/create', [DashboardScheduleController::class, 'create'])->name('schedule.create');
-  Route::post('dashboard/schedule', [DashboardScheduleController::class, 'store'])->name('schedule.store');
+  Route::get('dashboard/schedule', [DashboardScheduleController::class, 'index'])->name('schedule.index')->middleware('admin');
+  Route::get('dashboard/schedule/create', [DashboardScheduleController::class, 'create'])->name('schedule.create')->middleware('admin');
+  Route::post('dashboard/schedule', [DashboardScheduleController::class, 'store'])->name('schedule.store')->middleware('admin');
 });
-Route::resource('dashboard/profile', UserController::class)->parameters(['profile' => 'user'])->only(['index', 'update'])->middleware('auth');
+
+Route::resource('dashboard/profile', UserController::class)->parameters(['profile' => 'user'])->only(['index', 'update'])->middleware('admin');
+Route::resource('dashboard/users', AdminUserController::class, ['as' => 'dashboard'])->middleware('admin');
 
 // Route::resource('/dashboard/posts', UserPostController::class)->middleware('auth');

@@ -61,17 +61,10 @@
     </div>
 
     <!-- Nav Item - Users -->
-    <li class="nav-item {{ Request::is('dashboard/admin/users*') ? 'active' : '' }}">
-      <a class="nav-link pb-2" href="{{ route('admin.users.index') }}">
+    <li class="nav-item {{ Request::routeIs('dashboard.users*') ? 'active' : '' }}">
+      <a class="nav-link pb-2" href="{{ route('dashboard.users.index') }}">
         <i class="fas fa-user"></i>
         <span>Users</span></a>
-    </li>
-
-    <!-- Nav Item - Users -->
-    <li class="nav-item {{ Request::is('dashboard/admin/posts*') ? 'active' : '' }}">
-      <a class="nav-link pt-0" href="{{ route('admin.posts.index') }}">
-        <i class="fas fa-list"></i>
-        <span>Posts</span></a>
     </li>
   @endcan
 

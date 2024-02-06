@@ -1,26 +1,5 @@
 @extends('dashboard.layouts.main')
 
-@php
-  $postCount = $posts->count();
-  $totalClick = $posts->sum('click');
-  $postRate = $totalClick ? min(100, floor(($totalClick / $postCount) * 0.0485 * 100)) : 0;
-  $grade = 'No';
-
-  if ($postCount) {
-      if ($postRate >= 80) {
-          $grade = 'A';
-      } elseif ($postRate >= 60) {
-          $grade = 'B';
-      } elseif ($postRate >= 40) {
-          $grade = 'C';
-      } elseif ($postRate >= 10) {
-          $grade = 'D';
-      } else {
-          $grade = 'E';
-      }
-  }
-@endphp
-
 @section('content')
   <h1 class="h3 mb-4 text-gray-800">Edit User</h1>
 
@@ -40,7 +19,7 @@
     </div>
   @endif
 
-  <form action="{{ route('admin.users.update', $user->username) }}" method="POST" autocomplete="off"
+  <form action="{{ route('dashboard.users.update', $user->username) }}" method="POST" autocomplete="off"
     enctype="multipart/form-data">
     @csrf
     @method('PATCH')
@@ -72,36 +51,23 @@
                 <div class="text-center">
                   <h5 class="font-weight-bold">{{ $user->name }}</h5>
                   <div class="col-lg-8 mx-auto">
-                    {{-- <div class="form-group">
-                      <label for="role" class="form-label">Role</label>
-                      <select id="role" class="form-control" name="role">
-                        <option value="member">Member</option>
-                        <option value="admin">Admin</option>
-                      </select>
-                    </div> --}}
-                  </div>
-                  <p>{{ ucfirst($user->role) }}</p>
-                </div>
-              </div>
-            </div>
+                    @can('superadmin')
+                      <div class="form-group">
+                        <label for="role" class="form-label">Role</label>
+                        <select id="role" class="form-control @error('role') is-invalid @enderror" name="role">
+                          <option value="member">Member</option>
+                          <option value="admin">Admin</option>
+                        </select>
 
-            <div class="row text-center">
-              <div class="col-md-4">
-                <div class="card-profile-stats">
-                  <span class="heading">{{ $postCount }}</span>
-                  <span class="description">Post</span>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="card-profile-stats">
-                  <span class="heading">{{ $totalClick }}</span>
-                  <span class="description">Click</span>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="card-profile-stats">
-                  <span class="heading">{{ $grade }}</span>
-                  <span class="description">Grade</span>
+                        @error('role')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                      @enderror
+                      </div>
+                    @else
+                      <p>{{ ucfirst($user->role) }}</p>
+                    @endcan
+
+                  </div>
                 </div>
               </div>
             </div>
@@ -150,7 +116,8 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="email">Email address</label>
+                    <label class="form-control-label" for="email">Email address<span
+                        class="small text-danger">*</span></label>
                     <input type="email" id="email" class="form-control @error('email') is-invalid @enderror"
                       name="email" placeholder="example@example.com" value="{{ old('email', $user->email) }}">
 
@@ -158,6 +125,46 @@
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                   </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="email">Date of Birth</label>
+                    <input type="date" id="dob" class="form-control @error('dob') is-invalid @enderror"
+                      name="dob" placeholder="example@example.com" value="{{ old('dob', $user->dob) }}">
+
+                    @error('dob')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group focused">
+                    <label class="form-control-label" for="phone">Phone</label>
+                    <input type="text" id="phone" class="form-control @error('phone') is-invalid @enderror"
+                      name="phone" placeholder="Phone Number" value="{{ old('phone', $user->phone) }}">
+
+                    @error('phone')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" class="form-control @error('address') is-invalid @enderror" rows="3">{{ old('address', $user->address) }}</textarea>
+
+                    @error('address')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </div>
+
                 </div>
               </div>
 

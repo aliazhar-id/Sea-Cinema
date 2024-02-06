@@ -1,26 +1,5 @@
 @extends('dashboard.layouts.main')
 
-@php
-  $postCount = $posts->count();
-  $totalClick = $posts->sum('click');
-  $postRate = $totalClick ? min(100, floor(($totalClick / $postCount) * 0.0485 * 100)) : 0;
-  $grade = 'No';
-
-  if ($postCount) {
-      if ($postRate >= 80) {
-          $grade = 'A';
-      } elseif ($postRate >= 60) {
-          $grade = 'B';
-      } elseif ($postRate >= 40) {
-          $grade = 'C';
-      } elseif ($postRate >= 10) {
-          $grade = 'D';
-      } else {
-          $grade = 'E';
-      }
-  }
-@endphp
-
 @section('content')
   <div class="col-lg-8 order-lg-12 mx-auto">
     <div class="card shadow mb-2">
@@ -46,15 +25,12 @@
                 <p>{{ ucfirst($user->role) }}</p>
               </div>
             </div>
-            <div class="col text-center">
-              {{ $postCount }} Post | {{ $totalClick }} Click | {{ $grade }} Grade
-            </div>
           </div>
         </div>
 
         <!-- Button -->
         <div class="col text-center mb-2">
-          <a href="{{ route('admin.users.index') }}" class="btn btn-primary mt-3 ">Back</a>
+          <a href="{{ route('dashboard.users.index') }}" class="btn btn-primary mt-3 ">Back</a>
         </div>
       </div>
     </div>

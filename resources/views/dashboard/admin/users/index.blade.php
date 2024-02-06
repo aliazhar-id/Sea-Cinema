@@ -22,7 +22,7 @@
 @section('content')
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Users</h1>
-    <form action="{{ route('admin.users.index') }}"
+    <form action="{{ route('dashboard.users.index') }}"
       class="d-none d-sm-inline-block form-inline mr-auto ml-md-4 my-2 my-md-0 mw-100 navbar-search">
       @if (request('title'))
         <input type="hidden" name="title" value="{{ request('title') }}">
@@ -57,7 +57,7 @@
   @endif
 
   <div class="col-lg-12">
-    <a href="{{ route('admin.users.create') }}" class="btn btn-primary mb-3 mx-">Create New User</a>
+    <a href="{{ route('dashboard.users.create') }}" class="btn btn-primary mb-3 mx-">Create New User</a>
   </div>
 
   @if ($users->count())
@@ -69,6 +69,7 @@
             <th scope="col">Username</th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
+            <th scope="col">Role</th>
             <th scope="col" data-orderable="false">Action</th>
           </tr>
         </thead>
@@ -79,11 +80,12 @@
               <td>{{ $user->username }}</td>
               <td>{{ $user->name }}</td>
               <td>{{ $user->email }}</td>
+              <td>{{ $user->role }}</td>
               <td>
-                <a href="{{ route('admin.users.show', $user->username) }}" class="badge bg-primary"><span
+                <a href="{{ route('dashboard.users.show', $user->username) }}" class="badge bg-primary"><span
                     data-feather="eye"></span>
                 </a>
-                <a href="{{ route('admin.users.edit', $user->username) }}" class="badge bg-warning">
+                <a href="{{ route('dashboard.users.edit', $user->username) }}" class="badge bg-warning">
                   <span data-feather="edit"></span>
                 </a>
                 <button class="badge bg-danger border-0 text-info" data-toggle="modal" data-target="#deleteUserModal"
@@ -135,7 +137,7 @@
       const modal = $(this);
 
       $('#username').text(username);
-      modal.find('form').attr('action', `{{ route('admin.users.destroy', '') }}/${username}`);
+      modal.find('form').attr('action', `{{ route('dashboard.users.destroy', '') }}/${username}`);
     })
   </script>
 

@@ -17,7 +17,7 @@
     </div>
   @endif
 
-  <form action="{{ route('admin.users.store') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
+  <form action="{{ route('dashboard.users.store') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
     @csrf
 
     <div class="row">
