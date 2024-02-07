@@ -88,17 +88,18 @@
                         </div>
 
                         <ul class="py-2 text-sm text-gray-700"
-                        aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
-                        @can('admin')
-                          <li>
-                              <a href="{{ route('dashboard.index') }}"
-                                  class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
-                          </li>
-                        @endcan
+                            aria-labelledby="dropdownInformdropdownAvatarNameButtonationButton">
+                            @can('admin')
+                                <li>
+                                    <a href="{{ route('dashboard.index') }}"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-movieapp-600 hover:text-white">Dashboard</a>
+                                </li>
+                            @endcan
                             <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
+                                <a href="{{ 'profile' }}"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-movieapp-600 hover:text-white">Profile</a>
                             </li>
-                          </ul>
+                        </ul>
 
                         <div class="py-2">
                             <a href="{{ route('auth.logout') }}"

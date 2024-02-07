@@ -1,4 +1,5 @@
 {
+    "name": "sea-cinema",
     "private": true,
     "type": "module",
     "scripts": {

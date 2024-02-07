@@ -45,6 +45,11 @@ Route::name('dashboard.')->group(function () {
   Route::post('dashboard/schedule', [DashboardScheduleController::class, 'store'])->name('schedule.store')->middleware('admin');
 });
 
+// PROFILE
+Route::get('/profile', function () {
+  return view('profile');
+});
+
 Route::resource('dashboard/profile', UserController::class)->parameters(['profile' => 'user'])->only(['index', 'update'])->middleware('admin');
 Route::resource('dashboard/users', AdminUserController::class, ['as' => 'dashboard'])->middleware('admin');
 
