@@ -53,5 +53,6 @@ class DatabaseSeeder extends Seeder
 
     User::factory(3)->create();
     $this->call(MovieSeeder::class);
+    $this->call(DetailScheduleSeeder::class);
   }
 }
