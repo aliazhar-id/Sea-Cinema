@@ -11,7 +11,7 @@
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Main Styling -->
-    <link href="{{ 'page_profile\css\soft-ui-dashboard-tailwind.css?v=1.0.5' }}" rel="stylesheet" />
+    <link href="{{ '\css\profile\soft-ui-dashboard-tailwind.css?v=1.0.5' }}" rel="stylesheet" />
 </head>
 
 <body class="m-0 font-sans antialiased font-normal text-base leading-default bg-gray-50 text-slate-500">
@@ -72,7 +72,7 @@
 
         <div class="w-full px-6 mx-auto">
             <div class="relative flex items-center p-0 mt-6 overflow-hidden bg-center bg-cover min-h-75 rounded-2xl"
-                style="background-image: url('page_profile/img/curved-images/curved14.jpg'); background-position-y: 50%">
+                style="background-image: url('/assets/profile/curved-images/curved14.jpg'); background-position-y: 50%">
                 <span
                     class="absolute inset-y-0 w-full h-full bg-center bg-cover bg-gradient-to-tl from-sky-700 to-sky-500 opacity-60">
                 </span>
@@ -83,7 +83,7 @@
                     <div class="flex-none w-auto max-w-full px-3">
                         <div
                             class="text-base ease-soft-in-out h-18.5 w-18.5 relative inline-flex items-center justify-center rounded-xl text-white transition-all duration-200">
-                            <img src="{{ 'page_profile/img/bruce-mars.jpg' }}" alt="profile_image"
+                            <img src="{{ '/assets/profile/bruce-mars.jpg' }}" alt="profile_image"
                                 class="w-full shadow-soft-sm rounded-xl" />
                         </div>
                     </div>
@@ -261,8 +261,8 @@
 
 </body>
 <!-- plugin for scrollbar  -->
-<script src="{{ 'page_profile\js\plugins\perfect-scrollbar.min.js' }}" async></script>
+<script src="{{ '\js\profile\plugins\perfect-scrollbar.min.js' }}" async></script>
 <!-- main script file  -->
-<script src="{{ 'page_profile\js\soft-ui-dashboard-tailwind.js?v=1.0.5' }}"></script>
+<script src="{{ '\js\profile\soft-ui-dashboard-tailwind.js?v=1.0.5' }}"></script>
 
 </html>
