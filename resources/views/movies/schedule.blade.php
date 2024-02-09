@@ -10,7 +10,7 @@
 
       @foreach ($movies as $movie)
         @php
-          $movieImageURL = "{$imageBaseURL}/w300{$movie->image_path}";
+          $movieImageURL = "{$imageBaseURL}/w300{$movie->poster_path}";
         @endphp
 
         <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow">
@@ -53,9 +53,9 @@
             </div>
             <div class="flex items-center justify-between">
               {{-- <span class="text-3xl font-bold text-gray-900">Rp{{ $movie->schedules() }}</span> --}}
-              <span class="text-xl font-bold text-gray-900">Rp150.000</span>
-              <a href="#"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+              <span class="text-xl font-bold text-gray-900">{{$movie->price}}</span>
+              <a
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" href="booking/{{$movie->id_movie}}">
                 Buy Ticket
               </a>
             </div>

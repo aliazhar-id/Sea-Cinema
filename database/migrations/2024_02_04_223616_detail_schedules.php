@@ -14,7 +14,12 @@ return new class extends Migration
         Schema::create('detail_schedules', function (Blueprint $table) {
             $table->id('id_schedule');
             $table->string('id_movie');
-            $table->datetime('datetime');
+            $table->date('date');
+            $table->string('start_at');
+            $table->json('seats');
+            $table->string('studio');
+            $table->integer('price');
+            $table->string('format')->nullable();
             $table->foreign('id_movie')->references('id_movie')->on('schedules')->onDelete('cascade');
             $table->timestamps();
         });
