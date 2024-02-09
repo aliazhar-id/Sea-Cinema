@@ -2,9 +2,6 @@
 
 @section('custom-head')
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> --}}
-  <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
   <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 @endsection
 
@@ -67,48 +64,13 @@
                   </div>
                 </div>
               @endforeach
-
-
-
-
-              {{-- <div class="table-responsive col-lg-12 mt-4">
-                <table class="table table-striped table-sm" id="dataTable">
-                  <thead>
-                    <tr>
-                      <th scope="col">No.</th>
-                      <th scope="col">Id</th>
-                      <th scope="col">Title</th>
-                      <th scope="col">Popularity</th>
-                      <th scope="col" data-orderable="false">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($movies as $movie)
-                      <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $movie->id }}</td>
-                        <td>{{ $movie->title }}</td>
-                        <td>{{ $movie->popularity * 10 }}</td>
-                        <td>
-                          <button class="badge bg-primary border-0 text-white" data-toggle="modal"
-                            data-target="#showDetailModal" data-movie="{{ $movie->id }}"><span
-                              data-feather="eye"></span></button>
-                          <button class="badge bg-success border-0 text-white" data-toggle="modal"
-                            data-target="#addUpcomingModal" data-movie="{{ $movie->id }}"><span
-                              data-feather="plus"></span></button>
-                        </td>
-                      </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-              </div> --}}
             @elseif(!$status)
               <p class="text-center mt-5 mx-auto">No Movies Found :(</p>
             @endif
 
           </div>
 
-          <!-- Modal -->
+          <!-- Modal Add Schedule -->
           <div class="modal fade" id="addScheduleModal" tabindex="-1" aria-labelledby="addScheduleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -125,25 +87,26 @@
                     @csrf
                     <input type="hidden" id="id-movie" name="id-movie">
 
-                    <div class="row w-full">
+                    <div class="row w-full" id="list-movie">
                       <div class="col-lg-6">
-                        <label for="datepicker" class="form-label">Time</label>
-                        <input class="w-full" id="datepicker" name="time" width="234" placeholder="Pick date" />
-                        <script>
-                          $('#datepicker').datetimepicker({
-                            uiLibrary: 'bootstrap4',
-                            footer: true,
-                            modal: true,
-                            format: 'yyyy-mm-dd HH:MM'
-                          });
-                        </script>
+                        <div class="form-group w-full">
+                          <label for="datepicker" class="form-control-label">Time</label>
+                          <input class="form-control w-full datepicker @error('price') is-invalid @enderror"
+                            name="datetime[]" placeholder="Pick date">
+
+                          @error('datetime')
+                            <div class="invalid-feedback">
+                              {{ $message }}
+                            </div>
+                          @enderror
+                        </div>
                       </div>
 
                       <div class="col-lg-6">
                         <div class="form-group focused w-full">
                           <label class="form-control-label" for="title">Price</label>
                           <input type="number" id="title" class="form-control @error('price') is-invalid @enderror"
-                            name="price" placeholder="Price" value="{{ old('price') }}">
+                            name="price[]" placeholder="Price" value="{{ old('price') }}">
 
                           @error('price')
                             <div class="invalid-feedback">
@@ -153,89 +116,9 @@
                         </div>
                       </div>
                     </div>
-                    <div class="row w-full">
-                      <div class="col-lg-6">
-                        <label for="datepicker" class="form-label">Time</label>
-                        <input class="w-full" id="datepicker" name="time" width="234" placeholder="Pick date" />
-                        <script>
-                          $('#datepicker').datetimepicker({
-                            uiLibrary: 'bootstrap4',
-                            footer: true,
-                            modal: true,
-                            format: 'yyyy-mm-dd HH:MM'
-                          });
-                        </script>
-                      </div>
 
-                      <div class="col-lg-6">
-                        <div class="form-group focused w-full">
-                          <label class="form-control-label" for="title">Price</label>
-                          <input type="number" id="title" class="form-control @error('price') is-invalid @enderror"
-                            name="price" placeholder="Price" value="{{ old('price') }}">
-
-                          @error('price')
-                            <div class="invalid-feedback">
-                              {{ $message }}
-                            </div>
-                          @enderror
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row w-full">
-                      <div class="col-lg-6">
-                        <label for="datepicker" class="form-label">Time</label>
-                        <input class="w-full" id="datepicker" name="time" width="234" placeholder="Pick date" />
-                        <script>
-                          $('#datepicker').datetimepicker({
-                            uiLibrary: 'bootstrap4',
-                            footer: true,
-                            modal: true,
-                            format: 'yyyy-mm-dd HH:MM'
-                          });
-                        </script>
-                      </div>
-
-                      <div class="col-lg-6">
-                        <div class="form-group focused w-full">
-                          <label class="form-control-label" for="title">Price</label>
-                          <input type="number" id="title" class="form-control @error('price') is-invalid @enderror"
-                            name="price" placeholder="Price" value="{{ old('price') }}">
-
-                          @error('price')
-                            <div class="invalid-feedback">
-                              {{ $message }}
-                            </div>
-                          @enderror
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row w-full">
-                      <div class="col-lg-6">
-                        <label for="datepicker" class="form-label">Time</label>
-                        <input class="w-full" id="datepicker" name="time" width="234" placeholder="Pick date" />
-                        <script>
-                          $('#datepicker').datetimepicker({
-                            uiLibrary: 'bootstrap4',
-                            footer: true,
-                            modal: true,
-                            format: 'yyyy-mm-dd HH:MM'
-                          });
-                        </script>
-                      </div>
-
-                      <div class="col-lg-6">
-                        <div class="form-group focused w-full">
-                          <label class="form-control-label" for="title">Price</label>
-                          <input type="number" id="title" class="form-control @error('price') is-invalid @enderror"
-                            name="price" placeholder="Price" value="{{ old('price') }}">
-
-                          @error('price')
-                            <div class="invalid-feedback">
-                              {{ $message }}
-                            </div>
-                          @enderror
-                        </div>
-                      </div>
+                    <div class="row d-flex justify-content-end pr-2">
+                      <button id="btn-more" type="button" class="btn btn-primary">More</button>
                     </div>
 
                     <!-- Button -->
@@ -262,12 +145,63 @@
 @endsection
 
 @section('custom-script')
+  <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
+
   <script>
+    const loadElementPicker = () => {
+      $('.datepicker').each((i, el) => {
+
+        console.log(el);
+
+        $(el).datetimepicker({
+          uiLibrary: 'bootstrap4',
+          footer: true,
+          modal: true,
+          format: 'yyyy-mm-dd HH:MM'
+        });
+      })
+    }
+
+    loadElementPicker();
+
+    $('#btn-more').on('click', () => {
+      const inputElement = `
+        <div class="col-lg-6">
+          <div class="form-group w-full">
+            <label for="datepicker" class="form-control-label">Time</label>
+            <input class="form-control w-full datepicker @error('price') is-invalid @enderror"
+              name="datetime[]" placeholder="Pick date">
+
+            @error('datetime')
+              <div class="invalid-feedback">
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="form-group focused w-full">
+            <label class="form-control-label" for="title">Price</label>
+            <input type="number" id="title" class="form-control @error('price') is-invalid @enderror"
+              name="price[]" placeholder="Price" value="{{ old('price') }}">
+
+            @error('price')
+              <div class="invalid-feedback">
+                {{ $message }}
+              </div>
+            @enderror
+          </div>
+        </div>`;
+
+      $('#list-movie').append(inputElement);
+      loadElementPicker();
+    });
+
     $('#addScheduleModal').on('show.bs.modal', function(event) {
       const button = $(event.relatedTarget)
       const id = button.data('movie');
       const title = button.data('title');
-      // const modal = $(this);
 
       $('#id-movie').val(id);
       $('#addScheduleModalLabel').html(title);

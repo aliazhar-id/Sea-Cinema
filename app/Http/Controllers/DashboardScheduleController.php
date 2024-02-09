@@ -14,7 +14,7 @@ class DashboardScheduleController extends Controller
   {
     return view('dashboard.main.schedule', [
       'title' => 'Schedule',
-      'schedules' => Schedules::latest()->get()
+      'schedules' => DetailSchedule::latest()->get()
     ]);
   }
 
@@ -57,10 +57,13 @@ class DashboardScheduleController extends Controller
 
   public function store(Request $request)
   {
+    $datetimes = $request->datetime;
+    $prices = $request->price;
+
     $baseURL = env('MOVIE_DB_BASE_URL');
     $apiKey = env('MOVIE_DB_API_KEY');
 
-    $movieData = null;
+    $movie = null;
     $movieId = $request['id-movie'];
     $trailerID = null;
 
@@ -70,36 +73,85 @@ class DashboardScheduleController extends Controller
     ]);
 
     if ($movieDetailResponse->successful()) {
-      $movieData = $movieDetailResponse->object();
+      $movie = $movieDetailResponse->object();
     }
 
-    if (isset($movieData->videos->results)) {
-      foreach ($movieData->videos->results as $movie) {
-        if (strtolower($movie->type) == 'trailer') {
-          $trailerID = $movie->key;
+    if (isset($movie->videos->results)) {
+      foreach ($movie->videos->results as $videos) {
+        if (strtolower($videos->type) == 'trailer') {
+          $trailerID = $videos->key;
         }
       }
     }
 
-    // dd($movieData->release_date);
-
     Schedules::updateOrCreate(
       ['id_movie' => $movieId],
       [
-        'poster_path' => $movieData->poster_path,
+        'poster_path' => $movie->poster_path,
         'trailer_id' => $trailerID,
-        'title' => $movieData->title,
-        'release_date' => $movieData->release_date ?: null,
-        'rating' => $movieData->vote_average * 10,
-        'price' => $request['price']
+        'title' => $movie->title,
+        'tagline' => $movie->tagline,
+        'overview' => $movie->overview,
+        // 'rating' => $movie->rating,
+        'score' => $movie->vote_average * 10,
+        'release_date' => $movie->release_date ?: null,
       ]
     );
 
-    DetailSchedule::create([
-      'id_movie' => $movieId,
-      'datetime' => $request['time'],
-    ]);
+    $newDetailSchedules = [];
+
+    foreach ($datetimes as $key => $datetime) {
+      $dateISO = strtotime($datetime);
+
+      $date = date('Y-m-d', $dateISO);
+      $time = date('H:i', $dateISO);
+
+      $newDetailSchedules[$key] = [
+        'id_movie' => $movieId,
+        'date' => $date,
+        'start_at' => $time,
+        'studio' => 'Sea 1',
+        'price' => $prices[$key]
+      ];
+    }
+
+    DetailSchedule::upsert($newDetailSchedules, ['date', 'start_at']);
 
     return back();
+  }
+
+  public function update(Request $request)
+  {
+    $validatedData = $request->validate([
+      'id-schedule' => 'required|exists:detail_schedules,id_schedule',
+      'datetime' => 'required',
+      'price' => 'required|numeric|min:0',
+    ]);
+
+    $id_schedule = $validatedData['id-schedule'];
+    $datetime = $validatedData['datetime'];
+    $price = $validatedData['price'];
+
+    $dateISO = strtotime($datetime);
+    $date = date('Y-m-d', $dateISO);
+    $time = date('H:i', $dateISO);
+
+    DetailSchedule::find($id_schedule)->update([
+      'date' => $date,
+      'start_at' => $time,
+      'price' => $price,
+    ]);
+
+    return back()->with('success', 'Schedule has been updated');
+  }
+
+  public function destroy(Request $request)
+  {
+    $validatedData = $request->validate([
+      'id-schedule' => 'required|exists:detail_schedules,id_schedule',
+    ]);
+
+    DetailSchedule::destroy($validatedData['id-schedule']);
+    return back()->with('success', 'Schedule has been deleted successfully.');
   }
 }

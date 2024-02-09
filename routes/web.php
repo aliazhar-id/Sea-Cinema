@@ -14,7 +14,7 @@ use App\Http\Controllers\DashboardUpcomingController;
 Route::name('main.')->group(function () {
   Route::get('/', [MovieController::class, 'index'])->name('home');
   Route::get('/movies', [MovieController::class, 'movies'])->name('movies');
-  Route::get('/movie/{id}', [MovieController::class, 'movieDetails']);
+  Route::get('/movie/{id}', [MovieController::class, 'movieDetails'])->name('movie.details');
   Route::get('/booking/{id}', [MovieController::class, 'booking']);
   Route::get('/schedule', [MovieController::class, 'schedule'])->name('schedule');
   Route::get('/upcoming', [MovieController::class, 'upcoming'])->name('upcoming');
@@ -43,6 +43,8 @@ Route::name('dashboard.')->group(function () {
   Route::get('dashboard/schedule', [DashboardScheduleController::class, 'index'])->name('schedule.index')->middleware('admin');
   Route::get('dashboard/schedule/create', [DashboardScheduleController::class, 'create'])->name('schedule.create')->middleware('admin');
   Route::post('dashboard/schedule', [DashboardScheduleController::class, 'store'])->name('schedule.store')->middleware('admin');
+  Route::post('dashboard/schedule/update', [DashboardScheduleController::class, 'update'])->name('schedule.update')->middleware('admin');
+  Route::post('dashboard/schedule/delete', [DashboardScheduleController::class, 'destroy'])->name('schedule.destroy')->middleware('admin');
 });
 
 // PROFILE

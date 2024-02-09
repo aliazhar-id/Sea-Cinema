@@ -1,6 +1,8 @@
 @extends('dashboard.layouts.main')
 
 @section('custom-head')
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
   <link href="https://cdn.datatables.net/v/bs4/dt-1.13.8/datatables.min.css" rel="stylesheet">
 
   <style>
@@ -22,25 +24,6 @@
 @section('content')
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Scheduled Movie</h1>
-
-    <form action=""
-    {{-- <form action="{{ route('posts.index') }}" --}}
-      class="d-none d-sm-inline-block form-inline mr-auto ml-md-4 my-2 my-md-0 mw-100 navbar-search">
-      @if (request('title'))
-        <input type="hidden" name="title" value="{{ request('title') }}">
-      @endif
-
-      <div class="input-group">
-        <input type="text" name="search" value="{{ request('search') }}" class="form-control bg-white border-1 small"
-          placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-        <div class="input-group-append">
-          <button class="btn btn-primary" type="submit">
-            <i class="fas fa-search fa-sm"></i>
-          </button>
-        </div>
-      </div>
-    </form>
-
   </div>
 
   @if (session('success'))
@@ -60,7 +43,7 @@
   @endif
 
   <div class="col-lg-12">
-    <a href="{{ route('dashboard.schedule.create') }}" class="btn btn-primary mb-3 mx-">Create new Schedule</a>
+    <a href="{{ route('dashboard.schedule.create') }}" class="btn btn-primary mb-3 mx-">New Schedule</a>
   </div>
 
   @if ($schedules->count())
@@ -73,8 +56,8 @@
             <th scope="col">Title</th>
             <th scope="col">Date</th>
             <th scope="col">Start At</th>
-            <th scope="col">Price (Rp)</th>
-            
+            <th scope="col">Price</th>
+
             <th scope="col" data-orderable="false">Action</th>
           </tr>
         </thead>
@@ -83,21 +66,36 @@
             <tr>
               <td>{{ $loop->iteration }}</td>
               <td>{{ $sch->id_movie }}</td>
-              <td>{{ $sch->movie->title }}</td>
+              <td>
+                <a href="{{ route('main.movie.details', $sch->id_movie) }}" target="_blank">{{ $sch->movie->title }}</a>
+              </td>
               <td>{{ $sch->date }}</td>
               <td>{{ $sch->start_at }}</td>
-              <td>{{ $sch->price }}</td>
+              <td>Rp{{ $sch->price }}</td>
               <td>
-                <a href="" class="badge bg-primary"><span
-                {{-- <a href="{{ route('posts.show', $movie->slug) }}" class="badge bg-primary"><span --}}
-                    data-feather="eye"></span>
+                <a href="{{ route('main.movie.details', $sch->id_movie) }}" target="_blank"
+                  class="badge bg-primary text-white">
+                  <span data-feather="eye"></span>
                 </a>
-                <a href="" class="badge bg-warning"><span
-                {{-- <a href="{{ route('posts.edit', $movie->slug) }}" class="badge bg-warning"><span --}}
-                    data-feather="edit"></span>
-                </a>
-                <button class="badge bg-danger border-0 text-info" data-toggle="modal" data-target="#deleteMovieModal"
-                  data-movie="{{ $sch->id_movie }}"><span data-feather="x-circle"></span></button>
+
+                <button class="badge badge-warning border-0 text-white" data-toggle="modal"
+                  data-target="#editScheduleModal" data-schedule="{{ $sch->id_schedule }}"
+                  data-title="{{ $sch->movie->title }}"
+                  data-datetime="{{ date('Y/m/d', strtotime($sch->date)) . ' ' . $sch->start_at }}"
+                  data-price="{{ $sch->price }}">
+
+                  <span data-feather="edit"></span>
+
+                </button>
+
+                <button class="badge bg-danger border-0 text-white" data-toggle="modal" data-target="#deleteMovieModal"
+                  data-schedule="{{ $sch->id_schedule }}" data-movie="{{ $sch->id_movie }}"
+                  data-title="{{ $sch->movie->title }}" data-date="{{ $sch->date }}"
+                  data-start="{{ $sch->start_at }}" data-price="{{ $sch->price }}">
+
+                  <span data-feather="x-circle"></span>
+
+                </button>
               </td>
             </tr>
           @endforeach
@@ -105,22 +103,92 @@
       </table>
     </div>
 
+    <!-- Modal Edit Schedule -->
+    <div class="modal fade" id="editScheduleModal" tabindex="-1" aria-labelledby="editScheduleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editScheduleModalLabel">Movie Detail</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <form action="{{ route('dashboard.schedule.update') }}" method="POST" autocomplete="off">
+              @csrf
+              <input type="hidden" id="id-schedule" name="id-schedule">
+
+              <div class="row w-full" id="list-movie">
+                <div class="col-lg-6">
+                  <div class="form-group w-full">
+                    <label for="datepicker" class="form-control-label">Time</label>
+                    <input id="datepicker" class="form-control w-full @error('datetime') is-invalid @enderror"
+                      name="datetime" placeholder="Pick date">
+
+                    @error('datetime')
+                      <div class="invalid-feedback">
+                        {{ $message }}
+                      </div>
+                    @enderror
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group focused w-full">
+                    <label class="form-control-label" for="title">Price (Rp)</label>
+                    <input type="number" id="price" class="form-control @error('price') is-invalid @enderror"
+                      name="price" placeholder="Price" value="{{ old('price') }}">
+
+                    @error('price')
+                      <div class="invalid-feedback">
+                        {{ $message }}
+                      </div>
+                    @enderror
+                  </div>
+                </div>
+              </div>
+
+              <!-- Button -->
+              <div class="pl-lg-4 mt-3">
+                <div class="row">
+                  <div class="col text-center">
+                    <button type="submit" class="btn btn-primary">Update Schedule</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Delete Movie Modal-->
     <div class="modal fade" id="deleteMovieModal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Are you sure want to delete</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Are you sure want to delete this schedule?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "DELETE" below if you are ready to delete this Scheduled.</div>
+          <div class="modal-body">
+            <span class="d-block">Id Movie: <span id="delete-id"></span></span>
+            <span class="d-block">Title: <span id="delete-title"></span></span>
+            <span class="d-block">Date: <span id="delete-date"></span></span>
+            <span class="d-block">Start At: <span id="delete-start"></span></span>
+            <span class="d-block mb-3">Price: <span id="delete-price"></span></span>
+
+            <p>Select "DELETE" below if you are ready to delete this Schedule!.</p>
+          </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <form method="POST" id='deleteForm'>
-              @method('DELETE')
+            <form action="{{ route('dashboard.schedule.destroy') }}" method="POST" id='deleteForm'>
               @csrf
+              <input type="hidden" id="delete-id-schedule" name="id-schedule">
               <button type="submit" class="btn btn-danger">
                 <i class="far fa-trash-alt"></i> DELETE
               </button>
@@ -134,20 +202,8 @@
   @endif
 @endsection
 
-{{-- modal.find('form').attr('action', `{{ route('posts.destroy', '') }}/${movie}`); --}}
 @section('custom-script')
-  <script>
-    $('#deleteMovieModal').on('show.bs.modal', function(event) {
-      const button = $(event.relatedTarget)
-      const movie = button.data('movie');
-      const modal = $(this);
-
-      modal.find('form').attr('action', `/${movie}`);
-    })
-  </script>
-
   <script src="https://cdn.datatables.net/v/bs4/dt-1.13.8/datatables.min.js"></script>
-
   <script>
     $('#dataTable').dataTable({
       info: false,
@@ -166,5 +222,46 @@
         entriesCount.toggle(api.page.info().pages > 1);
       }
     });
+  </script>
+
+  <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
+  <script>
+    $('#editScheduleModal').on('show.bs.modal', function(event) {
+      const button = $(event.relatedTarget)
+      const id_schedule = button.data('schedule');
+      const title = button.data('title');
+      const datetime = button.data('datetime');
+      const price = button.data('price');
+
+      $('#datepicker').datetimepicker({
+        uiLibrary: 'bootstrap4',
+        footer: true,
+        modal: true,
+        format: 'yyyy-mm-dd HH:MM',
+        value: datetime,
+      });
+
+      $('#id-schedule').val(id_schedule);
+      $('#price').val(price);
+      $('#editScheduleModalLabel').html(title);
+    })
+
+    $('#deleteMovieModal').on('show.bs.modal', function(event) {
+      const button = $(event.relatedTarget)
+      const id_movie = button.data('movie');
+      const title = button.data('title');
+      const date = button.data('date');
+      const start_at = button.data('start');
+      const price = button.data('price');
+      const id_schedule = button.data('schedule');
+
+      $('#delete-id').html(id_movie);
+      $('#delete-title').html(title);
+      $('#delete-date').html(date);
+      $('#delete-start').html(start_at);
+      $('#delete-price').html('Rp' + price);
+
+      $('#delete-id-schedule').val(id_schedule);
+    })
   </script>
 @endsection

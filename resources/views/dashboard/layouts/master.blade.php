@@ -24,7 +24,7 @@
     integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
 
   <!-- Favicon-->
-  <link rel="apple-touch-icon" sizes="57x57" href="/assets/apple-icon-57x57.png">
+  {{-- <link rel="apple-touch-icon" sizes="57x57" href="/assets/apple-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="60x60" href="/assets/apple-icon-60x60.png">
   <link rel="apple-touch-icon" sizes="72x72" href="/assets/apple-icon-72x72.png">
   <link rel="apple-touch-icon" sizes="76x76" href="/assets/apple-icon-76x76.png">
@@ -40,7 +40,7 @@
   <link rel="manifest" href="/assets/manifest.json">
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="/assets/ms-icon-144x144.png">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#ffffff"> --}}
 
   @yield('custom-head')
 </head>
