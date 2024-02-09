@@ -21,7 +21,6 @@ return new class extends Migration
       $table->string('rating')->nullable();
       $table->float('score')->nullable();
       $table->date('release_date')->nullable();
-      $table->integer('price')->nullable();
       $table->timestamps();
     });
   }
