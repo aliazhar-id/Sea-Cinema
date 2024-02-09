@@ -72,7 +72,8 @@
             <th scope="col">Id</th>
             <th scope="col">Title</th>
             <th scope="col">Date</th>
-            <th scope="col">Price</th>
+            <th scope="col">Start At</th>
+            <th scope="col">Price (Rp)</th>
             
             <th scope="col" data-orderable="false">Action</th>
           </tr>
@@ -82,8 +83,9 @@
             <tr>
               <td>{{ $loop->iteration }}</td>
               <td>{{ $sch->id_movie }}</td>
-              <td>{{ $sch->title }}</td>
-              {{-- <td>{{ $sch->detail->datetime }}</td> --}}
+              <td>{{ $sch->movie->title }}</td>
+              <td>{{ $sch->date }}</td>
+              <td>{{ $sch->start_at }}</td>
               <td>{{ $sch->price }}</td>
               <td>
                 <a href="" class="badge bg-primary"><span
