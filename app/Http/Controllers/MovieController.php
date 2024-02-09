@@ -164,4 +164,11 @@ class MovieController extends Controller
       'imageBaseURL' => $imageBaseURL
     ]);
   }
+
+  public function booking($id) {
+    
+    $movieData = Schedules::where('id_movie', $id);
+
+    return view('movies.booking-movie', compact('movieData'));
+  }
 }

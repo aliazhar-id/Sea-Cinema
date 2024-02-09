@@ -15,10 +15,10 @@ Route::name('main.')->group(function () {
   Route::get('/', [MovieController::class, 'index'])->name('home');
   Route::get('/movies', [MovieController::class, 'movies'])->name('movies');
   Route::get('/movie/{id}', [MovieController::class, 'movieDetails']);
+  Route::get('/booking/{id}', [MovieController::class, 'booking']);
   Route::get('/schedule', [MovieController::class, 'schedule'])->name('schedule');
   Route::get('/upcoming', [MovieController::class, 'upcoming'])->name('upcoming');
 });
-
 
 // AUTH PAGE
 Route::name('auth.')->group(function () {
