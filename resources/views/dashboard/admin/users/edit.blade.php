@@ -60,8 +60,8 @@
                         </select>
 
                         @error('role')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                      @enderror
+                          <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                       </div>
                     @else
                       <p>{{ ucfirst($user->role) }}</p>
