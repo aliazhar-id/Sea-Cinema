@@ -114,7 +114,7 @@
               </div>
 
               <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="email">Email address<span
                         class="small text-danger">*</span></label>
@@ -122,6 +122,18 @@
                       name="email" placeholder="example@example.com" value="{{ old('email', $user->email) }}">
 
                     @error('email')
+                      <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group focused">
+                    <label class="form-control-label" for="balance">Balance ( Rp. )</label>
+                    <input type="text" id="balance" class="form-control @error('balance') is-invalid @enderror"
+                      name="balance" placeholder="balance Number" value="{{ old('balance', $user->balance) }}">
+
+                    @error('balance')
                       <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                   </div>

@@ -152,6 +152,11 @@ class AdminUserController extends Controller
       $isProfileUpdated = true;
     }
 
+    if ($request->balance != $user->balance) {
+      $rules['balance'] = 'required|numeric|digits_between:1,5000000';
+      $isProfileUpdated = true;
+    }
+
     if ($request->dob != $user->dob) {
       $rules['dob'] = 'required|date_format:Y-m-d';
       $isProfileUpdated = true;
