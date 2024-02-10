@@ -16,7 +16,10 @@ return new class extends Migration
             $table->string('poster_path');
             $table->string('trailer_id')->nullable();
             $table->string('title');
-            $table->float('rating');
+            $table->string('tagline')->nullable();
+            $table->text('overview')->nullable();
+            $table->float('rating')->nullable();
+            $table->float('score')->nullable();
             $table->date('release_date');
             $table->timestamps();
         });

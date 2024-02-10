@@ -23,7 +23,7 @@
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Upcoming Movie</h1>
 
-    <form action="" {{-- <form action="{{ route('posts.index') }}" --}}
+    <form action="{{ route('dashboard.upcoming.index') }}"
       class="d-none d-sm-inline-block form-inline mr-auto ml-md-4 my-2 my-md-0 mw-100 navbar-search">
       @if (request('title'))
         <input type="hidden" name="title" value="{{ request('title') }}">
@@ -59,7 +59,7 @@
   @endif
 
   <div class="col-lg-12">
-    <a href="{{ route('dashboard.upcoming.create') }}" class="btn btn-primary mb-3 mx-">Create new Upcoming</a>
+    <a href="{{ route('dashboard.upcoming.create') }}" class="btn btn-primary mb-3 mx-">New Upcoming</a>
   </div>
 
   @if ($movies->count())
@@ -68,9 +68,10 @@
         <thead>
           <tr>
             <th scope="col">No.</th>
+            <th scope="col">Id Movie</th>
             <th scope="col">Title</th>
-            <th scope="col">Price</th>
-            <th scope="col">Rating</th>
+            <th scope="col">Year</th>
+            <th scope="col">Popularity</th>
             <th scope="col" data-orderable="false">Action</th>
           </tr>
         </thead>
@@ -78,16 +79,23 @@
           @foreach ($movies as $movie)
             <tr>
               <td>{{ $loop->iteration }}</td>
-              <td>{{ $movie->title }}</td>
-              <td>{{ $movie->price }}</td>
-              <td>{{ $movie->rating }}</td>
+              <td>{{ $movie->id_movie }}</td>
               <td>
-                <a href="" class="badge bg-primary"><span {{-- <a href="{{ route('posts.show', $movie->slug) }}" class="badge bg-primary"><span --}} data-feather="eye"></span>
+                <a href="{{ route('main.movie.details', $movie->id_movie) }}" target="_blank">{{ $movie->title }}</a>
+              </td>
+              <td>{{ date('Y', strtotime($movie->release_date)) }}</td>
+              <td>{{ $movie->score * 10 }}</td>
+              <td>
+                <a href="{{ route('main.movie.details', $movie->id_movie) }}" target="_blank"
+                  class="badge bg-primary text-white">
+                  <span data-feather="eye"></span>
                 </a>
-                <a href="" class="badge bg-warning"><span {{-- <a href="{{ route('posts.edit', $movie->slug) }}" class="badge bg-warning"><span --}} data-feather="edit"></span>
-                </a>
-                <button class="badge bg-danger border-0 text-info" data-toggle="modal" data-target="#deleteMovieModal"
-                  data-movie="{{ $movie->slug }}"><span data-feather="x-circle"></span></button>
+
+                <button class="badge bg-danger border-0 text-white" data-toggle="modal"
+                  data-target="#deleteUpcomingMovieModal" data-movie="{{ $movie->id_movie }}"
+                  data-title="{{ $movie->title }}" data-year="{{ date('Y', strtotime($movie->release_date)) }}">
+
+                  <span data-feather="x-circle"></span>
               </td>
             </tr>
           @endforeach
@@ -96,7 +104,7 @@
     </div>
 
     <!-- Delete Movie Modal-->
-    <div class="modal fade" id="deleteMovieModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="deleteUpcomingMovieModal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -105,7 +113,13 @@
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">Select "DELETE" below if you are ready to delete this Scheduled.</div>
+          <div class="modal-body">
+            <span class="d-block">Id Movie: <span id="delete-id"></span></span>
+            <span class="d-block">Title: <span id="delete-title"></span></span>
+            <span class="d-block mb-3">Year: <span id="delete-year"></span></span>
+
+            <p>Select "DELETE" below if you are ready to delete this movie from Upcoming!.</p>
+          </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             <form method="POST" id='deleteForm'>
@@ -119,20 +133,27 @@
         </div>
       </div>
     </div>
+  @elseif (Request::get('search'))
+    <p class="text-center mt-5">No upcoming movies found with title: {{ Request::get('search') }} :(</p>
   @else
-    <p class="text-center mt-5">No Movies Upcoming Found :(</p>
+    <p class="text-center mt-5 h2">No upcoming movies found :(</p>
   @endif
 @endsection
 
-{{-- modal.find('form').attr('action', `{{ route('posts.destroy', '') }}/${movie}`); --}}
 @section('custom-script')
   <script>
-    $('#deleteMovieModal').on('show.bs.modal', function(event) {
+    $('#deleteUpcomingMovieModal').on('show.bs.modal', function(event) {
       const button = $(event.relatedTarget)
-      const movie = button.data('movie');
+      const id_movie = button.data('movie');
+      const title = button.data('title');
+      const year = button.data('year');
       const modal = $(this);
 
-      modal.find('form').attr('action', `/${movie}`);
+      $('#delete-id').html(id_movie);
+      $('#delete-title').html(title);
+      $('#delete-year').html(year);
+
+      modal.find('form').attr('action', `{{ route('dashboard.upcoming.destroy', '') }}/${id_movie}`);
     })
   </script>
 

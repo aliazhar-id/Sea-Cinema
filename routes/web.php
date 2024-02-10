@@ -35,9 +35,8 @@ Route::name('dashboard.')->group(function () {
   Route::post('dashboard/search', [DashboardController::class, 'search'])->name('search')->middleware('admin');
 
   // UPCOMING
-  Route::get('dashboard/upcoming', [DashboardUpcomingController::class, 'index'])->name('upcoming.index')->middleware('admin');
-  Route::get('dashboard/upcoming/create', [DashboardUpcomingController::class, 'create'])->name('upcoming.create')->middleware('admin');
-  Route::post('dashboard/upcoming', [DashboardUpcomingController::class, 'store'])->name('upcoming.store')->middleware('admin');
+  Route::resource('dashboard/upcoming', DashboardUpcomingController::class)->only(['index', 'create', 'store', 'destroy'])->middleware('admin');
+
 
   // SCHEDULE
   Route::get('dashboard/schedule', [DashboardScheduleController::class, 'index'])->name('schedule.index')->middleware('admin');
@@ -54,5 +53,3 @@ Route::get('/profile', function () {
 
 Route::resource('dashboard/profile', UserController::class)->parameters(['profile' => 'user'])->only(['index', 'update'])->middleware('admin');
 Route::resource('dashboard/users', AdminUserController::class, ['as' => 'dashboard'])->middleware('admin');
-
-// Route::resource('/dashboard/posts', UserPostController::class)->middleware('auth');

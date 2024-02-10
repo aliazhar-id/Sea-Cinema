@@ -38,7 +38,7 @@
 
           <div class="col">
 
-            <form action="" method="GET" autocomplete="off">
+            <form action="{{ route('dashboard.upcoming.create') }}" method="GET" autocomplete="off">
               <div class="pl-lg-4">
 
                 <div class="col-lg-8 mx-auto">
@@ -70,8 +70,9 @@
                     <thead>
                       <tr>
                         <th scope="col">No.</th>
-                        <th scope="col">Id</th>
+                        <th scope="col">Id Movie</th>
                         <th scope="col">Title</th>
+                        <th scope="col">Year</th>
                         <th scope="col">Popularity</th>
                         <th scope="col" data-orderable="false">Action</th>
                       </tr>
@@ -82,30 +83,39 @@
                           <td>{{ $loop->iteration }}</td>
                           <td>{{ $movie->id }}</td>
                           <td>{{ $movie->title }}</td>
+                          <td>{{ date('Y', strtotime($movie->release_date)) }}</td>
                           <td>{{ $movie->popularity * 10 }}</td>
                           <td>
                             <button class="badge bg-primary border-0 text-white" data-toggle="modal"
-                              data-target="#showDetailModal" data-movie="{{ $movie->id }}"><span
-                                data-feather="eye"></span></button>
+                              data-target="#showDetailModal" data-poster="{{ $movie->poster_path }}">
+
+                              <span data-feather="eye"></span>
+
+                            </button>
+
                             <button class="badge bg-success border-0 text-white" data-toggle="modal"
-                              data-target="#addUpcomingModal" data-movie="{{ $movie->id }}"><span
-                                data-feather="plus"></span></button>
+                              data-target="#addUpcomingModal" data-movie="{{ $movie->id }}"
+                              data-title="{{ $movie->title }}">
+
+                              <span data-feather="plus"></span>
+
+                            </button>
                           </td>
                         </tr>
                       @endforeach
                     </tbody>
                   </table>
                 </div>
-              @elseif(!$status)
-                <p class="text-center mt-5 mx-auto">No Movies Found :(</p>
+              @elseif(Request::get('search'))
+                <p class="text-center mt-5 mx-auto">No movies found with title: {{ Request::get('search') }} :(</p>
               @endif
 
             </div>
 
-            <!-- Modal -->
+            <!-- Modal Show Movie Detail -->
             <div class="modal fade" id="showDetailModal" tabindex="-1" aria-labelledby="showDetailModalLabel"
               aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="showDetailModalLabel">Movie Detail</h5>
@@ -113,8 +123,8 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <div class="modal-body">
-                    <img class="img-fluid" src="https://image.tmdb.org/t/p/w500//hek3koDUyRQk7FIhPXsa6mT2Zc3.jpg" alt="">
+                  <div class="modal-body text-center">
+                    <img id="poster" class="img-fluid" width="300" alt="Movie Poster">
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -124,17 +134,22 @@
             </div>
 
 
-            <!-- Add Movie Upcoming Modal-->
+            <!-- Modal Add Movie Upcoming -->
             <div class="modal fade" id="addUpcomingModal" tabindex="-1" role="dialog" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Are you sure want to add</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Are you sure want to add Upcoming?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">×</span>
                     </button>
                   </div>
-                  <div class="modal-body">Select "ADD" below if you are ready to add this upcoming movie.</div>
+                  <div class="modal-body">
+                    <span class="d-block">Id Movie: <span id="add-id"></span></span>
+                    <span class="d-block mb-3">Title: <span id="add-title"></span></span>
+
+                    <p>Select "ADD" below if you are ready to add this movie to upcoming.</p>
+                  </div>
                   <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <form method="POST" id='deleteForm' action="{{ route('dashboard.upcoming.store') }}">
@@ -161,13 +176,24 @@
 
 @section('custom-script')
   <script>
-    $('#addUpcomingModal').on('show.bs.modal', function(event) {
+    $('#showDetailModal').on('show.bs.modal', function(event) {
       const button = $(event.relatedTarget)
-      const movie = button.data('movie');
+      const poster_path = button.data('poster');
       const modal = $(this);
 
-      $('#id-movie').val(movie);
-    })
+      $('#poster').attr('src', "{{ $imageBaseURL . '/original' }}" + poster_path)
+    });
+
+    $('#addUpcomingModal').on('show.bs.modal', function(event) {
+      const button = $(event.relatedTarget)
+      const id_movie = button.data('movie');
+      const title = button.data('title');
+
+      $('#add-id').html(id_movie);
+      $('#add-title').html(title);
+
+      $('#id-movie').val(id_movie);
+    });
   </script>
 
   <script src="https://cdn.datatables.net/v/bs4/dt-1.13.8/datatables.min.js"></script>

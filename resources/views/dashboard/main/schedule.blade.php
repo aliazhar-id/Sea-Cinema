@@ -52,7 +52,7 @@
         <thead>
           <tr>
             <th scope="col">No.</th>
-            <th scope="col">Id</th>
+            <th scope="col">Id Movie</th>
             <th scope="col">Title</th>
             <th scope="col">Date</th>
             <th scope="col">Start At</th>
@@ -198,7 +198,7 @@
       </div>
     </div>
   @else
-    <p class="text-center mt-5">No Movies Schedule Found :(</p>
+    <p class="text-center mt-5 h2">No movies schedule found :(</p>
   @endif
 @endsection
 
