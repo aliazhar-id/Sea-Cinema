@@ -28,10 +28,10 @@ class MovieSeeder extends Seeder
         //     'append_to_response' => 'videos'
         // ]);    
         // dd($topMovieResponse->json());
-        for($x=1; $x <= 5; $x++){
+        for($x=1; $x <= 2; $x++){
             $topMovieResponse = Http::get("{$baseURL}/movie/popular?page={$x}", [
                 'api_key' => $apiKey,
-                'append_to_response' => 'videos'
+                // 'append_to_response' => 'videos'
             ]);    
             if ($topMovieResponse->successful()) {
                 $result = $topMovieResponse->object()->results;
@@ -42,6 +42,7 @@ class MovieSeeder extends Seeder
                     Schedules::create([
                         'id_movie' => $movie['id'],
                         'poster_path' => $movie['poster_path'],
+                        'backdrop_path' => $movie['backdrop_path'],
                         'trailer_id' => $movie['id'],
                         'title' => $movie['original_title'],
                         'overview' => $movie['overview'],

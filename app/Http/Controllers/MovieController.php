@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailSchedule;
 use App\Models\Schedules;
 use App\Models\Upcoming;
 use Illuminate\Http\Request;
@@ -167,8 +168,17 @@ class MovieController extends Controller
 
   public function booking($id) {
     
-    $movieData = Schedules::where('id_movie', $id);
+    $movieData = Schedules::where('id_movie', $id)->first();
+    $scheduleData = DetailSchedule::where('id_movie', $id)->get();
+    $uniqueDates = $scheduleData->groupBy('date')->keys()->toArray();
+    // $uniqueDatesCount = $scheduleData->groupBy('date')->count();
+    $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
+    // dd($uniqueDates);
 
-    return view('movies.booking-movie', compact('movieData'));
+    return view('movies.booking-movie', 
+    ['movieData' => $movieData,
+      'scheduleData' => $scheduleData,
+      'uniqueDates' => $uniqueDates,
+    'imageBaseURL' => $imageBaseURL] );
   }
 }

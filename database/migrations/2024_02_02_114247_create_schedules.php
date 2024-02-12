@@ -14,6 +14,7 @@ return new class extends Migration
     Schema::create('schedules', function (Blueprint $table) {
       $table->string('id_movie')->primary();
       $table->string('poster_path')->nullable();
+      $table->string('backdrop_path')->nullable();
       $table->string('trailer_id')->nullable();
       $table->string('title');
       $table->string('tagline')->nullable();
