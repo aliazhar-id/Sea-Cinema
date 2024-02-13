@@ -10,7 +10,8 @@
    {{-- resources/views/seats_selection.blade.php --}}
 
     <div   div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1px; margin: 16px 0;">
-        @foreach(array_slice(array_keys($seatsData), 0, 60) as $seat)
+        {{-- @foreach(array_slice(array_keys($seatsData), 0, 60) as $seat) --}}
+        @foreach($seatsData as $seat)
         <div
         style="
             width: calc(8.666% - 15px);

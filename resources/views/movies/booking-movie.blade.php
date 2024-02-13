@@ -136,21 +136,9 @@
       </div>
       <div class="mt-4 items-center"> 
         {{-- Rating --}}
-        <div class="w-20 h-20 rounded-full flex items-center justify-center mr-4" style="background: #00304D ">
-          <svg class="-rotate-90 w-20 h-20">
-            <circle style="color: #004F80;" stroke-width="8" stroke="currentColor" fill="transparent" r="32"
-              cx="40" cy="40" />
-  
-            <circle style="color: #6FCF97;" stroke-width="8" stroke-dasharray="{{ $circumference }}"
-              stroke-linecap="round" stroke-dashoffset="{{ $progressRating }}" stroke="currentColor" fill="transparent"
-              r="32" cx="40" cy="40" />
-          </svg>
-  
-          <span class="absolute font-inter font-bold text-xl text-white">{{ $rating }}%</span>
-        </div>
+       
       </div>
     </div>
-      <span class="font-quicksand font-bold text-6xl mt-4 text-blak">{{ $title }}</span>
   {{-- </div --}}
 
 </div>
