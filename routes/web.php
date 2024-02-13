@@ -19,6 +19,7 @@ Route::name('main.')->group(function () {
   Route::get('/booking/seats/{id}', [MovieController::class, 'seatsSelection'])->name('seats.selection');
   Route::get('/nowplaying', [MovieController::class, 'schedule'])->name('schedule');
   Route::get('/upcoming', [MovieController::class, 'upcoming'])->name('upcoming');
+  Route::get('/profile', [MovieController::class, 'profile'])->name('profile');
 });
 
 // AUTH PAGE
@@ -45,11 +46,6 @@ Route::name('dashboard.')->group(function () {
   Route::post('dashboard/schedule', [DashboardScheduleController::class, 'store'])->name('schedule.store')->middleware('admin');
   Route::post('dashboard/schedule/update', [DashboardScheduleController::class, 'update'])->name('schedule.update')->middleware('admin');
   Route::post('dashboard/schedule/delete', [DashboardScheduleController::class, 'destroy'])->name('schedule.destroy')->middleware('admin');
-});
-
-// PROFILE
-Route::get('/profile', function () {
-  return view('profile');
 });
 
 Route::resource('dashboard/profile', UserController::class)->parameters(['profile' => 'user'])->only(['index', 'update'])->middleware('admin');

@@ -146,7 +146,8 @@ class MovieController extends Controller
     ]);
   }
 
-  public function schedule() {
+  public function schedule()
+  {
     $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
 
     return view('movies.schedule', [
@@ -156,7 +157,13 @@ class MovieController extends Controller
     ]);
   }
 
-  public function upcoming() {
+  public function profile()
+  {
+    return view('movies.profile');
+  }
+
+  public function upcoming()
+  {
     $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
 
     return view('movies.upcoming', [
