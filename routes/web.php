@@ -7,7 +7,7 @@ use App\Http\Controllers\MovieController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DashboardScheduleController;
+use App\Http\Controllers\DashboardNowPlayingController;
 use App\Http\Controllers\DashboardUpcomingController;
 
 // MAIN PAGE
@@ -17,7 +17,7 @@ Route::name('main.')->group(function () {
   Route::get('/movie/{id}', [MovieController::class, 'movieDetails'])->name('movie.details');
   Route::get('/booking/{id}', [MovieController::class, 'booking']);
   Route::get('/booking/seats/{id}', [MovieController::class, 'seatsSelection'])->name('seats.selection');
-  Route::get('/nowplaying', [MovieController::class, 'schedule'])->name('schedule');
+  Route::get('/nowplaying', [MovieController::class, 'nowPlaying'])->name('nowplaying');
   Route::get('/upcoming', [MovieController::class, 'upcoming'])->name('upcoming');
   Route::get('/profile', [MovieController::class, 'profile'])->name('profile');
 });
@@ -41,11 +41,11 @@ Route::name('dashboard.')->group(function () {
 
 
   // SCHEDULE
-  Route::get('dashboard/schedule', [DashboardScheduleController::class, 'index'])->name('schedule.index')->middleware('admin');
-  Route::get('dashboard/schedule/create', [DashboardScheduleController::class, 'create'])->name('schedule.create')->middleware('admin');
-  Route::post('dashboard/schedule', [DashboardScheduleController::class, 'store'])->name('schedule.store')->middleware('admin');
-  Route::post('dashboard/schedule/update', [DashboardScheduleController::class, 'update'])->name('schedule.update')->middleware('admin');
-  Route::post('dashboard/schedule/delete', [DashboardScheduleController::class, 'destroy'])->name('schedule.destroy')->middleware('admin');
+  Route::get('dashboard/nowplaying', [DashboardNowPlayingController::class, 'index'])->name('nowplaying.index')->middleware('admin');
+  Route::get('dashboard/nowplaying/create', [DashboardNowPlayingController::class, 'create'])->name('nowplaying.create')->middleware('admin');
+  Route::post('dashboard/nowplaying', [DashboardNowPlayingController::class, 'store'])->name('nowplaying.store')->middleware('admin');
+  Route::post('dashboard/nowplaying/update', [DashboardNowPlayingController::class, 'update'])->name('nowplaying.update')->middleware('admin');
+  Route::post('dashboard/nowplaying/delete', [DashboardNowPlayingController::class, 'destroy'])->name('nowplaying.destroy')->middleware('admin');
 });
 
 Route::resource('dashboard/profile', UserController::class)->parameters(['profile' => 'user'])->only(['index', 'update'])->middleware('admin');

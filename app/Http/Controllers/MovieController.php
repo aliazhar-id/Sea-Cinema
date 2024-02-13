@@ -146,11 +146,11 @@ class MovieController extends Controller
     ]);
   }
 
-  public function schedule()
+  public function nowPlaying()
   {
     $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
 
-    return view('movies.schedule', [
+    return view('movies.now-playing', [
       'title' => 'Shcedule',
       'movies' => Schedules::latest()->get(),
       'imageBaseURL' => $imageBaseURL

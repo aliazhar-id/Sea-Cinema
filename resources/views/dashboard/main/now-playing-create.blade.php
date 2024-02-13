@@ -8,14 +8,14 @@
 @section('content')
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800 mx-auto">Create New Schedule</h1>
+    <h1 class="h3 mb-0 text-gray-800 mx-auto">Create New Now Playing</h1>
   </div>
 
   <div class="row">
     <div class="col-lg-10 order-lg-1 mx-auto">
       <div class="card shadow mb-4">
         <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">New Schedule</h6>
+          <h6 class="m-0 font-weight-bold text-primary">New Now Playing</h6>
         </div>
 
         <div class="card-body">
@@ -57,9 +57,9 @@
                     <h5 class="card-title">{{ $movie->title }}</h5>
                     <p class="card-text text-truncate">{{ isset($movie->tagline) ? $movie->tagline : $movie->overview }}
                     </p>
-                    <button class="btn bg-primary text-white" data-toggle="modal" data-target="#addScheduleModal"
+                    <button class="btn bg-primary text-white" data-toggle="modal" data-target="#addNowPlayingModal"
                       data-movie="{{ $movie->id }}" data-title="{{ $movie->title }}">
-                      Add Schedule
+                      Add Now Playing
                     </button>
                   </div>
                 </div>
@@ -71,19 +71,19 @@
           </div>
 
           <!-- Modal Add Schedule -->
-          <div class="modal fade" id="addScheduleModal" tabindex="-1" aria-labelledby="addScheduleModalLabel"
+          <div class="modal fade" id="addNowPlayingModal" tabindex="-1" aria-labelledby="addNowPlayingModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="addScheduleModalLabel">Movie Detail</h5>
+                  <h5 class="modal-title" id="addNowPlayingModalLabel">Movie Detail</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
 
-                  <form action="{{ route('dashboard.schedule.store') }}" method="POST" autocomplete="off">
+                  <form action="{{ route('dashboard.nowplaying.store') }}" method="POST" autocomplete="off">
                     @csrf
                     <input type="hidden" id="id-movie" name="id-movie">
 
@@ -125,7 +125,7 @@
                     <div class="pl-lg-4">
                       <div class="row">
                         <div class="col text-center">
-                          <button type="submit" class="btn btn-primary">Create Schedule</button>
+                          <button type="submit" class="btn btn-primary">Create Now Playing</button>
                         </div>
                       </div>
                     </div>
@@ -198,13 +198,13 @@
       loadElementPicker();
     });
 
-    $('#addScheduleModal').on('show.bs.modal', function(event) {
+    $('#addNowPlayingModal').on('show.bs.modal', function(event) {
       const button = $(event.relatedTarget)
       const id = button.data('movie');
       const title = button.data('title');
 
       $('#id-movie').val(id);
-      $('#addScheduleModalLabel').html(title);
+      $('#addNowPlayingModalLabel').html(title);
     })
   </script>
 @endsection

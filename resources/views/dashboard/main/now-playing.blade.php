@@ -23,7 +23,7 @@
 
 @section('content')
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Scheduled Movie</h1>
+    <h1 class="h2">Now Playing Movie</h1>
   </div>
 
   @if (session('success'))
@@ -43,7 +43,7 @@
   @endif
 
   <div class="col-lg-12">
-    <a href="{{ route('dashboard.schedule.create') }}" class="btn btn-primary mb-3 mx-">New Schedule</a>
+    <a href="{{ route('dashboard.nowplaying.create') }}" class="btn btn-primary mb-3 mx-">Add Now Playing</a>
   </div>
 
   @if ($schedules->count())
@@ -116,7 +116,7 @@
           </div>
           <div class="modal-body">
 
-            <form action="{{ route('dashboard.schedule.update') }}" method="POST" autocomplete="off">
+            <form action="{{ route('dashboard.nowplaying.update') }}" method="POST" autocomplete="off">
               @csrf
               <input type="hidden" id="id-schedule" name="id-schedule">
 
@@ -186,7 +186,7 @@
           </div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <form action="{{ route('dashboard.schedule.destroy') }}" method="POST" id='deleteForm'>
+            <form action="{{ route('dashboard.nowplaying.destroy') }}" method="POST" id='deleteForm'>
               @csrf
               <input type="hidden" id="delete-id-schedule" name="id-schedule">
               <button type="submit" class="btn btn-danger">

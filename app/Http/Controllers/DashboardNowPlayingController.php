@@ -8,12 +8,12 @@ use App\Models\Schedules;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
-class DashboardScheduleController extends Controller
+class DashboardNowPlayingController extends Controller
 {
   public function index()
   {
-    return view('dashboard.main.schedule', [
-      'title' => 'Schedule',
+    return view('dashboard.main.now-playing', [
+      'title' => 'Now Playing',
       'schedules' => DetailSchedule::latest()->get()
     ]);
   }
@@ -47,8 +47,8 @@ class DashboardScheduleController extends Controller
       }
     }
 
-    return view('dashboard.main.schedule-create', [
-      'title' => 'Create Schedule',
+    return view('dashboard.main.now-playing-create', [
+      'title' => 'Create Now Playing',
       'movies' => $movies,
       'status' => $status,
       'imageBaseURL' => $imageBaseURL

@@ -44,7 +44,7 @@
                             Movies</a>
                         <a href="{{ route('main.upcoming') }}"
                             class="{{ Request::is('upcoming') ? 'bg-movieapp-500 text-white' : 'text-gray-700 hover:bg-movieapp-600 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Upcoming</a>
-                        <a href="{{ route('main.schedule') }}"
+                        <a href="{{ route('main.nowplaying') }}"
                             class="{{ Request::is('nowplaying') ? 'bg-movieapp-500 text-white' : 'text-gray-700 hover:bg-movieapp-600 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Now Playing</a>
                             
                     </div>
@@ -126,8 +126,8 @@
             <a href="#"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">All
                 Movies</a>
-            <a href="{{ route('main.schedule') }}"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Schedule</a>
+            <a href="{{ route('main.nowplaying') }}"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Now Playing</a>
         </div>
     </div>
 </nav>

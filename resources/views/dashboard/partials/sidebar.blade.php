@@ -36,10 +36,10 @@
   </li>
 
   <!-- Nav Item - Add Post -->
-  <li class="nav-item {{ Request::routeIs('dashboard.schedule*') ? 'active' : '' }}">
-    <a class="nav-link pt-0" href="{{ route('dashboard.schedule.index') }}">
+  <li class="nav-item {{ Request::routeIs('dashboard.nowplaying*') ? 'active' : '' }}">
+    <a class="nav-link pt-0" href="{{ route('dashboard.nowplaying.index') }}">
       <i class="far fa-file"></i>
-      <span>Schedule</span></a>
+      <span>Now Playing</span></a>
   </li>
 
   <!-- Heading -->
