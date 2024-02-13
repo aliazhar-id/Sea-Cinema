@@ -93,7 +93,7 @@ class DashboardNowPlayingController extends Controller
         'tagline' => $movie->tagline,
         'overview' => $movie->overview,
         // 'rating' => $movie->rating,
-        'score' => $movie->vote_average * 10,
+        'score' => $movie->vote_average,
         'release_date' => $movie->release_date ?: null,
       ]
     );
