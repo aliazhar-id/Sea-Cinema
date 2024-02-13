@@ -186,7 +186,7 @@ class MovieController extends Controller
     ]);
   }
 
-  public function booking($id) 
+  public function booking($id)
   {
     $movieData = Schedules::where('id_movie', $id)->first();
     $scheduleData = DetailSchedule::where('id_movie', $id)->get();
@@ -195,23 +195,30 @@ class MovieController extends Controller
     $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
     // dd($uniqueDates);
 
-    return view('movies.booking-movie', 
-    ['movieData' => $movieData,
-      'scheduleData' => $scheduleData,
-      'uniqueDates' => $uniqueDates,
-    'imageBaseURL' => $imageBaseURL] );
+    return view(
+      'movies.booking-movie',
+      [
+        'movieData' => $movieData,
+        'scheduleData' => $scheduleData,
+        'uniqueDates' => $uniqueDates,
+        'imageBaseURL' => $imageBaseURL
+      ]
+    );
   }
 
   public function seatsSelection($id)
   {
     $data = DetailSchedule::where('id_schedule', $id)->first();
     $movieData = Schedules::where('id_movie', $data->id_movie)->first();
-    
+
     // dd($movieData, $data);
-    return view('movies.seats-booking', 
-    ['data' => $data,
-    'movieData' => $movieData,
-    'title' => 'Seats booking',
-  ]);
+    return view(
+      'movies.seats-booking',
+      [
+        'data' => $data,
+        'movieData' => $movieData,
+        'title' => 'Seats booking',
+      ]
+    );
   }
 }

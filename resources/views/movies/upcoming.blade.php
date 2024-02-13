@@ -11,7 +11,7 @@
       @foreach ($movies as $movie)
         @php
           $releaseYear = date('Y', strtotime($movie->release_date));
-          $movieImageURL = "{$imageBaseURL}/w500/{$movie->image_path}";
+          $movieImageURL = "{$imageBaseURL}/w500/{$movie->poster_path}";
           $rating = round($movie->rating * 10, 0);
         @endphp
 
