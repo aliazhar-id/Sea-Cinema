@@ -111,26 +111,29 @@
         <h1 class="font-inter font-bold text-3xl text-black my-4">Pick Your Date </h1>
       </div>
 
-      <div class="flex gap-4">
         @php
           $selectedDates = "";
         @endphp
+      <div class="flex gap-4 mb-10">
         @foreach($uniqueDates as $dates)
-          <div> 
+        <div class="flex flex-col relative"> 
+          <div class="mb-5"> 
             <button class="w-50 bg-red-500 hover:bg-movieapp-600 text-white pl-4 pr-6 py-3 font-inter text-sm flex flex-row rounded-2xl items-center hover:drop-shadow-lg duration-200" onclick="toggleHours('{{ $dates }}')">
-            {{$dates}}
-            </button>
+              {{$dates}}
+              </button>
           </div>
-          <div class="flex gap-4 hidden m-5" id="{{ $dates }}-hours" >
-              @foreach($scheduleData as $schedule)
-                  @if($schedule->date === $dates)
-                      <p>{{ $schedule->start_at }}</p>
-                  @endif
-              @endforeach
+          <div class="flex absolute top-full left-0 hidden" id="{{ $dates }}-hours"> <!-- Add absolute class to hours container -->
+            @foreach($scheduleData as $schedule)
+                @if($schedule->date === $dates)
+                <button  class="mb-10 mx-2 bg-slate-200 hover:bg-slate-500 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"><a href="seats/{{$schedule->id_schedule}}"> {{ $schedule->start_at }}</a>
+                </button>                
+                @endif
+            @endforeach
           </div>
+        </div>
+       
         @endforeach
       </div>
-      <span class="font-inter italic text-sm mt-4 text-black max-w-3xl">{{ $tagline }}</span>
       <div class="mt-4 items-center"> 
         {{-- Rating --}}
         <div class="w-20 h-20 rounded-full flex items-center justify-center mr-4" style="background: #00304D ">
@@ -161,9 +164,14 @@
   </script>
   <script>
     function toggleHours(date) {
-        console.log("Date: " + date)
-        const hoursList = document.getElementById(`${date}-hours`); 
-        hoursList.classList.toggle('hidden');
+      const allHours = document.querySelectorAll('[id$="-hours"]');
+    allHours.forEach(hours => {
+      if (hours.id !== `${date}-hours`) {
+        hours.classList.add('hidden'); // Hide all hours except for the one corresponding to the clicked date
+      }
+    });
+    const hoursList = document.getElementById(`${date}-hours`);
+    hoursList.classList.toggle('hidden');
     }
   </script>
 @endsection

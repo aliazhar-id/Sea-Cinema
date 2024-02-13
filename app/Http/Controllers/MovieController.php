@@ -166,8 +166,8 @@ class MovieController extends Controller
     ]);
   }
 
-  public function booking($id) {
-    
+  public function booking($id) 
+  {
     $movieData = Schedules::where('id_movie', $id)->first();
     $scheduleData = DetailSchedule::where('id_movie', $id)->get();
     $uniqueDates = $scheduleData->groupBy('date')->keys()->toArray();
@@ -180,5 +180,18 @@ class MovieController extends Controller
       'scheduleData' => $scheduleData,
       'uniqueDates' => $uniqueDates,
     'imageBaseURL' => $imageBaseURL] );
+  }
+
+  public function seatsSelection($id)
+  {
+    $data = DetailSchedule::where('id_schedule', $id)->first();
+    $movieData = Schedules::where('id_movie', $data->id_movie)->first();
+    
+    // dd($movieData, $data);
+    return view('movies.seats-booking', 
+    ['data' => $data,
+    'movieData' => $movieData,
+    'title' => 'Seats booking',
+  ]);
   }
 }

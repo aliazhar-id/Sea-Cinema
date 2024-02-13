@@ -4,8 +4,6 @@
   <div class="w-full h-auto min-h-screen flex flex-col">
     {{-- Header Section --}}
     @include('movies.partials.header')
-
-
     <div class="w-auto pl-28 pr-10 pt-6 pb-10 grid grid-cols-3 lg:grid-cols-5 gap-5">
 
       @foreach ($movies as $movie)
