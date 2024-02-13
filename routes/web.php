@@ -17,7 +17,7 @@ Route::name('main.')->group(function () {
   Route::get('/movie/{id}', [MovieController::class, 'movieDetails'])->name('movie.details');
   Route::get('/booking/{id}', [MovieController::class, 'booking']);
   Route::get('/booking/seats/{id}', [MovieController::class, 'seatsSelection'])->name('seats.selection');
-  Route::get('/schedule', [MovieController::class, 'schedule'])->name('schedule');
+  Route::get('/nowplaying', [MovieController::class, 'schedule'])->name('schedule');
   Route::get('/upcoming', [MovieController::class, 'upcoming'])->name('upcoming');
 });
 
