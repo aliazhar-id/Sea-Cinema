@@ -14,6 +14,6 @@ class Schedules extends Model
 
   public function detail()
   {
-    return $this->hasMany(DetailSchedule::class, 'id_schedule');
+    return $this->hasMany(DetailSchedule::class, 'id_movie');
   }
 }

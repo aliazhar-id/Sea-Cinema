@@ -44,8 +44,8 @@
                             Movies</a>
                         <a href="{{ route('main.upcoming') }}"
                             class="{{ Request::is('upcoming') ? 'bg-movieapp-500 text-white' : 'text-gray-700 hover:bg-movieapp-600 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Upcoming</a>
-                        <a href="{{ route('main.nowplaying') }}"
-                            class="{{ Request::is('nowplaying') ? 'bg-movieapp-500 text-white' : 'text-gray-700 hover:bg-movieapp-600 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Now Playing</a>
+                        <a href="{{ route('main.nowplaying')}}"
+                            class="{{ Request::is('nowplaying') || Request::is('booking*') ? 'bg-movieapp-500 text-white' : 'text-gray-700 hover:bg-movieapp-600 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Now Playing</a>
                             
                     </div>
                 </div>
