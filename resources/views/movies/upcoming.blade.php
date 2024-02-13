@@ -41,5 +41,8 @@
       @endforeach
 
     </div>
+    @if ($movies->count() == 0) 
+      <div class="w-full my-auto text-center text-gray-600 h text-xl font-bold">No Upcoming Movies Found :(</div>
+    @endif
   </div>
 @endsection
