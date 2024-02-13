@@ -5,8 +5,20 @@
     {{-- Header Section --}}
     @include('movies.partials.header')
 
+    <div class="mx-auto w-4/5 mt-8">
+      <ul id="genres" class="flex flex-wrap justify-center text-sm font-medium text-center text-gray-500">
+
+        @foreach ($genres as $genre)
+          <li class="me-2">
+            <button data-id_genre = "{{ $genre->id }}"
+              class="inline-block px-4 py-3 rounded-lg hover:text-gray-900 hover:bg-gray-100">{{ $genre->name }}</button>
+          </li>
+        @endforeach
+      </ul>
+    </div>
+
     {{-- Sort Section --}}
-    <div class="ml-28 mt-8 flex flex-row items-center">
+    <div class="ml-28 mt-3 flex flex-row items-center">
       <span class="font-inter font-bold text-xl">Sort</span>
 
       <div class="relative ml-4">
@@ -20,13 +32,6 @@
           <option value="vote_average.asc">Top Rated (Ascending)</option>
 
         </select>
-
-        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-          <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-            <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"></path>
-          </svg>
-        </div>
-
       </div>
     </div>
 
@@ -105,6 +110,7 @@
     const apiKey = '{{ $apiKey }}';
     let sortBy = '{{ $sortBy }}';
     let page = '{{ $page }}';
+    let id_genre;
     const minimalVoter = '{{ $minimalVoter }}';
 
     // Hide loader
@@ -115,7 +121,7 @@
 
     function loadMore() {
       $.ajax({
-        url: `${baseURL}/discover/movie?page=${++page}&sort_by=${sortBy}&api_key=${apiKey}&vote_count.gte=${minimalVoter}`,
+        url: `${baseURL}/discover/movie?page=${++page}&sort_by=${sortBy}&api_key=${apiKey}&vote_count.gte=${minimalVoter}${id_genre ? '&with_genres=' + id_genre : ''}`,
         type: 'get',
         beforeSend: function() {
           // Show Loader
@@ -133,7 +139,7 @@
             const id = movie.id;
             const title = movie.title;
             const movieImageURL = `${imageBaseURL}/w500/${movie.poster_path}`;
-            const rating = movie.vote_average * 10;
+            const rating = Math.round(movie.vote_average * 10);
 
             htmlData.push(`
             <a href="movie/${id}" class="group">
@@ -155,7 +161,7 @@
                       fill="#38B6FF"></path>
                   </svg>
 
-                  <span class="font-inter text-sm ml-1">${rating }%</span>
+                  <span class="font-inter text-sm ml-1">${rating}%</span>
                 </div>
               </div>
             </a>
@@ -193,6 +199,26 @@
         // Get data
         loadMore();
       }
+    }
+
+    $('#genres li').click((e) => {
+      const button = $(e.target);
+      const id_genre = button.data('id_genre');
+
+      button.addClass('text-white bg-movieapp-500');
+      button.removeClass('hover:text-gray-900 hover:bg-gray-100');
+      $(e.currentTarget).siblings().children().removeClass('bg-movieapp-500 text-white');
+      $(e.currentTarget).siblings().children().addClass('hover:text-gray-900 hover:bg-gray-100');
+
+      changeGenres(id_genre);
+    });
+
+    function changeGenres(genre) {
+      $('#dataWrapper').html('');
+      page = 0;
+      id_genre = genre
+
+      loadMore();
     }
   </script>
 @endsection

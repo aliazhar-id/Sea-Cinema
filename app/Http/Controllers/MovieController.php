@@ -60,6 +60,7 @@ class MovieController extends Controller
     $apiKey = env('MOVIE_DB_API_KEY');
 
     $movies = [];
+    $genres = [];
     $sortBy = 'popularity.desc';
     $page = 1;
     $minimalVoter = 100;
@@ -78,10 +79,22 @@ class MovieController extends Controller
       if (isset($result)) $movies = $result;
     }
 
+    // Do request api to get all genres
+    $genreResponse = Http::get("{$baseURL}/genre/movie/list", [
+      'language' => 'en',
+      'api_key' => $apiKey,
+    ]);
+
+    if ($genreResponse->successful()) {
+      $result = $genreResponse->object()->genres;
+      if (isset($result)) $genres = $result;
+    }
+
     // return json_decode($movieResponse);
 
     return view('movies.movie', [
       'title' => 'Movies',
+      'genres' => $genres,
       'baseURL' => $baseURL,
       'imageBaseURL' => $imageBaseURL,
       'apiKey' => $apiKey,
