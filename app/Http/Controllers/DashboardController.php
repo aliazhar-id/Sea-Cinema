@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Movies;
+use App\Models\User;
+use App\Models\Upcoming;
 use Illuminate\Http\Request;
+use App\Models\DetailSchedule;
 use Illuminate\Support\Facades\Http;
 
 class DashboardController extends Controller
@@ -12,7 +14,9 @@ class DashboardController extends Controller
   {
     return view('dashboard.main.dashboard', [
       'title' => 'Dashboard',
-      'posts' => []
+      'upcomings' => Upcoming::all(),
+      'schedules' => DetailSchedule::all(),
+      'users' => User::all(),
     ]);
   }
 
