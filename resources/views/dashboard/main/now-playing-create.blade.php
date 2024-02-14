@@ -150,9 +150,6 @@
   <script>
     const loadElementPicker = () => {
       $('.datepicker').each((i, el) => {
-
-        console.log(el);
-
         $(el).datetimepicker({
           uiLibrary: 'bootstrap4',
           footer: true,
@@ -166,7 +163,7 @@
 
     $('#btn-more').on('click', () => {
       const inputElement = `
-        <div class="col-lg-6">
+        <div class="col-lg-6 input-more">
           <div class="form-group w-full">
             <label for="datepicker" class="form-control-label">Time</label>
             <input class="form-control w-full datepicker @error('price') is-invalid @enderror"
@@ -180,7 +177,7 @@
           </div>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-6 input-more">
           <div class="form-group focused w-full">
             <label class="form-control-label" for="title">Price</label>
             <input type="number" id="title" class="form-control @error('price') is-invalid @enderror"
@@ -205,6 +202,8 @@
 
       $('#id-movie').val(id);
       $('#addNowPlayingModalLabel').html(title);
+
+      $('.input-more').each((i, el) => $(el).remove());
     })
   </script>
 @endsection
