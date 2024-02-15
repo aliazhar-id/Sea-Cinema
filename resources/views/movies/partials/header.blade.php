@@ -30,6 +30,9 @@
                 </button>
             </div>
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                <a href="{{ '/' }}">
+                    <img src="{{ 'assets/logo.webp' }}" alt="" width="50px" class="mr-2">
+                </a>
                 <div class="flex flex-shrink-0 font-inter text-lg font-bold uppercase items-center">
                     Sea Cinema |
                 </div>
