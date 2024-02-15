@@ -54,8 +54,7 @@
       <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <form action="/logout" method="POST">
-          @csrf
+        <form action="{{ route('auth.logout') }}" method="GET">
           <button type="submit" class="btn btn-danger">
             Logout <span data-feather="log-out"></span>
           </button>
