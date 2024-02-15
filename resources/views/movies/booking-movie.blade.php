@@ -114,19 +114,21 @@
         @php
           $selectedDates = "";
         @endphp
-      <div class="flex gap-4 mb-10">
+      <div class="flex gap-4 mb-10 relative">
         @foreach($uniqueDates as $dates)
-        <div class="flex flex-col relative"> 
+        <div class="flex flex-col"> 
           <div class="mb-5"> 
-            <button class="w-50 bg-red-500 hover:bg-movieapp-600 text-white pl-4 pr-6 py-3 font-inter text-sm flex flex-row rounded-2xl items-center hover:drop-shadow-lg duration-200" onclick="toggleHours('{{ $dates }}')">
+            <button class="btn-dates w-50 bg-red-500 hover:bg-movieapp-600 text-white pl-4 pr-6 py-3 font-inter text-sm flex flex-row rounded-2xl items-center hover:drop-shadow-lg duration-200" onclick="toggleHours('{{ $dates }}', this)">
               {{$dates}}
               </button>
           </div>
-          <div class="flex absolute top-full left-0 hidden" id="{{ $dates }}-hours"> <!-- Add absolute class to hours container -->
+          <div class=" flex absolute top-full left-1/2 -translate-x-1/2 scale-0 duration-300" id="{{ $dates }}-hours"> <!-- Add absolute class to hours container -->
             @foreach($scheduleData as $schedule)
                 @if($schedule->date === $dates)
-                <button  class="mb-10 mx-2 bg-slate-200 hover:bg-slate-500 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"><a href="seats/{{$schedule->id_schedule}}"> {{ $schedule->start_at }}</a>
-                </button>                
+                  <a href="seats/{{$schedule->id_schedule}}">
+                    <button  class="mb-10 mx-2 bg-slate-200 hover:bg-slate-500 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"> {{ $schedule->start_at }}
+                    </button>                
+                  </a>
                 @endif
             @endforeach
           </div>
@@ -151,15 +153,19 @@
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous">
   </script>
   <script>
-    function toggleHours(date) {
+    function toggleHours(date, el) {
+
+      $('.btn-dates').each((i, el) => $(el).removeClass('!bg-movieapp-600'));
+      $(el).addClass('!bg-movieapp-600');
+      
       const allHours = document.querySelectorAll('[id$="-hours"]');
     allHours.forEach(hours => {
       if (hours.id !== `${date}-hours`) {
-        hours.classList.add('hidden'); // Hide all hours except for the one corresponding to the clicked date
+        hours.classList.add('scale-0'); // Hide all hours except for the one corresponding to the clicked date
       }
     });
     const hoursList = document.getElementById(`${date}-hours`);
-    hoursList.classList.toggle('hidden');
+    hoursList.classList.remove('scale-0');
     }
   </script>
 @endsection
