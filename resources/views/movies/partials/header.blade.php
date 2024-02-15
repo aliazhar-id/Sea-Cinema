@@ -43,9 +43,10 @@
                             class="{{ Request::is('movies') ? 'bg-movieapp-500 text-white' : 'text-gray-700 hover:bg-movieapp-600 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Movies</a>
                         <a href="{{ route('main.upcoming') }}"
                             class="{{ Request::is('upcoming') ? 'bg-movieapp-500 text-white' : 'text-gray-700 hover:bg-movieapp-600 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Upcoming</a>
-                        <a href="{{ route('main.nowplaying')}}"
-                            class="{{ Request::is('nowplaying') || Request::is('booking*') ? 'bg-movieapp-500 text-white' : 'text-gray-700 hover:bg-movieapp-600 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Now Playing</a>
-                            
+                        <a href="{{ route('main.nowplaying') }}"
+                            class="{{ Request::is('nowplaying') || Request::is('booking*') ? 'bg-movieapp-500 text-white' : 'text-gray-700 hover:bg-movieapp-600 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium">Now
+                            Playing</a>
+
                     </div>
                 </div>
             </div>
@@ -96,6 +97,11 @@
                                 </li>
                             @endcan
                             <li>
+                                <div class="px-4 py-3 text-sm text-blue-600">
+                                    <div class="font-medium ">{{ auth()->user()->role }}</div>
+                                </div>
+                            </li>
+                            <li>
                                 <a href="{{ 'profile' }}"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-movieapp-600 hover:text-white">Profile</a>
                             </li>
@@ -125,7 +131,8 @@
             <a href="#"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Movies</a>
             <a href="{{ route('main.nowplaying') }}"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Now Playing</a>
+                class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Now
+                Playing</a>
         </div>
     </div>
 </nav>
