@@ -124,6 +124,7 @@ class UserController extends Controller
       $image->save(storage_path('app/public/' . $filePath));
 
       $validatedData['image'] = $filePath;
+      $isProfileUpdated = true;
     }
 
     if (!$isProfileUpdated) {

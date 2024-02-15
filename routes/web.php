@@ -20,6 +20,7 @@ Route::name('main.')->group(function () {
   Route::get('/nowplaying', [MovieController::class, 'nowPlaying'])->name('nowplaying');
   Route::get('/upcoming', [MovieController::class, 'upcoming'])->name('upcoming');
   Route::get('/profile', [MovieController::class, 'profile'])->name('profile');
+  Route::post('/profile/{user}', [UserController::class, 'update'])->name('profile.update');
 });
 
 // AUTH PAGE
