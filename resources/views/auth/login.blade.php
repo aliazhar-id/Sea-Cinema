@@ -40,7 +40,7 @@
                 </div>
 
 
-                <h1 class="text-gray-800 font-bold text-2xl mb-1 text-center">Hello Again!</h1>
+                <h1 class="text-gray-800 font-bold text-2xl mb-1 text-center">Hello! let's get started!</h1>
                 <p class="text-sm font-normal text-gray-600 mb-7 text-center">Welcome Back</p>
 
                 <div class="flex flex-col mb-4">
