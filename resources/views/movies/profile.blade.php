@@ -89,16 +89,16 @@
                     </div>
                     <div class="flex-none w-auto max-w-full px-3 my-auto">
                         <div class="h-full">
-                            <h5 class="mb-1">Dohn Joe</h5>
-                            <p class="mb-0 font-semibold leading-normal text-sm">Admin</p>
+                            <h5 class="mb-1">{{ auth()->user()->name }}</h5>
+                            <p class="mb-0 font-semibold leading-normal text-sm">{{ auth()->user()->role }}</p>
+                            <form class="flex items-center justify-end flex-wrap pt-1 pr-10 mr-12">
+                                <label class="block">
+                                    <span class="sr-only">Choose profile photo</span>
+                                    <input type="file" class="block w-full text-sm text-slate-500" />
+                                </label>
+                            </form>
                         </div>
                     </div>
-                    <form class="flex items-center justify-end flex-wrap pt-1 pr-10 mr-12">
-                        <label class="block">
-                            <span class="sr-only">Choose profile photo</span>
-                            <input type="file" class="block w-full text-sm text-slate-500" />
-                        </label>
-                    </form>
                 </div>
             </div>
         </div>
@@ -109,7 +109,7 @@
                 <div class="w-full max-w-full px-3 lg-max:mt-6">
                     <div
                         class="relative flex flex-col h-full min-w-0 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
-                        <div class="p-4 pb-0 mb-0 bg-white border-b-0 rounded-t-2xl">
+                        <div class="p-4 pb-0 mb-0 border-b-0 rounded-t-2xl">
                             <div class="flex flex-wrap -mx-3">
                                 <div class="flex items-center w-full max-w-full px-3 shrink-0 md:w-8/12 md:flex-none">
                                     <h6 class="mb-0">My Account</h6>
@@ -255,9 +255,18 @@
                                         {{-- password confirmation --}}
 
                                     </div>
+                                    <div class="flex mt-6">
+                                        <button type="submit"
+                                            class="bg-transparent bg-gray-200 text-gray-800 font-inter py-2 px-4 rounded-lg shadow-md mr-2">
+                                            Save
+                                        </button>
+                                        <button type="reset"
+                                            class="bg-transparent bg-gray-200 text-gray-800 font-inter py-2 px-4 rounded-lg shadow-md">
+                                            Cancel
+                                        </button>
+                                    </div>
                             </div>
                         </div>
-                    </div>
 
 </body>
 <!-- plugin for scrollbar  -->
