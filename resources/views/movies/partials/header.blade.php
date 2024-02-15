@@ -85,7 +85,7 @@
                         class="z-20 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
                         <div class="px-4 py-3 text-sm text-gray-900">
                             <div class="font-medium ">{{ auth()->user()->name }}</div>
-                            <div class="truncate">{{ auth()->user()->email }}</div>
+                            <div class="font-medium text-blue-600">{{ auth()->user()->role }}</div>
                         </div>
 
                         <ul class="py-2 text-sm text-gray-700"
@@ -96,11 +96,6 @@
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-movieapp-600 hover:text-white">Dashboard</a>
                                 </li>
                             @endcan
-                            <li>
-                                <div class="px-4 py-3 text-sm text-blue-600">
-                                    <div class="font-medium ">{{ auth()->user()->role }}</div>
-                                </div>
-                            </li>
                             <li>
                                 <a href="{{ 'profile' }}"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-movieapp-600 hover:text-white">Profile</a>
