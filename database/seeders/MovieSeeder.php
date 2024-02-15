@@ -28,7 +28,7 @@ class MovieSeeder extends Seeder
         //     'append_to_response' => 'videos'
         // ]);    
         // dd($topMovieResponse->json());
-        for($x=1; $x <= 2; $x++){
+        for($x=1; $x <= 1; $x++){
             $topMovieResponse = Http::get("{$baseURL}/movie/popular?page={$x}", [
                 'api_key' => $apiKey,
                 // 'append_to_response' => 'videos'
