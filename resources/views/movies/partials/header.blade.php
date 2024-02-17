@@ -29,16 +29,16 @@
                     </svg>
                 </button>
             </div>
-            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-                <a href="{{ '/' }}">
-                    <img src="{{ 'assets/logo.webp' }}" alt="" width="50px" class="mr-2">
+            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start overflow-hidden">
+                <a class="flex" href="{{ route('main.home') }}">
+                    <img class="rotate-45 mix-blend-multiply" src="{{ '/assets/logo/ms-icon-310x310.png' }}" alt="" width="50" class="mr-2">
+
+                    <div class="flex flex-shrink-0 font-inter text-lg font-bold uppercase items-center">
+                        Sea Cinema |
+                    </div>
                 </a>
-                <div class="flex flex-shrink-0 font-inter text-lg font-bold uppercase items-center">
-                    Sea Cinema |
-                </div>
-                <div class="hidden sm:ml-6 sm:block">
-                    <div class="flex space-x-4">
-                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-movieapp-600 hover:text-white" -->
+                <div class="hidden sm:ml-6 sm:block my-auto">
+                    <div class="flex space-x-4 items-center">
                         <a href="{{ route('main.home') }}"
                             class="{{ Request::is('/') ? 'bg-movieapp-500 text-white' : 'text-gray-700 hover:bg-movieapp-600 hover:text-white' }} rounded-md px-3 py-2 text-sm font-medium"
                             aria-current="page">Top Movies</a>
