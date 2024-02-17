@@ -66,7 +66,7 @@
     {{-- Top Up History Section --}}
     <div class="mx-auto min-w-max mt-16 mb-28 font-quicksand text-gray-800">
       <div class="text-3xl font-bold">Top Up History</div>
-      @if ($history)
+      @if ($history->count())
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-2">
           <table class="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
