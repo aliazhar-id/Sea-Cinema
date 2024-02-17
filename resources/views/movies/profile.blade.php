@@ -260,8 +260,7 @@
                     class="bg-movieapp-500 text-gray-50 font-inter py-2 px-4 rounded-lg shadow-md mr-2">
                     Save
                   </button>
-                  <button type="reset"
-                    class="bg-transparent bg-gray-400 text-gray-50 font-inter py-2 px-4 rounded-lg shadow-lg">
+                  <button type="reset" class="bg-gray-400 text-gray-50 font-inter py-2 px-4 rounded-lg shadow-lg">
                     Reset
                   </button>
                 </div>
@@ -274,9 +273,5 @@
   </div>
 
 </body>
-<!-- plugin for scrollbar  -->
-<script src="{{ '\js\profile\plugins\perfect-scrollbar.min.js' }}" async></script>
-<!-- main script file  -->
-<script src="{{ '\js\profile\soft-ui-dashboard-tailwind.js?v=1.0.5' }}"></script>
 
 </html>
