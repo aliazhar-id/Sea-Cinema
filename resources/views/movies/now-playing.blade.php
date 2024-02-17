@@ -60,8 +60,11 @@
       @endforeach
     </div>
 
-    @if ($movies->count() == 0) 
-    <div class="w-full my-auto text-center text-gray-600 h text-xl font-bold">No Now Playing Movies Found :(</div>
+    @if ($movies->count() == 0)
+      <div class="w-full my-auto text-center text-gray-600 h text-xl font-bold">No Now Playing Movies Found :(</div>
     @endif
+
+    {{-- Footer Section --}}
+    @include('movies.partials.footer')
   </div>
 @endsection

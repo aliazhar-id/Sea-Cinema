@@ -88,7 +88,10 @@
                         class="z-20 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
                         <div class="px-4 py-3 text-sm text-gray-900">
                             <div class="font-medium ">{{ auth()->user()->name }}</div>
-                            <div class="font-medium text-blue-600">{{ auth()->user()->role }}</div>
+                            <div>
+                                <span class="font-medium text-blue-600">{{ auth()->user()->role }}</span> 
+                                <span class="text-gray-800">( Rp{{ number_format(auth()->user()->balance, 0, '.') }} )</span>
+                            </div>
                         </div>
 
                         <ul class="py-2 text-sm text-gray-700"
@@ -100,7 +103,7 @@
                                 </li>
                             @endcan
                             <li>
-                                <a href="{{ 'profile' }}"
+                                <a href="{{ route('main.profile') }}"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-movieapp-600 hover:text-white">Profile</a>
                             </li>
                             <li>
