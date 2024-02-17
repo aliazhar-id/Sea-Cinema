@@ -103,6 +103,10 @@
                                 <a href="{{ 'profile' }}"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-movieapp-600 hover:text-white">Profile</a>
                             </li>
+                            <li>
+                                <a href="{{ route('main.topup.index') }}"
+                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-movieapp-600 hover:text-white">Top Up</a>
+                            </li>
                         </ul>
 
                         <div class="py-2">

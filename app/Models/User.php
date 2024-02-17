@@ -10,23 +10,28 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+  use HasApiTokens, HasFactory, Notifiable;
 
-    protected $guarded = ['id_user'];
-    protected $primaryKey = 'id_user';
+  protected $guarded = ['id_user'];
+  protected $primaryKey = 'id_user';
 
-    protected $hidden = [
-        'password',
-        // 'remember_token',
-    ];
+  protected $hidden = [
+    'password',
+    // 'remember_token',
+  ];
 
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
+  protected $casts = [
+    'email_verified_at' => 'datetime',
+    'password' => 'hashed',
+  ];
 
-    public function getRouteKeyName()
-    {
-      return 'username';
-    }
+  public function getRouteKeyName()
+  {
+    return 'username';
+  }
+
+  public function topUps()
+  {
+    return $this->hasMany(TopUp::class, 'id_user');
+  }
 }

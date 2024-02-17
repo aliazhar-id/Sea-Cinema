@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardNowPlayingController;
 use App\Http\Controllers\DashboardUpcomingController;
+use App\Http\Controllers\TopUpController;
 
 // MAIN PAGE
 Route::name('main.')->group(function () {
@@ -21,6 +22,8 @@ Route::name('main.')->group(function () {
   Route::get('/upcoming', [MovieController::class, 'upcoming'])->name('upcoming');
   Route::get('/profile', [MovieController::class, 'profile'])->name('profile');
   Route::post('/profile/{user}', [UserController::class, 'update'])->name('profile.update');
+  Route::get('/topup', [TopUpController::class, 'index'])->name('topup.index');
+  Route::post('/topup', [TopUpController::class, 'store'])->name('topup.store');
 });
 
 // AUTH PAGE
