@@ -34,7 +34,7 @@ class AdminUserController extends Controller
         ->get();
     }
 
-    return view('dashboard.admin.users.index', [
+    return view('dashboard.page.administrator.users.index', [
       'title' => 'Users',
       'users' => $users
     ]);
@@ -45,7 +45,7 @@ class AdminUserController extends Controller
    */
   public function create()
   {
-    return view('dashboard.admin.users.create', [
+    return view('dashboard.page.administrator.users.create', [
       'title' => 'Create User'
     ]);
   }
@@ -96,7 +96,7 @@ class AdminUserController extends Controller
       abort(403);
     }
 
-    return view('dashboard.admin.users.show', [
+    return view('dashboard.page.administrator.users.show', [
       'title' => 'User Info',
       'user' => $user,
     ]);
@@ -115,7 +115,7 @@ class AdminUserController extends Controller
       abort(403);
     }
 
-    return view('dashboard.admin.users.edit', [
+    return view('dashboard.page.administrator.users.edit', [
       'title' => 'Edit User',
       'user' => $user,
     ]);

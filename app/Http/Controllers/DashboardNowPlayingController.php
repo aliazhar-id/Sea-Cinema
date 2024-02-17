@@ -12,7 +12,7 @@ class DashboardNowPlayingController extends Controller
 {
   public function index()
   {
-    return view('dashboard.main.now-playing', [
+    return view('dashboard.page.main.now-playing.index', [
       'title' => 'Now Playing',
       'schedules' => DetailSchedule::latest()->get()
     ]);
@@ -47,7 +47,7 @@ class DashboardNowPlayingController extends Controller
       }
     }
 
-    return view('dashboard.main.now-playing-create', [
+    return view('dashboard.page.main.now-playing.create', [
       'title' => 'Create Now Playing',
       'movies' => $movies,
       'status' => $status,

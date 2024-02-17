@@ -13,7 +13,7 @@ class DashboardUpcomingController extends Controller
    */
   public function index()
   {
-    return view('dashboard.main.upcoming', [
+    return view('dashboard.page.main.upcoming.index', [
       'title' => 'Upcomming',
       'movies' => Upcoming::latest()->filter(request(['search']))->get()
     ]);
@@ -44,7 +44,7 @@ class DashboardUpcomingController extends Controller
       }
     }
 
-    return view('dashboard.main.upcoming-create', [
+    return view('dashboard.page.main.upcoming.create', [
       'title' => 'Create Upcoming',
       'imageBaseURL' => $imageBaseURL,
       'movies' => $movies,

@@ -16,7 +16,7 @@ class UserController extends Controller
    */
   public function index()
   {
-    return view('dashboard.main.profile', [
+    return view('dashboard.page.settings.profile', [
       'title' => 'Profile',
       'posts' => []
     ]);
