@@ -17,6 +17,7 @@ return new class extends Migration
       $table->integer('amount');
       $table->string('proof_image');
       $table->enum('status', ['pending', 'approved', 'declined']);
+      $table->foreignId('id_admin')->nullable();
       $table->timestamps();
     });
   }

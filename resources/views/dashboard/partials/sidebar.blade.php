@@ -44,29 +44,39 @@
 
   <!-- Heading -->
   <div class="sidebar-heading">
+    VERIFICATION
+  </div>
+
+  <!-- Nav Item - Users -->
+  <li class="nav-item {{ Request::routeIs('dashboard.topup*') ? 'active' : '' }}">
+    <a class="nav-link pb-2 pt-1" href="{{ route('dashboard.topup.index') }}">
+      <i class="fas fa-user"></i>
+      <span>Top Up</span></a>
+  </li>
+
+  <!-- Heading -->
+  <div class="sidebar-heading pt-1">
+    ADMINISTRATOR
+  </div>
+
+  <!-- Nav Item - Users -->
+  <li class="nav-item {{ Request::routeIs('dashboard.users*') ? 'active' : '' }}">
+    <a class="nav-link pb-2 pt-0" href="{{ route('dashboard.users.index') }}">
+      <i class="fas fa-user"></i>
+      <span>Users</span></a>
+  </li>
+
+  <!-- Heading -->
+  <div class="sidebar-heading pt-1">
     SETTINGS
   </div>
 
   <!-- Nav Item - Profile -->
   <li class="nav-item {{ Request::is('profile') ? 'active' : '' }}">
-    <a class="nav-link" href="{{ route('profile.index') }}">
+    <a class="nav-link pt-0" href="{{ route('profile.index') }}">
       <i class="fas fa-user-edit"></i>
       <span>Profile</span></a>
   </li>
-
-  @can('admin')
-    <!-- Heading -->
-    <div class="sidebar-heading">
-      ADMINISTRATOR
-    </div>
-
-    <!-- Nav Item - Users -->
-    <li class="nav-item {{ Request::routeIs('dashboard.users*') ? 'active' : '' }}">
-      <a class="nav-link pb-2" href="{{ route('dashboard.users.index') }}">
-        <i class="fas fa-user"></i>
-        <span>Users</span></a>
-    </li>
-  @endcan
 
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block">

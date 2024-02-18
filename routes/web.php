@@ -4,12 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\TopUpController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DashboardNowPlayingController;
 use App\Http\Controllers\DashboardUpcomingController;
-use App\Http\Controllers\TopUpController;
+use App\Http\Controllers\DashboardNowPlayingController;
+use App\Http\Controllers\DashboardTopUpVerificationController;
 
 // MAIN PAGE
 Route::name('main.')->group(function () {
@@ -50,6 +51,9 @@ Route::name('dashboard.')->group(function () {
   Route::post('dashboard/nowplaying', [DashboardNowPlayingController::class, 'store'])->name('nowplaying.store')->middleware('admin');
   Route::post('dashboard/nowplaying/update', [DashboardNowPlayingController::class, 'update'])->name('nowplaying.update')->middleware('admin');
   Route::post('dashboard/nowplaying/delete', [DashboardNowPlayingController::class, 'destroy'])->name('nowplaying.destroy')->middleware('admin');
+
+  Route::get('dashboard/topups', [DashboardTopUpVerificationController::class, 'index'])->name('topup.index')->middleware('admin');
+  Route::post('/topup/{topup}', [TopUpController::class, 'update'])->name('topup.update')->middleware('admin');
 });
 
 Route::resource('dashboard/profile', UserController::class)->parameters(['profile' => 'user'])->only(['index', 'update'])->middleware('admin');

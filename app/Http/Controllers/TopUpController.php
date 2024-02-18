@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\TopUp;
 use Illuminate\Http\Request;
 
@@ -31,5 +32,22 @@ class TopUpController extends Controller
     TopUp::create($validatedData);
 
     return back()->with('success', 'Top up request has been sent, please wait for approval!');
+  }
+
+  public function update(Request $request, TopUp $topup)
+  {
+    $validatedData = $request->validate([
+      'status' => 'required|in:approved,declined',
+    ]);
+
+    $validatedData['id_admin'] = auth()->user()->id_user;
+
+    $topup->update($validatedData);
+
+    if ($validatedData['status'] == 'approved') {
+      User::find($topup->id_user)->increment('balance', $topup->amount);
+    }
+
+    return back()->with('success', "Top up request has been {$validatedData['status']}!");
   }
 }
