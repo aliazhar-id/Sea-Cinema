@@ -11,8 +11,8 @@
 
     <div   div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1px; margin: 16px 0;">
         {{-- @foreach(array_slice(array_keys($seatsData), 0, 60) as $seat) --}}
-        @foreach($seatsData as $seat)
-        <div
+        @foreach($seatsData as $seat => $isAvailable)
+    <div
         style="
             width: calc(8.666% - 15px);
             height: 60px;
@@ -24,52 +24,30 @@
             margin-right: 7px;
             margin-bottom: 6px;
             padding: 10px;
-            background-color: {{ $seatsData[$seat] ? '#888' : (in_array($seat, $selectedSeats) ? '#005bb5' : '#fff') }};
-            color: {{ $seatsData[$seat] ? '#606c7a' : (in_array($seat, $selectedSeats) ? '#fff' : '#000') }};
-            cursor: {{ $seatsData[$seat] ? 'not-allowed' : 'pointer' }};
-        }}"
-        onclick="handleSeatSelection('{{ $seat }}')"
-        >
+            background-color: {{ $isAvailable ? '#888' : (in_array($seat, $selectedSeats) ? '#005bb5' : '#fff') }};
+            color: {{ $isAvailable ? '#606c7a' : (in_array($seat, $selectedSeats) ? '#fff' : '#000') }};
+            cursor: {{ $isAvailable ? 'not-allowed' : 'pointer' }};
+        }}" onclick="handleSeatSelection('{{ $seat }}')"  >
         {{ $seat }}
-        </div>
+    </div>
     @endforeach
     </div>
   
-  <div style="display: flex; justify-content: center; align-items: center;">
+  {{-- <div style="display: flex; justify-content: center; align-items: center;">
     @foreach(array_slice(array_keys($seatsData), -4) as $seat)
     <div
-      style="
-        width: 8.333%;
-        height: 40px;
-        border: 1px solid #999;
-        border-radius: 4px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 2px;
-        margin-bottom: 2px;
-        background-color: {{ $seatsData[$seat] ? '#888' : (in_array($seat, $selectedSeats) ? '#005bb5' : '#fff') }};
-        color: {{ $seatsData[$seat] ? '#606c7a' : (in_array($seat, $selectedSeats) ? '#fff' : '#000') }};
-        cursor: {{ $seatsData[$seat] ? 'not-allowed' : 'pointer' }};
-      }}"
-      onclick="handleSeatSelection('{{ $seat }}')"
-    >
+      style=" width: 8.333%; height: 40px; border: 1px solid #999; border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-right: 2px; margin-bottom: 2px; background-color: {{ $seatsData[$seat] ? '#888' : (in_array($seat, $selectedSeats) ? '#005bb5' : '#fff') }}; color: {{ $seatsData[$seat] ? '#606c7a' : (in_array($seat, $selectedSeats) ? '#fff' : '#000') }};  cursor: {{ $seatsData[$seat] ? 'not-allowed' : 'pointer' }}; }}"
+      onclick="handleSeatSelection('{{ $seat }}')">
       {{ $seat }}
     </div>
     @endforeach
-  </div>
+  </div> --}}
 </div>
 @endsection
 
 @section('script')
 <script>
-    // Sample data representing seat availability
-    const seatsData = {
-        "A01": false,
-        "A02": true,
-        "A03": false,
-        // Add more seat data...
-    };
+    let selectedSeats = @json($selectedSeats);
 
     // Function to render the seat layout
     function renderSeatLayout() {
@@ -109,10 +87,6 @@
         const selectedSeatsContainer = document.getElementById("selected-seats");
         selectedSeatsContainer.textContent = selectedSeats.join(", ");
     }
-
-    // Initialize selected seats array
-    let selectedSeats = [];
-
     // Initial rendering of seat layout
     renderSeatLayout();
 </script>

@@ -17,7 +17,7 @@ Route::name('main.')->group(function () {
   Route::get('/', [MovieController::class, 'index'])->name('home');
   Route::get('/movies', [MovieController::class, 'movies'])->name('movies');
   Route::get('/movie/{id}', [MovieController::class, 'movieDetails'])->name('movie.details');
-  Route::get('/booking/{id}', [MovieController::class, 'booking'])->middleware('auth');
+  Route::get('/booking/{id}', [MovieController::class, 'booking'])->name('booking.details');
   Route::get('/booking/seats/{id}', [MovieController::class, 'seatsSelection'])->name('seats.selection')->middleware('auth');
   Route::get('/nowplaying', [MovieController::class, 'nowPlaying'])->name('nowplaying');
   Route::get('/upcoming', [MovieController::class, 'upcoming'])->name('upcoming');

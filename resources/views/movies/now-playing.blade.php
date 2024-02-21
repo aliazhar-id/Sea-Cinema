@@ -1,4 +1,4 @@
-@extends('movies.layouts.main')
+`@extends('movies.layouts.main')
 
 @section('body')
   <div class="w-full h-auto min-h-screen flex flex-col">
@@ -20,11 +20,11 @@
         @endphp
 
         <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow">
-          <a href="{{ route('main.movie.details', $movie->id_movie) }}">
+          <a href="{{ route('main.booking.details', $movie->id_movie) }}">
             <img class="p-8" src="{{ $movieImageURL }}" alt="Movie Poster" />
           </a>
           <div class="px-5 pb-5">
-            <a href="{{ route('main.movie.details', $movie->id_movie) }}">
+            <a href="{{ route('main.booking.details', $movie->id_movie) }}">
               <h5 class="text-xl font-semibold tracking-tight text-gray-900">{{ $movie->title }}</h5>
             </a>
             <div class="flex items-center mt-2.5 mb-5">
