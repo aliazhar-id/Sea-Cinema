@@ -17,7 +17,7 @@ return new class extends Migration
       $table->integer('amount');
       $table->string('proof_image');
       $table->enum('status', ['pending', 'approved', 'declined']);
-      $table->foreignId('id_admin')->constrained('users', 'id_user')->nullable();
+      $table->foreignId('id_admin')->nullable()->constrained('users', 'id_user');
       $table->timestamps();
     });
   }
