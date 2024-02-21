@@ -183,7 +183,7 @@
 
         <script src="https://cdn.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"></script>
         <script>
-            const musicPath = '{!! asset('audio/1.mp3') !!}';
+            const musicPath = '{!! asset('audio/3.mp3') !!}';
             const sound = new Howl({
                 src: [musicPath],
                 autoplay: true,
