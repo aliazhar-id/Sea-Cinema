@@ -17,14 +17,14 @@ Route::name('main.')->group(function () {
   Route::get('/', [MovieController::class, 'index'])->name('home');
   Route::get('/movies', [MovieController::class, 'movies'])->name('movies');
   Route::get('/movie/{id}', [MovieController::class, 'movieDetails'])->name('movie.details');
-  Route::get('/booking/{id}', [MovieController::class, 'booking']);
-  Route::get('/booking/seats/{id}', [MovieController::class, 'seatsSelection'])->name('seats.selection');
+  Route::get('/booking/{id}', [MovieController::class, 'booking'])->middleware('auth');
+  Route::get('/booking/seats/{id}', [MovieController::class, 'seatsSelection'])->name('seats.selection')->middleware('auth');
   Route::get('/nowplaying', [MovieController::class, 'nowPlaying'])->name('nowplaying');
   Route::get('/upcoming', [MovieController::class, 'upcoming'])->name('upcoming');
-  Route::get('/profile', [MovieController::class, 'profile'])->name('profile');
-  Route::post('/profile/{user}', [UserController::class, 'update'])->name('profile.update');
-  Route::get('/topup', [TopUpController::class, 'index'])->name('topup.index');
-  Route::post('/topup', [TopUpController::class, 'store'])->name('topup.store');
+  Route::get('/profile', [MovieController::class, 'profile'])->name('profile')->middleware('auth');
+  Route::post('/profile/{user}', [UserController::class, 'update'])->name('profile.update')->middleware('auth');
+  Route::get('/topup', [TopUpController::class, 'index'])->name('topup.index')->middleware('auth');
+  Route::post('/topup', [TopUpController::class, 'store'])->name('topup.store')->middleware('auth');
 });
 
 // AUTH PAGE
