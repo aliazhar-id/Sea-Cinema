@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Upcoming;
 use Illuminate\Http\Request;
-use App\Models\DetailSchedule;
+use App\Models\NowPlayingSchedule;
 use Illuminate\Support\Facades\Http;
 
 class DashboardController extends Controller
@@ -15,7 +15,7 @@ class DashboardController extends Controller
     return view('dashboard.page.dashboard', [
       'title' => 'Dashboard',
       'upcomings' => Upcoming::all(),
-      'schedules' => DetailSchedule::all(),
+      'schedules' => NowPlayingSchedule::all(),
       'users' => User::all(),
     ]);
   }

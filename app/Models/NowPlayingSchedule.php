@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DetailSchedule extends Model
+class NowPlayingSchedule extends Model
 {
   use HasFactory;
 
@@ -14,6 +14,6 @@ class DetailSchedule extends Model
 
   public function movie()
   {
-    return $this->belongsTo(Schedules::class, 'id_movie');
+    return $this->belongsTo(NowPlaying::class, 'id_movie');
   }
 }

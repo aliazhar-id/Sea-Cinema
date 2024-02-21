@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DetailSchedule;
-use App\Models\Schedules;
+use App\Models\NowPlaying;
+use App\Models\NowPlayingSchedule;
 use App\Models\Upcoming;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -165,7 +165,7 @@ class MovieController extends Controller
 
     return view('movies.now-playing', [
       'title' => 'Shcedule',
-      'movies' => Schedules::latest()->get(),
+      'movies' => NowPlaying::latest()->get(),
       'imageBaseURL' => $imageBaseURL
     ]);
   }
@@ -188,8 +188,8 @@ class MovieController extends Controller
 
   public function booking($id)
   {
-    $movieData = Schedules::where('id_movie', $id)->first();
-    $scheduleData = DetailSchedule::where('id_movie', $id)->get();
+    $movieData = NowPlaying::where('id_movie', $id)->first();
+    $scheduleData = NowPlayingSchedule::where('id_movie', $id)->get();
     $uniqueDates = $scheduleData->groupBy('date')->keys()->toArray();
     // $uniqueDatesCount = $scheduleData->groupBy('date')->count();
     $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
@@ -208,8 +208,8 @@ class MovieController extends Controller
 
   public function seatsSelection($id)
   {
-    $data = DetailSchedule::where('id_schedule', $id)->first();
-    $movieData = Schedules::where('id_movie', $data->id_movie)->first();
+    $data = NowPlayingSchedule::where('id_schedule', $id)->first();
+    $movieData = NowPlaying::where('id_movie', $data->id_movie)->first();
 
     // dd($movieData, $data);
     return view(

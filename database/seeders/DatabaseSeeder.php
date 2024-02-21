@@ -3,10 +3,11 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\NowPlaying;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Database\Seeders\MovieSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -52,7 +53,7 @@ class DatabaseSeeder extends Seeder
     ]);
 
     User::factory(3)->create();
-    $this->call(MovieSeeder::class);
-    $this->call(DetailScheduleSeeder::class);
+    $this->call(NowPlayingSeeder::class);
+    $this->call(NowPlayingScheduleSeeder::class);
   }
 }

@@ -9,10 +9,10 @@
         @php
           $movieImageURL = "{$imageBaseURL}/w300{$movie->poster_path}";
           $score = round($movie->score / 2, 2);
-          $maxPrice = collect($movie->detail)
+          $maxPrice = collect($movie->schedule)
               ->flatten()
               ->max('price');
-          $minPrice = collect($movie->detail)
+          $minPrice = collect($movie->schedule)
               ->flatten()
               ->min('price');
 

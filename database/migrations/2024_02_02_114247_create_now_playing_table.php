@@ -11,7 +11,7 @@ return new class extends Migration
    */
   public function up(): void
   {
-    Schema::create('schedules', function (Blueprint $table) {
+    Schema::create('now_playings', function (Blueprint $table) {
       $table->string('id_movie')->primary();
       $table->string('poster_path')->nullable();
       $table->string('backdrop_path')->nullable();
@@ -31,6 +31,6 @@ return new class extends Migration
    */
   public function down(): void
   {
-    Schema::dropIfExists('schedules');
+    Schema::dropIfExists('now_playings');
   }
 };

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detail_schedules', function (Blueprint $table) {
+        Schema::create('now_playing_schedules', function (Blueprint $table) {
             $table->id('id_schedule');
             $table->string('id_movie');
             $table->date('date');
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('studio');
             $table->integer('price');
             $table->string('format')->nullable();
-            $table->foreign('id_movie')->references('id_movie')->on('schedules')->onDelete('cascade');
+            $table->foreign('id_movie')->references('id_movie')->on('now_playings')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('detail_schedules');
+        Schema::dropIfExists('now_playing_schedules');
     }
 };

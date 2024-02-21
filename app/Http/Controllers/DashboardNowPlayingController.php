@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DetailSchedule;
-use App\Models\Movies;
-use App\Models\Schedules;
+use App\Models\NowPlayingSchedule;
+use App\Models\NowPlaying;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -14,7 +13,7 @@ class DashboardNowPlayingController extends Controller
   {
     return view('dashboard.page.main.now-playing.index', [
       'title' => 'Now Playing',
-      'schedules' => DetailSchedule::latest()->get()
+      'schedules' => NowPlayingSchedule::latest()->get()
     ]);
   }
 
@@ -84,7 +83,7 @@ class DashboardNowPlayingController extends Controller
       }
     }
 
-    Schedules::updateOrCreate(
+    NowPlaying::updateOrCreate(
       ['id_movie' => $movieId],
       [
         'poster_path' => $movie->poster_path,
@@ -98,7 +97,7 @@ class DashboardNowPlayingController extends Controller
       ]
     );
 
-    $newDetailSchedules = [];
+    $newSchedules = [];
 
     foreach ($datetimes as $key => $datetime) {
       $dateISO = strtotime($datetime);
@@ -106,7 +105,7 @@ class DashboardNowPlayingController extends Controller
       $date = date('Y-m-d', $dateISO);
       $time = date('H:i', $dateISO);
 
-      $newDetailSchedules[$key] = [
+      $newSchedules[$key] = [
         'id_movie' => $movieId,
         'date' => $date,
         'start_at' => $time,
@@ -115,7 +114,7 @@ class DashboardNowPlayingController extends Controller
       ];
     }
 
-    DetailSchedule::upsert($newDetailSchedules, ['date', 'start_at']);
+    NowPlayingSchedule::upsert($newSchedules, ['date', 'start_at']);
 
     return back();
   }
@@ -136,7 +135,7 @@ class DashboardNowPlayingController extends Controller
     $date = date('Y-m-d', $dateISO);
     $time = date('H:i', $dateISO);
 
-    DetailSchedule::find($id_schedule)->update([
+    NowPlayingSchedule::find($id_schedule)->update([
       'date' => $date,
       'start_at' => $time,
       'price' => $price,
@@ -151,7 +150,7 @@ class DashboardNowPlayingController extends Controller
       'id-schedule' => 'required|exists:detail_schedules,id_schedule',
     ]);
 
-    DetailSchedule::destroy($validatedData['id-schedule']);
+    NowPlayingSchedule::destroy($validatedData['id-schedule']);
     return back()->with('success', 'Schedule has been deleted successfully.');
   }
 }
