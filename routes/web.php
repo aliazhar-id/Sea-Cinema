@@ -12,6 +12,18 @@ use App\Http\Controllers\DashboardUpcomingController;
 use App\Http\Controllers\DashboardNowPlayingController;
 use App\Http\Controllers\DashboardTopUpVerificationController;
 
+// NIM  : 10121189
+// Nama : Muhammad Izham Ali Azhar
+// Kelas: IF-5/V
+
+// NIM  : 10121177
+// Nama : Muhammad Gilang Abdul Gani
+// Kelas: IF-5/V  
+
+// NIM  : 10121203
+// Nama : Azka Zaki Ramadhan
+// Kelas: IF-5/V
+
 // MAIN PAGE
 Route::name('main.')->group(function () {
   Route::get('/', [MovieController::class, 'index'])->name('home');

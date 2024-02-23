@@ -1,0 +1,45 @@
+# Anggota Kelompok
+  NIM  : 10121189
+  Nama : Muhammad Izham Ali Azhar
+  Kelas: IF-5/V
+
+  NIM  : 10121177
+  Nama : Muhammad Gilang Abdul Gani
+  Kelas: IF-5/V  
+
+  NIM  : 10121203
+  Nama : Azka Zaki Ramadhan
+  Kelas: IF-5/V
+
+# Link Website (Hosting): https://cinema.aliazhar.my.id
+
+# Versi Laravel: 10
+
+################################################
+
+# Konfigurasi & Informasi:
+
+1. Menggunakan API TheMovieDB(TMDB)
+  https://developer.themoviedb.org/reference/intro/getting-started
+
+2. Konfigurasi php.ini
+  extension=gd
+
+3. Konfigurasi .env; atau bisa langsung menggunakan .env.example
+  FILESYSTEM_DISK = "public"
+  MOVIE_DB_BASE_URL=https://api.themoviedb.org/3
+  MOVIE_DB_IMAGE_BASE_URL=https://image.tmdb.org/t/p
+  MOVIE_DB_API_KEY="74006d9988529bbd8c1ae4bd77fb1e70"
+
+4. Command sebelum dijalankan
+  $ php artisan storage:link
+
+5. Command opsional seeder Now Playing Movies dan User
+  $ php artisan migrate:fresh --seed
+
+  ## User (Email):
+    1. SuperAdmin : superadmin@gmail.com
+    2. Admin      : admin@gmail.com
+    3. Member     : member@gmail.com 
+
+    *Semua user passwordnya "123" 
