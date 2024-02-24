@@ -1,3 +1,5 @@
+# SEA CINEMA
+
 # Anggota Kelompok
   NIM  : 10121189
   Nama : Muhammad Izham Ali Azhar
@@ -19,22 +21,33 @@
 
 # Konfigurasi & Informasi:
 
-1. Menggunakan API TheMovieDB(TMDB)
+1. Install NodeJS Package
+  $ npm install
+  *Tools tambahan NodeJS v20.0.0^
+
+2. Build VITE Production Mode atau Bisa juga VITE Development Mode
+  2.1 Jika VITE Production Mode
+    $ npm run build
+  2.2 Jika VITE Development Mode
+    $ npm run dev
+    *cara ini memerlukan dua terminal, untuk VITE Development dan Run Laravel ($ php artisan serve) 
+
+3. Menggunakan API Key TheMovieDB(TMDB)
   https://developer.themoviedb.org/reference/intro/getting-started
 
-2. Konfigurasi php.ini
+4. Konfigurasi php.ini
   extension=gd
 
-3. Konfigurasi .env; atau bisa langsung menggunakan .env.example
+5. Konfigurasi .env; atau bisa langsung menggunakan .env.example
   FILESYSTEM_DISK = "public"
   MOVIE_DB_BASE_URL=https://api.themoviedb.org/3
   MOVIE_DB_IMAGE_BASE_URL=https://image.tmdb.org/t/p
   MOVIE_DB_API_KEY="74006d9988529bbd8c1ae4bd77fb1e70"
 
-4. Command sebelum dijalankan
+6. Command sebelum dijalankan
   $ php artisan storage:link
 
-5. Command opsional seeder Now Playing Movies dan User
+7. Command opsional seeder Now Playing Movies dan User
   $ php artisan migrate:fresh --seed
 
   ## User (Email):
@@ -42,4 +55,4 @@
     2. Admin      : admin@gmail.com
     3. Member     : member@gmail.com 
 
-    *Semua user passwordnya "123" 
+    *Semua user passwordnya "123", app yang dihosting juga sama. 
