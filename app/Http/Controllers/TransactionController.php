@@ -9,6 +9,7 @@ use App\Models\Transaction;
 use App\Models\Ticket;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
+use Dompdf\Dompdf;
 
 class TransactionController extends Controller
 {
@@ -39,6 +40,7 @@ class TransactionController extends Controller
                 'total_price' => $transaction->total_price,
                 'seats' => $ticket->seats,
                 'ticket_code' => $ticket->ticket_code,
+                'ticket_id' => $ticket->id,
                 'studio' => $ticket->studio,
             ];
             $data[] = $ticket_details;
@@ -59,9 +61,36 @@ class TransactionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($id)
     {
         //
+        $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
+
+        $user_data = auth()->user()->id_user;
+        $ticket_data = Ticket::where('id', $id)->first();
+        $transaction = Transaction::where('id_transactions', $ticket_data->id_transaction)->first();
+        $nowplaying_data = NowPlayingSchedule::where('id_schedule', $transaction->id_schedule)->first();
+        $movie_data = NowPlaying::where('id_movie', $nowplaying_data->id_movie)->first();
+        $ticket_details = [
+            'movie_title' => $movie_data->title,
+            'poster_path' => $movie_data->poster_path,
+            'date' => $nowplaying_data->date,
+            'start_at' => $nowplaying_data->start_at,
+            'total_price' => $transaction->total_price,
+            'seats' => $ticket_data->seats,
+            'ticket_code' => $ticket_data->ticket_code,
+            'ticket_id' => $ticket_data->id,
+            'studio' => $ticket_data->studio,
+        ];
+
+        $pdf = new Dompdf();
+        $html = view('ticket-pdf', compact('ticket_details', 'imageBaseURL'))->render();
+        $pdf->loadHtml($html);
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->render();
+    
+        // Output PDF
+        return $pdf->stream();
     }
 
     /**

@@ -34,6 +34,7 @@ Route::name('main.')->group(function () {
   Route::get('/booking/seats/{id}', [MovieController::class, 'seatsSelection'])->name('seats.selection')->middleware('auth');
   Route::post('/booking/seats/{id}', [TransactionController::class, 'store'])->name('seats.buyticket')->middleware('auth');
   Route::get('/ticket', [TransactionController::class, 'index'])->name('seats.ticket')->middleware('auth');
+  Route::get('/pdfticket/{id}', [TransactionController::class, 'create'])->name('ticket.pdf')->middleware('auth');
   Route::get('/nowplaying', [MovieController::class, 'nowPlaying'])->name('nowplaying');
   Route::get('/upcoming', [MovieController::class, 'upcoming'])->name('upcoming');
   Route::get('/profile', [MovieController::class, 'profile'])->name('profile')->middleware('auth');
