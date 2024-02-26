@@ -18,6 +18,8 @@ class TransactionController extends Controller
     public function index()
     {
         //
+        $imageBaseURL = env('MOVIE_DB_IMAGE_BASE_URL');
+
         $user_data = auth()->user()->id_user;
         $ticket_data = Ticket::where('id_user', $user_data)->get();
         // dd($ticket_data);
@@ -49,7 +51,9 @@ class TransactionController extends Controller
         // dd($data);
 
         return view('movies.ticket', ['title' => 'Ticket',
-        'data' => $data]);
+        'data' => $data,
+        'imageBaseURL' => $imageBaseURL
+    ]);
     }
 
     /**
