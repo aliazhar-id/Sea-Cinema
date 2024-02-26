@@ -218,6 +218,7 @@ class MovieController extends Controller
         'data' => $data,
         'movieData' => $movieData,
         'title' => 'Seats booking',
+        'id' => $id,
       ]
     );
   }

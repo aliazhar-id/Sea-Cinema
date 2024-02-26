@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id('id_transactions');
             $table->timestamps();
-            $table->string('transaction_code');
+            $table->string('transaction_code')->nullable();
             $table->decimal('total_price', 8, 2);
             $table->string('booked_seats');
             $table->foreignId('id_user')->constrained('users', 'id_user');

@@ -2,37 +2,80 @@
 
 @section('body')
 <div class="w-full h-screen flex flex-col relative">
+    
+    @include('movies.partials.header')
+
     @php
      $seatsData = json_decode($data->seats, true); // Decode JSON string into an array
      $selectedSeats = [];
     @endphp
     {{-- Background Image --}}
    {{-- resources/views/seats_selection.blade.php --}}
-
-    <div   div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1px; margin: 16px 0;">
+   
+   @if (session()->has('message'))
+   <div class="alert alert-success">
+       {{ session('message') }}
+   </div>
+   @endif
+   <h1 class="text-black text-xl text-center p-8">Layout </h1>
+    <div class="w-full h-50% bg-gray-900 overflow-hidden mt-10">
+    <!-- Movie title -->
+        <div class="text-white text-center p-8">
+            <h1>Screen</h1>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1px; margin: 16px 0;">
         {{-- @foreach(array_slice(array_keys($seatsData), 0, 60) as $seat) --}}
         @foreach($seatsData as $seat => $isAvailable)
-    <div
-        style="
-            width: calc(8.666% - 15px);
-            height: 60px;
-            border: 2px solid #999;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 7px;
-            margin-bottom: 6px;
-            padding: 10px;
-            background-color: {{ $isAvailable ? '#888' : (in_array($seat, $selectedSeats) ? '#005bb5' : '#fff') }};
-            color: {{ $isAvailable ? '#606c7a' : (in_array($seat, $selectedSeats) ? '#fff' : '#000') }};
-            cursor: {{ $isAvailable ? 'not-allowed' : 'pointer' }};
-        }}" onclick="handleSeatSelection('{{ $seat }}')"  >
-        {{ $seat }}
-    </div>
+        <div
+            style="
+                width: calc(8.666% - 15px);
+                height: 60px;
+                border: 2px solid #999;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 7px;
+                margin-bottom: 6px;
+                padding: 10px;
+                background-color: {{ $isAvailable ? '#888' : (in_array($seat, $selectedSeats) ? '#005bb5' : '#fff') }};
+                color: {{ $isAvailable ? '#606c7a' : (in_array($seat, $selectedSeats) ? '#fff' : '#000') }};
+                cursor: {{ $isAvailable ? 'not-allowed' : 'pointer' }};
+            }}" onclick="handleSeatSelection('{{ $seat }}')"  >
+            {{ $seat }}
+        </div>
     @endforeach
-    </div>
-  
+    <form action="{{ route('main.seats.buyticket', ['id' => $id]) }}" method="POST">
+        @csrf
+        <input type="hidden" name="id" value="{{ $id }}">
+    
+        <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1px; margin: 16px 0;">
+            @php $iterationCount = 0; @endphp
+            <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1px;">
+                @foreach($seatsData as $seat => $isAvailable)
+                    @if($iterationCount % 12 === 0 && $iterationCount !== 0)
+                        </div><div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1px;">
+                    @endif
+                    @if(!$isAvailable)
+                        <div class="seat-box" onclick="handleSeatSelection('{{ $seat }}')">
+                            <input type="checkbox" id="{{ $seat }}" name="seats[]" value="{{ $seat }}">
+                            <label for="{{ $seat }}">{{ $seat }}</label>
+                        </div>
+                    @endif
+                    @php $iterationCount++; @endphp
+                @endforeach
+            </div>
+        </div>
+        <div class="flex justify-center">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-1/2 items-center">BUY TICKET</button>
+        </div>
+    </form>
+    
+    
+    
+    
+    
   {{-- <div style="display: flex; justify-content: center; align-items: center;">
     @foreach(array_slice(array_keys($seatsData), -4) as $seat)
     <div

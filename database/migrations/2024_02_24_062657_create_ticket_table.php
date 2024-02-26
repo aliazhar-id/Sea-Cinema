@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('ticket', function (Blueprint $table) {
             $table->id();
-            $table->string('transaction_code');
-            $table->string('ticket_code');
-            $table->string('seats');
-            $table->string('studio');
+            $table->string('transaction_code')->nullable();
+            $table->string('ticket_code')->nullable();
+            $table->string('seats')->nullable();
+            $table->string('studio')->nullable();
             $table->foreignId('id_user')->constrained('users', 'id_user');
             $table->foreignId('id_transaction')->references('id_transactions')->on('transactions');
             $table->timestamps();
